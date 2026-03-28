@@ -11,17 +11,20 @@ const TERM_OPTIONS: { key: TermRange; label: string; sub: string }[] = [
   { key: 'late', label: 'Після 28 тижнів', sub: 'III триместр' },
 ];
 
-const RESULTS: Record<TermRange, { title: string; body: string }> = {
+const RESULTS: Record<TermRange, { title: string; body: string; accent: string }> = {
   early: {
-    title: 'Чудовий момент для переходу.',
-    body: 'Ми приймемо всі ваші аналізи та продовжимо ведення з того місця, де зупинились. Перший прийом — огляд карти та план.',
+    accent: 'Ранній перехід — ідеальний час',
+    title: 'Встигаєте пройти повний скринінг I триместру',
+    body: 'Ви встигаєте оформити спостереження з самого початку та пройти повний скринінг I триместру. Лікар складе план від першого прийому.',
   },
   mid: {
-    title: 'Перехід у II триместрі — стандартна практика.',
-    body: 'Лікар перегляне вашу карту на першій консультації та визначить, які дослідження вже проведено. Зайвих повторів не буде.',
+    accent: 'Перехід у II триместрі — звичайна практика',
+    title: 'Зайвих повторів не буде',
+    body: 'Лікар перегляне вашу карту на першій консультації та визначить, які дослідження вже проведено. Те, що вже виконано — не повторюємо.',
   },
   late: {
-    title: 'Ми приймаємо і на пізніх термінах.',
+    accent: 'Приймаємо і на пізніх термінах',
+    title: 'Лікар зв\'яжеться з вами особисто',
     body: 'Уточніть деталі — наш лікар зв\'яжеться з вами особисто, щоб підготуватись до прийому і не гаяти часу.',
   },
 };
@@ -74,12 +77,12 @@ export default function MedokTransfer() {
     <section style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)' }}>
       <div id="transfer" style={{ maxWidth: 1140, margin: '0 auto', padding: '72px 48px' }}>
         <div style={{ marginBottom: 44 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>Перехід</div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>ПЕРЕХІД</div>
           <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Перехід з іншої клініки
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
-            Приймаємо на будь-якому терміні. Ми вже знаємо що вам потрібно.
+            Приймаємо на будь-якому терміні. Процес простий — ми робимо це регулярно.
           </p>
         </div>
 
@@ -114,8 +117,8 @@ export default function MedokTransfer() {
 
             {step === 'result' && term && (
               <div style={{ background: 'var(--tp)', border: '1.5px solid var(--tl)', borderRadius: 18, padding: 28 }}>
-                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>
-                  {TERM_OPTIONS.find((o) => o.key === term)?.label}
+                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 8 }}>
+                  {RESULTS[term].accent}
                 </div>
                 <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 10, lineHeight: 1.3 }}>
                   {RESULTS[term].title}
@@ -221,9 +224,9 @@ export default function MedokTransfer() {
                   <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>Як це відбувається</h3>
                   <p style={{ fontSize: 13, color: 'var(--g400)', marginBottom: 20 }}>Три кроки для переходу</p>
                   {[
-                    { n: 1, title: 'Зберіть наявні документи', desc: 'Обмінна карта, виписки, результати аналізів та УЗД. Якщо частини немає — не критично.' },
-                    { n: 2, title: 'Перший прийом — огляд карти', desc: 'Лікар визначає, які дослідження вже виконані, і складає план. Вже проведені аналізи не повторюємо.' },
-                    { n: 3, title: 'Оформлення пакету', desc: 'Обираємо відповідний триместровий пакет. Вартість фіксована і прозора.' },
+                    { n: 1, title: 'Зберіть те, що є', desc: 'Обмінна карта, виписки, результати аналізів та УЗД. Якщо частини документів немає — не проблема.' },
+                    { n: 2, title: 'Перший прийом — огляд карти', desc: 'Лікар дивиться, що вже зроблено, і складає план. Те, що вже виконано, не повторюємо.' },
+                    { n: 3, title: 'Оформлення програми', desc: 'Обираємо відповідний триместровий пакет. Вартість фіксована — як для нових пацієнток.' },
                   ].map((s, i) => (
                     <div key={s.n} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', marginBottom: i < 2 ? 20 : 0 }}>
                       <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--td)', color: '#fff', fontWeight: 800, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{s.n}</div>

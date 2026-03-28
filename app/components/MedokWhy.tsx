@@ -1,86 +1,108 @@
-const WHY_ITEMS = [
+const SUPPORT_CARDS = [
   {
-    title: 'CAREWAY App — 24/7',
-    text: 'Лікарі MED OK використовують спеціалізований застосунок для перевірки ваших аналізів між прийомами. Зв\'язок без черг.',
-    highlight: true,
-    badge: 'CAREWAY App',
+    title: 'УЗД-діагностика експертного рівня',
+    text: 'Скринінги проводить Бондарчук Жанна — сертифікація FMF London, член ISUOG. Апарат Voluson E8 з 3D/4D. Ваш гінеколог отримує максимально точну інформацію для рішень.',
+    iconBg: 'var(--tp)',
   },
   {
-    title: 'FMF London та ISUOG',
-    text: 'Бондарчук Жанна — сертифікований спеціаліст FMF London та член ISUOG. Скринінги за міжнародними протоколами.',
-    highlight: false,
+    title: 'Генетичний скринінг I триместру',
+    text: 'Оцінка ризиків хромосомних аномалій. Результати обробляються у системі Astraia — міжнародний стандарт, у партнерстві з генетичним центром «Геном».',
+    iconBg: '#dcfce7',
   },
   {
-    title: 'Апарат Voluson E8',
-    text: 'УЗД-обладнання експертного класу GE Healthcare з 3D/4D-технологіями. Детальна пренатальна діагностика вад розвитку.',
-    highlight: false,
+    title: 'Один лікар — від початку до кінця',
+    text: 'Ваш акушер-гінеколог знає вашу історію від першого прийому до огляду після пологів. Не ротується з черговими. Знає ваші особливості, реагує в контексті.',
+    iconBg: '#fef9c3',
   },
   {
-    title: 'Astraia + центр «Геном»',
-    text: 'Біохімічний скринінг I триместру обробляється у ліцензованій програмі Astraia у партнерстві з центром генетики «Геном».',
-    highlight: false,
-  },
-  {
-    title: 'Фіксована ціна пакету',
-    text: 'Пакет «Довіра» включає всі передбачені консультації та дослідження за один платіж. Вартість відома заздалегідь.',
-    highlight: false,
-  },
-  {
-    title: 'Один лікар на весь термін',
-    text: 'Ваш лікар знає вашу карту від першого до останнього прийому. Не ротується між черговими спеціалістами.',
-    highlight: false,
+    title: 'Фіксована вартість',
+    text: 'Ви знаєте суму за весь триместр наперед. Всі консультації, УЗД, аналізи — включені. Без несподіваних доплат під час вагітності.',
+    iconBg: 'var(--g100)',
   },
 ];
-
-function Icon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--td)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
-}
 
 export default function MedokWhy() {
   return (
     <section style={{ maxWidth: 1140, margin: '0 auto', padding: '72px 48px' }}>
       <div style={{ marginBottom: 44 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>Переваги</div>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
+          ПЕРЕВАГИ
+        </div>
         <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
           Чому MED OK
         </h2>
-        <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10 }}>Конкретні факти, а не загальні слова</p>
+        <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, maxWidth: 620, lineHeight: 1.75 }}>
+          Кожне рішення вашого лікаря базується на повній картині — а ви знаєте, що відбувається, і не маєте приводу для тривог
+        </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18 }}>
-        {WHY_ITEMS.map((item) => (
+      {/* Main accent card — full width */}
+      <div style={{
+        background: 'linear-gradient(135deg,#05121e 0%,#0d2235 100%)',
+        borderRadius: 24, padding: '40px 44px', marginBottom: 18,
+        color: '#fff',
+      }}>
+        <div style={{ maxWidth: 760 }}>
+          <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 24, fontWeight: 600, color: '#fff', marginBottom: 16, lineHeight: 1.3 }}>
+            Лікар бачить повну картину — ви не маєте приводу для тривог
+          </h3>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,.65)', lineHeight: 1.8, marginBottom: 20 }}>
+            У звичайній клініці лікар бачить ваші показники тільки на прийомі. У MED OK ваш лікар має під рукою всі ключові дані між візитами — через медичну систему CAREWAY. Якщо результат аналізу потребує уваги, лікар побачить це і зв&apos;яжеться з вами, не чекаючи наступного запису.
+          </p>
+          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', marginBottom: 20 }}>
+            {[
+              { label: 'Ваш кабінет', sub: 'дорожня карта, візити, результати' },
+              { label: 'Застосунок лікаря', sub: 'контроль показників між прийомами' },
+            ].map(item => (
+              <div key={item.label}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--tl)', marginBottom: 3 }}>{item.label}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,.5)' }}>{item.sub}</div>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', lineHeight: 1.7, fontStyle: 'italic' }}>
+            Це не просто &quot;зв&apos;язок 24/7&quot;. Це система, яка мінімізує ризик того, що щось важливе залишиться непоміченим — і прибирає привід для тривог між прийомами.
+          </p>
+        </div>
+      </div>
+
+      {/* Supporting 4 cards — 2x2 grid */}
+      <div className="why-grid">
+        {SUPPORT_CARDS.map((card) => (
           <div
-            key={item.title}
+            key={card.title}
             style={{
-              background: item.highlight ? 'linear-gradient(150deg,var(--tp) 0%,#fff 60%)' : '#fff',
-              border: `1.5px solid ${item.highlight ? 'var(--t)' : 'var(--g200)'}`,
-              borderRadius: 18, padding: '24px 20px',
-              transition: 'all .22s',
+              background: '#fff',
+              border: '1.5px solid var(--g200)',
+              borderRadius: 18, padding: '24px 22px',
             }}
           >
-            <div style={{ width: 44, height: 44, borderRadius: 12, background: item.highlight ? 'rgba(82,178,173,.2)' : 'var(--g100)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
-              <Icon />
+            <div style={{
+              width: 44, height: 44, borderRadius: 12,
+              background: card.iconBg,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14,
+            }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--td)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
             </div>
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 7 }}>{item.title}</h3>
-            <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65 }}>{item.text}</p>
-            {item.badge && (
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--td)', color: '#fff', fontSize: 11, fontWeight: 700, padding: '4px 11px', borderRadius: 20, marginTop: 10 }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" /></svg>
-                {item.badge}
-              </div>
-            )}
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 8 }}>{card.title}</h3>
+            <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.7 }}>{card.text}</p>
           </div>
         ))}
       </div>
 
       <style>{`
-        @media(max-width:1024px){section > div:last-child[style*="repeat(3"]{grid-template-columns:repeat(2,1fr)!important}}
-        @media(max-width:768px){section > div:last-child[style*="repeat(3"]{grid-template-columns:1fr 1fr!important;gap:12px!important}}
-        @media(max-width:480px){section > div:last-child[style*="repeat(3"]{grid-template-columns:1fr!important}}
+        .why-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+        @media(max-width:768px){
+          section[id=""] { padding: 52px 20px !important; }
+          .why-grid { grid-template-columns: 1fr !important; }
+          [style*="40px 44px"] { padding: 28px 24px !important; }
+        }
       `}</style>
     </section>
   );
