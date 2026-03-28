@@ -282,11 +282,6 @@ export default function MedokPackages() {
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75, maxWidth: 620 }}>
             Фіксована ціна за весь триместр. Всі консультації та дослідження включені — без несподіваних доплат.
           </p>
-          <p style={{ fontSize: 12, color: 'var(--g400)', marginTop: 6 }}>
-            * Лікар вищої кваліфікаційної категорії
-            <InfoBtn termKey="qual-category" onInfo={setTermKey} />
-            {' '}— +650 грн/триместр
-          </p>
         </div>
 
         <div className="programs-grid">

@@ -1,128 +1,316 @@
-import { DOCTORS, CLINIC } from '@/lib/data';
-import { Doctor } from '@/lib/types';
+'use client';
+import Image from 'next/image';
+import { useState } from 'react';
+import { CLINIC } from '@/lib/data';
 
-function DoctorActivity({ doc }: { doc: Doctor }) {
-  if (doc.doctor_type !== 'obstetrician') return null;
-  if (!doc.last_active_at) return null;
+const TERM_LABELS: Record<string, string> = {
+  fmf: 'FMF (Fetal Medicine Foundation)',
+  isuog: 'ISUOG',
+  voluson: 'Апарат Voluson E8',
+};
+const TERM_BODIES: Record<string, string> = {
+  fmf: 'Fetal Medicine Foundation — міжнародна організація з Лондона, яка розробляє стандарти скринінгу вагітності. Сертифікат FMF означає, що лікар пройшов навчання та щорічну перевірку якості вимірювань.',
+  isuog: 'Міжнародне товариство ультразвуку в акушерстві та гінекології. Членство підтверджує дотримання світових стандартів діагностики.',
+  voluson: "Апарат УЗД експертного класу від GE Healthcare. Забезпечує високу деталізацію зображення, включаючи 3D/4D — об'ємну візуалізацію дитини в реальному часі.",
+};
 
-  const daysAgo = Math.floor(
-    (Date.now() - new Date(doc.last_active_at).getTime()) / (1000 * 60 * 60 * 24)
-  );
-  if (daysAgo > 7) return null;
-
-  const actLabel = daysAgo === 0 ? 'сьогодні' : daysAgo === 1 ? 'вчора' : `${daysAgo} дні тому`;
-
+function InfoBtn({ termKey, onInfo }: { termKey: string; onInfo: (k: string) => void }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'var(--g400)', background: 'var(--g50)', borderRadius: 8, padding: '6px 10px', marginBottom: 10 }}>
-      <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', flexShrink: 0, display: 'inline-block' }} />
-      <span style={{ fontWeight: 600 }}>Веде прийом</span>
-      <span>·</span>
-      <span>Активний {actLabel}</span>
-      {doc.patients_count && doc.patients_count > 0 ? (
-        <>
-          <span>·</span>
-          <span>{doc.patients_count} пацієнток</span>
-        </>
-      ) : null}
-    </div>
+    <button
+      onClick={() => onInfo(termKey)}
+      style={{
+        background: 'var(--tp)', border: 'none', cursor: 'pointer',
+        fontSize: 10, fontWeight: 800, color: 'var(--td)',
+        padding: '1px 6px', borderRadius: 20,
+        display: 'inline-flex', alignItems: 'center',
+        marginLeft: 3, verticalAlign: 'middle', lineHeight: 1.4,
+        fontFamily: 'inherit',
+      }}
+      title="Що це?"
+    >?</button>
   );
 }
 
+// Obstetrician cards
+const OB_DOCTORS = [
+  {
+    id: 'yanyuk',
+    name: 'Янюк Ольга Олександрівна',
+    role: 'Акушер-гінеколог · УЗД',
+    photo: '/ginekolog-yanyuk-olga.jpg',
+    initials: 'ЯО',
+    avatarColor: 'linear-gradient(135deg,var(--td),var(--t))',
+    bioKey: 'yanyuk',
+  },
+  {
+    id: 'kelman',
+    name: 'Кельман Вікторія Володимирівна',
+    role: 'Акушер-гінеколог · Пренатальна діагностика',
+    photo: '/ginekolog-kelman-viktoriya.jpg',
+    initials: 'КВ',
+    avatarColor: 'linear-gradient(135deg,#7c3aed,#a78bfa)',
+    bioKey: 'kelman',
+  },
+  {
+    id: 'trofimchuk',
+    name: 'Трофімчук Тетяна Ігорівна',
+    role: 'Акушер-гінеколог · УЗД',
+    photo: '/ginekolog-trofimchuk-tetyana.jpg',
+    initials: 'ТТ',
+    avatarColor: 'linear-gradient(135deg,var(--c),#f43f5e)',
+    bioKey: 'trofimchuk',
+  },
+];
+
+const UZD_DOCTOR = {
+  id: 'bondarchuk',
+  name: 'Бондарчук Жанна Геннадіївна',
+  role: 'УЗД-діагност · Voluson E8',
+  photo: '/ginekolog-UZD-bondarchuk-zhanna.jpg',
+  initials: 'БЖ',
+  avatarColor: 'linear-gradient(135deg,#b45309,#f59e0b)',
+};
+
+// Bio renderers (with optional ℹ️ buttons)
+function ObBio({ id, onInfo }: { id: string; onInfo: (k: string) => void }) {
+  if (id === 'yanyuk') {
+    return (
+      <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, textAlign: 'center' }}>
+        Веде вагітність і сама проводить УЗД — ваш лікар бачить повну картину без посередників. Автор медичних публікацій, учасниця міжнародних профільних конференцій.
+      </p>
+    );
+  }
+  if (id === 'kelman') {
+    return (
+      <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, textAlign: 'center' }}>
+        Фокус на пренатальній діагностиці та доказовій медицині. Навчання за програмою FMF<InfoBtn termKey="fmf" onInfo={onInfo} /> — міжнародний стандарт скринінгу. Детально пояснює кожен результат і план дій.
+      </p>
+    );
+  }
+  if (id === 'trofimchuk') {
+    return (
+      <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, textAlign: 'center' }}>
+        ВНМУ з відзнакою, додаткова спеціалізація з УЗД (Львів, 2022). Поєднує ведення вагітності з власними дослідженнями. Сучасний підхід та увага до комфорту пацієнтки.
+      </p>
+    );
+  }
+  return null;
+}
+
 export default function MedokDoctors() {
-  const obDoctors = DOCTORS.filter((d) => d.doctor_type === 'obstetrician');
-  const uzdDoctor = DOCTORS.find((d) => d.doctor_type === 'ultrasound');
+  const [termKey, setTermKey] = useState<string | null>(null);
+  const [ctaOpen, setCtaOpen] = useState(false);
+  const [ctaPhone, setCtaPhone] = useState('');
+  const [ctaSent, setCtaSent] = useState(false);
+
+  const handleCtaSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await fetch('/api/medok/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: '', phone: ctaPhone, form_type: 'callback' }),
+      });
+    } catch { /* non-fatal */ }
+    setCtaSent(true);
+  };
 
   return (
-    <section style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)', borderBottom: '1px solid var(--g100)' }}>
+    <section style={{ background: '#fff', borderTop: '1px solid var(--g100)', borderBottom: '1px solid var(--g100)' }}>
       <div id="doctors" style={{ maxWidth: 1140, margin: '0 auto', padding: '72px 48px' }}>
+
+        {/* Header */}
         <div style={{ marginBottom: 44 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>Команда</div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>КОМАНДА</div>
           <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Лікарі, які ведуть вагітність
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
-            Акушер-гінекологи з реальною міжнародною підготовкою
+            Одна вагітність — один лікар від першого візиту до огляду після пологів
           </p>
         </div>
 
-        {/* Obstetricians */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginBottom: 28 }}>
-          {obDoctors.map((doc) => (
-            <div
-              key={doc.id}
-              style={{ background: '#fff', border: '1.5px solid var(--g200)', borderRadius: 20, padding: '24px 18px', transition: 'all .25s', cursor: 'pointer' }}
-            >
-              <div style={{ width: 60, height: 60, borderRadius: 14, margin: '0 auto 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: '#fff', background: doc.avatar_color }}>
-                {doc.avatar_initials}
+        {/* Obstetricians grid */}
+        <div className="doctors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginBottom: 28 }}>
+          {OB_DOCTORS.map((doc) => (
+            <div key={doc.id} style={{
+              background: '#fff', border: '1.5px solid var(--g200)',
+              borderRadius: 20, padding: '28px 18px',
+              transition: 'all .25s', display: 'flex', flexDirection: 'column', alignItems: 'center',
+            }}>
+              {/* Photo */}
+              <div style={{ width: 80, height: 80, borderRadius: 18, overflow: 'hidden', marginBottom: 14, flexShrink: 0, border: '2px solid var(--g100)' }}>
+                <Image
+                  src={doc.photo}
+                  alt={doc.name}
+                  width={80}
+                  height={80}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                />
               </div>
+
               <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--g900)', textAlign: 'center', marginBottom: 3, lineHeight: 1.35 }}>
                 {doc.name}
               </div>
-              <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, textAlign: 'center', marginBottom: 10, textTransform: 'uppercase', letterSpacing: '.5px' }}>
+              <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, textAlign: 'center', marginBottom: 14, textTransform: 'uppercase', letterSpacing: '.5px' }}>
                 {doc.role}
               </div>
 
-              <DoctorActivity doc={doc} />
+              <ObBio id={doc.id} onInfo={setTermKey} />
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, justifyContent: 'center', marginBottom: 12 }}>
-                {doc.tags.map((tag) => (
-                  <span key={tag} style={{ fontSize: 10, fontWeight: 700, background: tag.includes('FMF') ? 'rgba(214,2,66,.1)' : 'var(--g100)', color: tag.includes('FMF') ? 'var(--cd)' : 'var(--g600)', padding: '3px 8px', borderRadius: 10 }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <p style={{ fontSize: 12, color: 'var(--g500)', lineHeight: 1.55, marginBottom: 14, textAlign: 'center' }}>
-                {doc.bio}
-              </p>
-              <a
-                href={`tel:${CLINIC.phone}`}
-                style={{ display: 'block', textAlign: 'center', padding: '9px', background: 'var(--cl)', color: 'var(--c)', borderRadius: 9999, fontSize: 13, fontWeight: 700, textDecoration: 'none', transition: 'all .2s' }}
-              >
+              <a href={`tel:${CLINIC.phone}`} style={{
+                display: 'block', textAlign: 'center', padding: '9px',
+                background: 'var(--cl)', color: 'var(--c)',
+                borderRadius: 9999, fontSize: 13, fontWeight: 700,
+                textDecoration: 'none', transition: 'all .2s', width: '100%',
+              }}>
                 Записатись
               </a>
             </div>
           ))}
         </div>
 
-        {/* UZD specialist */}
-        {uzdDoctor && (
-          <div style={{ background: 'linear-gradient(150deg,var(--tp) 0%,#fff 60%)', border: '1.5px solid var(--tl)', borderRadius: 20, padding: '24px 28px', display: 'flex', alignItems: 'center', gap: 24 }}>
-            <div style={{ width: 64, height: 64, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 22, fontWeight: 600, color: '#fff', background: uzdDoctor.avatar_color, flexShrink: 0 }}>
-              {uzdDoctor.avatar_initials}
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 4 }}>Діагностика · Voluson E8</div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 4 }}>{uzdDoctor.name}</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-                {uzdDoctor.tags.map((tag) => (
-                  <span key={tag} style={{ fontSize: 10, fontWeight: 700, background: tag.includes('FMF') ? 'rgba(214,2,66,.1)' : 'var(--tp)', color: tag.includes('FMF') ? 'var(--cd)' : 'var(--td)', padding: '3px 8px', borderRadius: 10 }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.6, maxWidth: 360 }}>
-              {uzdDoctor.bio}
-            </p>
-            <a href={`tel:${CLINIC.phone}`} style={{ flexShrink: 0, background: 'var(--td)', color: '#fff', padding: '10px 22px', borderRadius: 9999, textDecoration: 'none', fontSize: 13, fontWeight: 700 }}>
-              Записатись
-            </a>
+        {/* UZD specialist — wide card */}
+        <div style={{
+          background: 'linear-gradient(150deg,var(--tp) 0%,#fff 60%)',
+          border: '1.5px solid var(--tl)', borderRadius: 20,
+          padding: '24px 28px', display: 'flex', alignItems: 'center', gap: 24,
+          marginBottom: 24,
+        }}>
+          {/* Photo */}
+          <div style={{ width: 72, height: 72, borderRadius: 16, overflow: 'hidden', flexShrink: 0, border: '2px solid var(--tl)' }}>
+            <Image
+              src={UZD_DOCTOR.photo}
+              alt={UZD_DOCTOR.name}
+              width={72}
+              height={72}
+              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+            />
           </div>
-        )}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 4 }}>
+              ДІАГНОСТИКА
+            </div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 6 }}>{UZD_DOCTOR.name}</div>
+            <div style={{ fontSize: 11, color: 'var(--g400)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.3px' }}>
+              {UZD_DOCTOR.role}
+            </div>
+          </div>
+          <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.7, maxWidth: 440, flex: 1 }}>
+            Лікар, до якого направляють ваші гінекологи на планові скринінги. Сертифікація FMF London<InfoBtn termKey="fmf" onInfo={setTermKey} />, член ISUOG<InfoBtn termKey="isuog" onInfo={setTermKey} />. Апарат Voluson E8<InfoBtn termKey="voluson" onInfo={setTermKey} /> з 3D/4D — деталізація, яка дає вашому лікарю повну інформацію для рішень. Жанна не веде вагітність — вона проводить ключові дослідження, на які спирається ваш акушер-гінеколог.
+          </p>
+          <a href={`tel:${CLINIC.phone}`} style={{
+            flexShrink: 0, background: 'var(--td)', color: '#fff',
+            padding: '10px 22px', borderRadius: 9999,
+            textDecoration: 'none', fontSize: 13, fontWeight: 700,
+          }}>
+            Записатись
+          </a>
+        </div>
+
+        {/* "Допоможемо обрати" CTA block */}
+        <div style={{
+          background: 'var(--g50)', border: '1.5px solid var(--g200)',
+          borderRadius: 18, padding: '24px 28px',
+          display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap',
+        }}>
+          <div style={{ flex: 1, minWidth: 260 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 6 }}>
+              Не знаєте, кого обрати?
+            </div>
+            <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, margin: 0 }}>
+              Залиште номер — адміністратор розпитає про вашу ситуацію і підкаже, який лікар вам підійде.
+            </p>
+          </div>
+
+          {!ctaOpen && !ctaSent && (
+            <button
+              onClick={() => setCtaOpen(true)}
+              style={{
+                background: 'var(--td)', color: '#fff', border: 'none',
+                padding: '12px 26px', borderRadius: 9999,
+                fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Передзвоніть мені
+            </button>
+          )}
+
+          {ctaOpen && !ctaSent && (
+            <form onSubmit={handleCtaSubmit} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+              <input
+                type="tel"
+                value={ctaPhone}
+                onChange={(e) => setCtaPhone(e.target.value)}
+                placeholder="+380"
+                required
+                style={{
+                  padding: '11px 16px', border: '1.5px solid var(--g200)',
+                  borderRadius: 9999, fontSize: 14, fontFamily: 'inherit',
+                  outline: 'none', width: 180,
+                }}
+              />
+              <button type="submit" style={{
+                background: 'var(--c)', color: '#fff', border: 'none',
+                padding: '11px 22px', borderRadius: 9999,
+                fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+              }}>
+                Надіслати
+              </button>
+            </form>
+          )}
+
+          {ctaSent && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--td)', fontWeight: 700, fontSize: 13 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Передзвонимо вам скоро
+            </div>
+          )}
+        </div>
       </div>
 
+      {/* Bottom Sheet for info terms */}
+      {termKey && (
+        <div onClick={() => setTermKey(null)} style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,.45)',
+          zIndex: 400, display: 'flex', alignItems: 'flex-end',
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: '#fff', borderRadius: '20px 20px 0 0',
+            padding: '28px 28px 48px', width: '100%',
+            maxWidth: 540, margin: '0 auto',
+            animation: 'slideUpSheet .25s ease',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--g900)' }}>
+                {TERM_LABELS[termKey] ?? termKey}
+              </div>
+              <button onClick={() => setTermKey(null)} style={{
+                background: 'var(--g100)', border: 'none',
+                width: 36, height: 36, borderRadius: '50%',
+                fontSize: 18, cursor: 'pointer', color: 'var(--g500)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>✕</button>
+            </div>
+            <p style={{ fontSize: 14, color: 'var(--g600)', lineHeight: 1.75 }}>
+              {TERM_BODIES[termKey] ?? 'Інформація буде додана.'}
+            </p>
+          </div>
+        </div>
+      )}
+
       <style>{`
-        @media(max-width:1024px){
-          #doctors > div:nth-child(2){grid-template-columns:repeat(2,1fr)!important}
-        }
+        @keyframes slideUpSheet { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+        @media(max-width:1024px){ .doctors-grid{grid-template-columns:repeat(2,1fr)!important} }
         @media(max-width:768px){
           #doctors{padding:52px 20px!important}
-          #doctors > div:nth-child(2){grid-template-columns:1fr 1fr!important;gap:12px!important}
-          #doctors > div:nth-child(3){flex-direction:column!important;gap:16px!important}
+          .doctors-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
+          [style*="flex-direction: column"]{flex-direction:column!important;gap:16px!important}
         }
-        @media(max-width:480px){
-          #doctors > div:nth-child(2){grid-template-columns:1fr!important}
-        }
+        @media(max-width:480px){ .doctors-grid{grid-template-columns:1fr!important} }
       `}</style>
     </section>
   );

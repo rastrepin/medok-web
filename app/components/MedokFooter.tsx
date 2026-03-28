@@ -118,7 +118,7 @@ export default function MedokFooter() {
           <div style={{ fontSize: 12, color: 'rgba(255,255,255,.3)' }}>
             Powered by{' '}
             <a href="https://check-up.in.ua" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,.45)', textDecoration: 'none' }}>
-              CAREWAY
+              check-up.in.ua
             </a>
           </div>
         </div>
