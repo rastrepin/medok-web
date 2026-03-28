@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --c: #d60242;
+  --cd: #a8012f;
+  --cl: #fff0f4;
+  --cm: #fcd6e3;
+  --t: #52b2ad;
+  --tl: #97d5c9;
+  --tp: #e4f5f3;
+  --td: #1a7c75;
+  --g50: #fafafa;
+  --g100: #f4f4f5;
+  --g200: #e4e4e7;
+  --g300: #d1d5db;
+  --g400: #9ca3af;
+  --g500: #6b7280;
+  --g600: #52525b;
+  --g700: #3f3f46;
+  --g900: #18181b;
+  --sh: 0 1px 4px rgba(0,0,0,.06);
+  --shm: 0 4px 18px rgba(0,0,0,.08);
+  --shl: 0 8px 36px rgba(0,0,0,.11);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #fff;
+  color: var(--g900);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Bottom sheet */
+.bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+.bottom-sheet-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  z-index: 501;
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.32,.72,0,1);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.bottom-sheet.is-open {
+  transform: translateY(0);
+}
+
+.term {
+  border-bottom: 1px dashed #52b2ad;
+  cursor: pointer;
+  color: #1a7c75;
+}
+.term:hover { background: #e4f5f3; }
