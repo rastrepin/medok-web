@@ -6,7 +6,7 @@ const TRUST_ITEMS = [
 
 export default function MedokTrustBar() {
   return (
-    <div style={{
+    <div className="trust-bar" style={{
       background: '#0a1f30',
       borderTop: '1px solid rgba(255,255,255,.07)',
       borderBottom: '1px solid rgba(255,255,255,.07)',
@@ -32,7 +32,7 @@ export default function MedokTrustBar() {
 
       <style>{`
         @media(max-width:768px){
-          div[style*="0a1f30"]{padding:12px 20px!important}
+          .trust-bar{padding:12px 20px!important}
         }
       `}</style>
     </div>

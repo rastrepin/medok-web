@@ -171,7 +171,7 @@ export default function MedokDoctors() {
         </div>
 
         {/* UZD specialist — wide card */}
-        <div style={{
+        <div className="uzd-card" style={{
           background: 'linear-gradient(150deg,var(--tp) 0%,#fff 60%)',
           border: '1.5px solid var(--tl)', borderRadius: 20,
           padding: '24px 28px', display: 'flex', alignItems: 'center', gap: 24,
@@ -308,9 +308,13 @@ export default function MedokDoctors() {
         @media(max-width:768px){
           #doctors{padding:52px 20px!important}
           .doctors-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
-          [style*="flex-direction: column"]{flex-direction:column!important;gap:16px!important}
+          .uzd-card{flex-direction:column!important;align-items:flex-start!important;gap:16px!important}
+          .uzd-card p{max-width:100%!important}
+          .uzd-card a{width:100%!important;text-align:center!important;display:block!important}
         }
-        @media(max-width:480px){ .doctors-grid{grid-template-columns:1fr!important} }
+        @media(max-width:480px){
+          .doctors-grid{grid-template-columns:1fr!important}
+        }
       `}</style>
     </section>
   );

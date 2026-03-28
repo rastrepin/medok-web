@@ -9,7 +9,7 @@ const TRUST_PILLS = [
 
 export default function MedokHero() {
   return (
-    <section style={{
+    <section id="hero" style={{
       maxWidth: 1140, margin: '0 auto',
       padding: '72px 48px 64px',
     }}>
@@ -51,7 +51,7 @@ export default function MedokHero() {
       </p>
 
       {/* CTA buttons */}
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginBottom: 32 }}>
+      <div className="hero-btns" style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginBottom: 32 }}>
         <button
           onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })}
           style={{
@@ -98,12 +98,14 @@ export default function MedokHero() {
 
       <style>{`
         @media(max-width:768px){
-          section[style*="72px 48px 64px"]{padding:48px 20px 44px!important}
-          h1{font-size:32px!important;max-width:100%!important}
-          h1 + p{font-size:18px!important}
+          #hero{padding:48px 20px 44px!important}
+          #hero h1{font-size:32px!important;max-width:100%!important}
+          #hero h1 + p{font-size:18px!important}
+          #hero .hero-btns{flex-direction:column!important;align-items:flex-start!important}
+          #hero .hero-btns button{width:100%!important;justify-content:center!important}
         }
         @media(max-width:480px){
-          h1{font-size:28px!important}
+          #hero h1{font-size:28px!important}
         }
       `}</style>
     </section>
