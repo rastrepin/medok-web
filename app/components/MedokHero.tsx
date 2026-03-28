@@ -1,17 +1,45 @@
 'use client';
 
 const TRUST_PILLS = [
-  { icon: '★', label: 'FMF London', termKey: 'fmf' },
-  { icon: '⬜', label: 'Voluson E8', termKey: null },
-  { icon: '●', label: 'CAREWAY App 24/7', termKey: null },
-  { icon: '⬜', label: 'Astraia + «Геном»', termKey: 'astraia' },
+  { label: "Зв'язок з лікарем 24/7" },
+  { label: 'УЗД експертного класу' },
+  { label: 'Міжнародні протоколи скринінгу' },
+  { label: 'Фіксована вартість' },
 ];
 
 const HERO_CARDS = [
-  { bg: 'var(--tp)', label: 'Ведення вагітності', sub: 'I, II, III триместр або повне', badge: 'Пакет «Довіра»', badgeBg: 'var(--tp)', badgeColor: 'var(--td)' },
-  { bg: 'var(--cl)', label: 'Команда 24/7', sub: 'CAREWAY App між візитами', badge: 'Онлайн', badgeBg: '#ffe4e6', badgeColor: '#be123c' },
-  { bg: '#fef9c3', label: 'Планове УЗД на Voluson E8', sub: 'FMF London · ISUOG · 3D/4D', badge: 'Скринінг', badgeBg: '#fef9c3', badgeColor: '#b45309' },
-  { bg: '#dcfce7', label: 'Біохімічний скринінг', sub: 'Astraia + центр «Геном»', badge: 'I триместр', badgeBg: '#dcfce7', badgeColor: '#166534' },
+  {
+    bg: 'var(--tp)',
+    label: 'Ведення вагітності',
+    sub: 'Один лікар від постановки до пологів',
+    badge: 'від 9 970 ₴',
+    badgeBg: 'var(--td)',
+    badgeColor: '#fff',
+  },
+  {
+    bg: '#ffe4e6',
+    label: 'Питання між візитами',
+    sub: 'Надіслали аналіз — лікар перевірить',
+    badge: 'Застосунок',
+    badgeBg: '#ffe4e6',
+    badgeColor: '#be123c',
+  },
+  {
+    bg: '#fef9c3',
+    label: 'Планове УЗД',
+    sub: 'Скринінги I, II, III триместру · 3D/4D',
+    badge: 'Діагностика',
+    badgeBg: '#fef9c3',
+    badgeColor: '#b45309',
+  },
+  {
+    bg: '#dcfce7',
+    label: 'Генетичний скринінг',
+    sub: 'Ризики хромосомних аномалій · I триместр',
+    badge: 'Скринінг',
+    badgeBg: '#dcfce7',
+    badgeColor: '#166534',
+  },
 ];
 
 export default function MedokHero() {
@@ -26,28 +54,40 @@ export default function MedokHero() {
     }}>
       {/* Left */}
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 18 }}>
+        {/* Eyebrow */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 10,
+          fontSize: 11, fontWeight: 700, letterSpacing: '2.2px',
+          textTransform: 'uppercase', color: 'var(--td)', marginBottom: 18,
+        }}>
           <span style={{ width: 26, height: 2, background: 'var(--t)', borderRadius: 1, flexShrink: 0, display: 'inline-block' }} />
-          Ведення вагітності · Пакет «Довіра»
+          ВЕДЕННЯ ВАГІТНОСТІ · ВІННИЦЯ
         </div>
 
-        <h1
-          style={{
-            fontFamily: 'var(--font-playfair), "Playfair Display", serif',
-            fontSize: 46, fontWeight: 600, color: 'var(--g900)',
-            lineHeight: 1.12, marginBottom: 20, letterSpacing: '-.5px',
-          }}
-        >
-          Ваша вагітність —{' '}
-          <em style={{ fontStyle: 'italic', color: 'var(--c)' }}>
-            під повним контролем
-          </em>
+        {/* H1 — SEO-first */}
+        <h1 style={{
+          fontFamily: 'var(--font-playfair), "Playfair Display", serif',
+          fontSize: 42, fontWeight: 600, color: 'var(--g900)',
+          lineHeight: 1.12, marginBottom: 12, letterSpacing: '-.5px',
+        }}>
+          Ведення вагітності у Вінниці — МЦ MED OK
         </h1>
 
-        <p style={{ fontSize: 15, color: 'var(--g500)', lineHeight: 1.75, marginBottom: 32, maxWidth: 450 }}>
-          Персоналізована програма з I до III триместру. Команда MED OK супроводжує вас цілодобово через CAREWAY App — лікарі перевіряють ваші аналізи та висновки у режимі реального часу.
+        {/* Accent subtitle */}
+        <p style={{
+          fontFamily: 'var(--font-playfair), "Playfair Display", serif',
+          fontSize: 22, fontStyle: 'italic', color: 'var(--t)',
+          lineHeight: 1.4, marginBottom: 20,
+        }}>
+          Ваша вагітність — під повним контролем
         </p>
 
+        {/* Description */}
+        <p style={{ fontSize: 15, color: 'var(--g500)', lineHeight: 1.75, marginBottom: 32, maxWidth: 450 }}>
+          Персоналізована програма з I до III триместру. Команда MED OK супроводжує вас між візитами — лікарі перевіряють ваші аналізи та висновки і повідомляють, якщо потрібна увага.
+        </p>
+
+        {/* CTA buttons */}
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginBottom: 28 }}>
           <button
             onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })}
@@ -86,7 +126,7 @@ export default function MedokHero() {
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--td)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
               </svg>
               {pill.label}
             </div>
@@ -140,10 +180,10 @@ export default function MedokHero() {
             gap:32px!important;
           }
           section[style*="grid-template-columns"] > div:last-child{display:none}
-          h1{font-size:34px!important}
+          h1{font-size:30px!important}
         }
         @media(max-width:480px){
-          h1{font-size:28px!important}
+          h1{font-size:26px!important}
         }
       `}</style>
     </section>
