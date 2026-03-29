@@ -35,6 +35,7 @@ function InfoBtn({ termKey, onInfo }: { termKey: string; onInfo: (k: string) => 
 const OB_DOCTORS = [
   {
     id: 'yanyuk',
+    slug: 'yanyuk-olha',
     name: 'Янюк Ольга Олександрівна',
     role: 'Акушер-гінеколог · УЗД',
     photo: '/ginekolog-yanyuk-olga.jpg',
@@ -44,6 +45,7 @@ const OB_DOCTORS = [
   },
   {
     id: 'kelman',
+    slug: 'kelman-viktoriia',
     name: 'Кельман Вікторія Володимирівна',
     role: 'Акушер-гінеколог · Пренатальна діагностика',
     photo: '/ginekolog-kelman-viktoriya.jpg',
@@ -53,6 +55,7 @@ const OB_DOCTORS = [
   },
   {
     id: 'trofimchuk',
+    slug: 'trofimchuk-tetiana',
     name: 'Трофімчук Тетяна Ігорівна',
     role: 'Акушер-гінеколог · УЗД',
     photo: '/ginekolog-trofimchuk-tetyana.jpg',
@@ -64,6 +67,7 @@ const OB_DOCTORS = [
 
 const UZD_DOCTOR = {
   id: 'bondarchuk',
+  slug: 'bondarchuk-zhanna',
   name: 'Бондарчук Жанна Геннадіївна',
   role: 'УЗД-діагност · Voluson E8',
   photo: '/ginekolog-UZD-bondarchuk-zhanna.jpg',
@@ -158,14 +162,25 @@ export default function MedokDoctors() {
 
               <ObBio id={doc.id} onInfo={setTermKey} />
 
-              <a href={`tel:${CLINIC.phone}`} style={{
-                display: 'block', textAlign: 'center', padding: '9px',
-                background: 'var(--cl)', color: 'var(--c)',
-                borderRadius: 9999, fontSize: 13, fontWeight: 700,
-                textDecoration: 'none', transition: 'all .2s', width: '100%',
-              }}>
-                Записатись
-              </a>
+              <div style={{ display: 'flex', gap: 7, width: '100%' }}>
+                <a href={`tel:${CLINIC.phone}`} style={{
+                  flex: 1, display: 'block', textAlign: 'center', padding: '9px 6px',
+                  background: 'var(--cl)', color: 'var(--c)',
+                  borderRadius: 9999, fontSize: 12, fontWeight: 700,
+                  textDecoration: 'none',
+                }}>
+                  Записатись
+                </a>
+                <a href={`/doctors/${doc.slug}?case=pregnancy`} style={{
+                  flex: 1, display: 'block', textAlign: 'center', padding: '9px 6px',
+                  background: 'var(--g50)', color: 'var(--g600)',
+                  border: '1.5px solid var(--g200)',
+                  borderRadius: 9999, fontSize: 12, fontWeight: 600,
+                  textDecoration: 'none',
+                }}>
+                  Профіль
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -199,13 +214,27 @@ export default function MedokDoctors() {
           <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.7, maxWidth: 440, flex: 1 }}>
             Лікар, до якого направляють ваші гінекологи на планові скринінги. Сертифікація FMF London<InfoBtn termKey="fmf" onInfo={setTermKey} />, член ISUOG<InfoBtn termKey="isuog" onInfo={setTermKey} />. Апарат Voluson E8<InfoBtn termKey="voluson" onInfo={setTermKey} /> з 3D/4D — деталізація, яка дає вашому лікарю повну інформацію для рішень. Жанна не веде вагітність — вона проводить ключові дослідження, на які спирається ваш акушер-гінеколог.
           </p>
-          <a href={`tel:${CLINIC.phone}`} style={{
-            flexShrink: 0, background: 'var(--td)', color: '#fff',
-            padding: '10px 22px', borderRadius: 9999,
-            textDecoration: 'none', fontSize: 13, fontWeight: 700,
-          }}>
-            Записатись
-          </a>
+          <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
+            <a href={`tel:${CLINIC.phone}`} style={{
+              display: 'block', textAlign: 'center',
+              background: 'var(--td)', color: '#fff',
+              padding: '10px 22px', borderRadius: 9999,
+              textDecoration: 'none', fontSize: 13, fontWeight: 700,
+              whiteSpace: 'nowrap',
+            }}>
+              Записатись
+            </a>
+            <a href={`/doctors/${UZD_DOCTOR.slug}`} style={{
+              display: 'block', textAlign: 'center',
+              background: 'var(--tp)', color: 'var(--td)',
+              border: '1.5px solid var(--tl)',
+              padding: '9px 22px', borderRadius: 9999,
+              textDecoration: 'none', fontSize: 13, fontWeight: 600,
+              whiteSpace: 'nowrap',
+            }}>
+              Профіль
+            </a>
+          </div>
         </div>
 
         {/* "Допоможемо обрати" CTA block */}
