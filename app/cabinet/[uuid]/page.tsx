@@ -70,11 +70,11 @@ export default async function CabinetPage({ params }: Props) {
   const steps = cabinet.trimester ? TRIMESTER_STEPS[cabinet.trimester] ?? [] : [];
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--g50)', fontFamily: 'var(--font-nunito,"Nunito",sans-serif)' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--g50)', fontFamily: 'var(--font)' }}>
       {/* Nav */}
       <nav style={{ background: '#fff', borderBottom: '1px solid var(--g200)', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 20px', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ fontFamily: 'var(--font-playfair,"Playfair Display",serif)', fontSize: 17, fontWeight: 700, color: 'var(--g900)' }}>
+          <div style={{ fontFamily: 'var(--font)', fontSize: 17, fontWeight: 700, color: 'var(--g900)' }}>
             МЦ MED OK
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, fontWeight: 700, color: 'var(--td)', background: 'var(--tp)', borderRadius: 20, padding: '4px 12px' }}>
@@ -101,7 +101,7 @@ export default async function CabinetPage({ params }: Props) {
             </div>
           </div>
 
-          <h1 style={{ fontFamily: 'var(--font-playfair,"Playfair Display",serif)', fontSize: 24, fontWeight: 700, color: 'var(--g900)', marginBottom: 4, lineHeight: 1.25 }}>
+          <h1 style={{ fontFamily: 'var(--font)', fontSize: 24, fontWeight: 700, color: 'var(--g900)', marginBottom: 4, lineHeight: 1.25 }}>
             {cabinet.patient_name}
           </h1>
           <p style={{ fontSize: 14, color: 'var(--g400)', marginBottom: 0 }}>
@@ -180,7 +180,7 @@ export default async function CabinetPage({ params }: Props) {
                 background: doctor.avatar_color,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 18, fontWeight: 700, color: '#fff',
-                fontFamily: 'var(--font-playfair,"Playfair Display",serif)',
+                fontFamily: 'var(--font)',
               }}>
                 {doctor.avatar_initials}
               </div>

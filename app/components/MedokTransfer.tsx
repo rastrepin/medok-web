@@ -78,7 +78,7 @@ export default function MedokTransfer() {
       <div id="transfer" style={{ maxWidth: 1140, margin: '0 auto', padding: '72px 48px' }}>
         <div style={{ marginBottom: 44 }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>ПЕРЕХІД</div>
-          <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Перехід з іншої клініки
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
@@ -91,7 +91,7 @@ export default function MedokTransfer() {
           <div>
             {step === 'initial' && (
               <div>
-                <div style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 22, fontWeight: 600, color: 'var(--g900)', marginBottom: 8 }}>
+                <div style={{ fontFamily: 'var(--font)', fontSize: 22, fontWeight: 600, color: 'var(--g900)', marginBottom: 8 }}>
                   На якому терміні ви зараз?
                 </div>
                 <p style={{ fontSize: 14, color: 'var(--g400)', marginBottom: 24, fontWeight: 500 }}>
@@ -120,7 +120,7 @@ export default function MedokTransfer() {
                 <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 8 }}>
                   {RESULTS[term].accent}
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 10, lineHeight: 1.3 }}>
+                <h3 style={{ fontFamily: 'var(--font)', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 10, lineHeight: 1.3 }}>
                   {RESULTS[term].title}
                 </h3>
                 <p style={{ fontSize: 14, color: 'var(--g600)', lineHeight: 1.7, marginBottom: 22 }}>
@@ -148,7 +148,7 @@ export default function MedokTransfer() {
                 <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--tp)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px' }}>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--td)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                 </div>
-                <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 22, fontWeight: 600, color: 'var(--g900)', marginBottom: 8 }}>
+                <h3 style={{ fontFamily: 'var(--font)', fontSize: 22, fontWeight: 600, color: 'var(--g900)', marginBottom: 8 }}>
                   Запит надіслано
                 </h3>
                 <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.7 }}>
@@ -163,7 +163,7 @@ export default function MedokTransfer() {
             <div style={{ background: '#fff', border: '1.5px solid var(--g200)', borderRadius: 20, padding: 28, boxShadow: 'var(--shm)' }}>
               {step === 'form' ? (
                 <>
-                  <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>
+                  <h3 style={{ fontFamily: 'var(--font)', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>
                     Залишити запит
                   </h3>
                   <p style={{ fontSize: 13, color: 'var(--g400)', marginBottom: 20, fontWeight: 500 }}>
@@ -221,7 +221,7 @@ export default function MedokTransfer() {
                 </>
               ) : (
                 <div>
-                  <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>Як це відбувається</h3>
+                  <h3 style={{ fontFamily: 'var(--font)', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>Як це відбувається</h3>
                   <p style={{ fontSize: 13, color: 'var(--g400)', marginBottom: 20 }}>Три кроки для переходу</p>
                   {[
                     { n: 1, title: 'Зберіть те, що є', desc: 'Обмінна карта, виписки, результати аналізів та УЗД. Якщо частини документів немає — не проблема.' },

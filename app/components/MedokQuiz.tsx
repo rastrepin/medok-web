@@ -133,7 +133,7 @@ export default function MedokQuiz() {
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
             Калькулятор
           </div>
-          <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Дізнайтесь вартість
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
@@ -146,7 +146,7 @@ export default function MedokQuiz() {
         {/* Step 1 */}
         {step === 1 && (
           <div style={{ animation: 'fadeUp .28s ease' }}>
-            <div style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 28, fontWeight: 600, color: 'var(--g900)', textAlign: 'center', marginBottom: 8 }}>
+            <div style={{ fontFamily: 'var(--font)', fontSize: 28, fontWeight: 600, color: 'var(--g900)', textAlign: 'center', marginBottom: 8 }}>
               Який триместр вас цікавить?
             </div>
             <div style={{ textAlign: 'center', color: 'var(--g400)', fontSize: 14, marginBottom: 34, fontWeight: 500 }}>
@@ -176,7 +176,7 @@ export default function MedokQuiz() {
         {/* Step 2 */}
         {step === 2 && (
           <div style={{ animation: 'fadeUp .28s ease' }}>
-            <div style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 28, fontWeight: 600, color: 'var(--g900)', textAlign: 'center', marginBottom: 8 }}>
+            <div style={{ fontFamily: 'var(--font)', fontSize: 28, fontWeight: 600, color: 'var(--g900)', textAlign: 'center', marginBottom: 8 }}>
               Одноплідна чи двоплідна?
             </div>
             <div style={{ textAlign: 'center', color: 'var(--g400)', fontSize: 14, marginBottom: 34, fontWeight: 500 }}>
@@ -214,7 +214,7 @@ export default function MedokQuiz() {
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 8 }}>
                 Пакет «Довіра» · {program.name}
               </div>
-              <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 24, fontWeight: 600, color: 'var(--g900)', marginBottom: 6 }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontSize: 24, fontWeight: 600, color: 'var(--g900)', marginBottom: 6 }}>
                 Ведення вагітності — {program.name}
               </h3>
               <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.7, marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--g100)' }}>
@@ -229,7 +229,7 @@ export default function MedokQuiz() {
                     {pregType === 'single' ? 'одноплідна' : 'двоплідна'} вагітність
                   </div>
                 </div>
-                <div style={{ marginLeft: 'auto', fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 26, fontWeight: 700, color: 'var(--td)', whiteSpace: 'nowrap' }}>
+                <div style={{ marginLeft: 'auto', fontFamily: 'var(--font)', fontSize: 26, fontWeight: 700, color: 'var(--td)', whiteSpace: 'nowrap' }}>
                   {formatPrice(price)}
                 </div>
               </div>
@@ -272,7 +272,7 @@ export default function MedokQuiz() {
         {step === 'form' && program && (
           <div style={{ animation: 'fadeUp .3s ease' }}>
             <div style={{ background: '#fff', border: '1.5px solid var(--g200)', borderRadius: 18, padding: 28 }}>
-              <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontSize: 20, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>
                 Запис на програму
               </h3>
               <p style={{ fontSize: 13, color: 'var(--g400)', marginBottom: 22, fontWeight: 500 }}>
@@ -380,7 +380,7 @@ export default function MedokQuiz() {
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 26, fontWeight: 600, color: 'var(--g900)', marginBottom: 10 }}>
+            <h3 style={{ fontFamily: 'var(--font)', fontSize: 26, fontWeight: 600, color: 'var(--g900)', marginBottom: 10 }}>
               Запит надіслано
             </h3>
             <p style={{ fontSize: 15, color: 'var(--g500)', lineHeight: 1.72, maxWidth: 400, margin: '0 auto 26px' }}>

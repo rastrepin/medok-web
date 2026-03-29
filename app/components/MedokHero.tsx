@@ -25,7 +25,7 @@ export default function MedokHero() {
 
       {/* H1 — SEO-first */}
       <h1 style={{
-        fontFamily: 'var(--font-playfair), "Playfair Display", serif',
+        fontFamily: 'var(--font)',
         fontSize: 48, fontWeight: 600, color: 'var(--g900)',
         lineHeight: 1.1, marginBottom: 14, letterSpacing: '-.5px',
         maxWidth: 720,
@@ -33,11 +33,13 @@ export default function MedokHero() {
         Ведення вагітності у Вінниці — МЦ MED OK
       </h1>
 
-      {/* Accent subtitle */}
+      {/* Accent subtitle — Cormorant Garamond italic */}
       <p style={{
-        fontFamily: 'var(--font-playfair), "Playfair Display", serif',
-        fontSize: 24, fontStyle: 'italic', color: 'var(--t)',
-        lineHeight: 1.4, marginBottom: 22, maxWidth: 600,
+        fontFamily: 'var(--font-acc)',
+        fontSize: 56, fontStyle: 'italic', fontWeight: 300,
+        color: 'var(--td)',
+        lineHeight: 1.15, marginBottom: 22, maxWidth: 640,
+        letterSpacing: '-.3px',
       }}>
         Ваша вагітність — під повним контролем
       </p>

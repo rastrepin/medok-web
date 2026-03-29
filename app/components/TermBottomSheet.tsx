@@ -76,7 +76,7 @@ export default function TermBottomSheet({ termKey, onClose }: Props) {
                 <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
             </div>
-            <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--g900)', fontFamily: 'var(--font-playfair),"Playfair Display",serif' }}>
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--g900)', fontFamily: 'var(--font)' }}>
               {term.title}
             </h3>
           </div>

@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 :root {
+  --font: Onest, sans-serif;
+  --font-acc: 'Cormorant Garamond', Georgia, serif;
   --c: #d60242;
   --cd: #a8012f;
   --cl: #fff0f4;

@@ -12,7 +12,7 @@ export default function MedokGeoSummary() {
     >
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         <h2 style={{
-          fontFamily: 'var(--font-playfair),"Playfair Display",serif',
+          fontFamily: 'var(--font)',
           fontSize: 22, fontWeight: 600, color: '#fff',
           marginBottom: 8, lineHeight: 1.3,
         }}>

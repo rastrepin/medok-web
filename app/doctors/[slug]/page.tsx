@@ -202,7 +202,7 @@ export default async function DoctorPage({
           <p style={{
             fontSize: 18, fontWeight: 700, color: '#fff',
             marginBottom: 20,
-            fontFamily: 'var(--font-playfair),"Playfair Display",serif',
+            fontFamily: 'var(--font)',
           }}>
             Хочете записатись до {doctor.name.split(' ')[0]}?
           </p>

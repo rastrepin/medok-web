@@ -25,7 +25,7 @@ export default function MedokHub() {
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
             НАПРЯМИ
           </div>
-          <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Як ми допомагаємо
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
@@ -69,7 +69,7 @@ export default function MedokHub() {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               </div>
-              <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 22, fontWeight: 600, color: 'var(--g900)', marginBottom: 10, lineHeight: 1.25 }}>
+              <h3 style={{ fontFamily: 'var(--font)', fontSize: 22, fontWeight: 600, color: 'var(--g900)', marginBottom: 10, lineHeight: 1.25 }}>
                 {item.title}
               </h3>
               <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.75, marginBottom: 20, flex: 1 }}>

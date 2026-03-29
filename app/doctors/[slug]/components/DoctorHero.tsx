@@ -117,7 +117,7 @@ export default function DoctorHero({
 
             {/* Name */}
             <h1 style={{
-              fontFamily: 'var(--font-playfair),"Playfair Display",serif',
+              fontFamily: 'var(--font)',
               fontSize: 38, fontWeight: 600, lineHeight: 1.15,
               color: '#fff', marginBottom: 16, letterSpacing: '-.3px',
             }}>

@@ -126,7 +126,7 @@ export default function MedokDoctors() {
         {/* Header */}
         <div style={{ marginBottom: 44 }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>КОМАНДА</div>
-          <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Лікарі, які ведуть вагітність
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
@@ -217,7 +217,7 @@ export default function MedokDoctors() {
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
             <a href={`tel:${CLINIC.phone}`} style={{
               display: 'block', textAlign: 'center',
-              background: 'var(--td)', color: '#fff',
+              background: 'var(--c)', color: '#fff',
               padding: '10px 22px', borderRadius: 9999,
               textDecoration: 'none', fontSize: 13, fontWeight: 700,
               whiteSpace: 'nowrap',

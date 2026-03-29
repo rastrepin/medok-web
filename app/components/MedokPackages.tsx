@@ -198,7 +198,7 @@ function PackageCard({ pkg, onInfo }: { pkg: PackageItem; onInfo: (k: string) =>
             Найкраща ціна
           </span>
         )}
-        <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 19, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>
+        <h3 style={{ fontFamily: 'var(--font)', fontSize: 19, fontWeight: 600, color: 'var(--g900)', marginBottom: 4 }}>
           {pkg.name}
         </h3>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 4 }}>
@@ -276,7 +276,7 @@ export default function MedokPackages() {
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
             ПРОГРАМИ
           </div>
-          <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
             Вартість ведення вагітності
           </h2>
           <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75, maxWidth: 620 }}>

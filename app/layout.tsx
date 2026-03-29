@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Nunito } from "next/font/google";
+import { Onest, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin", "cyrillic"],
-  weight: ["500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-const nunito = Nunito({
-  variable: "--font-nunito",
+const onest = Onest({
+  variable: "--font",
   subsets: ["latin", "cyrillic"],
   weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-acc",
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400"],
+  style: ["italic"],
 });
 
 export const metadata: Metadata = {
@@ -96,14 +96,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="uk" className={`${playfair.variable} ${nunito.variable}`}>
+    <html lang="uk" className={`${onest.variable} ${cormorant.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrg) }}
         />
       </head>
-      <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font-nunito), Nunito, sans-serif" }}>
+      <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font), Onest, sans-serif" }}>
         {children}
       </body>
     </html>

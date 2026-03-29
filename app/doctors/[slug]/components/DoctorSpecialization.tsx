@@ -33,7 +33,7 @@ export default function DoctorSpecialization({
 
         {/* Headline */}
         <h2 style={{
-          fontFamily: 'var(--font-playfair),"Playfair Display",serif',
+          fontFamily: 'var(--font)',
           fontSize: 32, fontWeight: 600, color: 'var(--g900)',
           lineHeight: 1.25, marginBottom: 16, maxWidth: 680,
         }}>
@@ -58,7 +58,7 @@ export default function DoctorSpecialization({
               <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <span style={{
                   fontSize: 22, fontWeight: 800, color: 'var(--td)',
-                  fontFamily: 'var(--font-playfair),"Playfair Display",serif',
+                  fontFamily: 'var(--font)',
                 }}>
                   {s.value}
                 </span>

@@ -17,7 +17,7 @@ export default function MedokFooter() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 48, marginBottom: 48 }}>
           {/* Brand */}
           <div>
-            <div style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
+            <div style={{ fontFamily: 'var(--font)', fontSize: 20, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
               МЦ MED OK
             </div>
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,.45)', marginBottom: 16, letterSpacing: '.3px' }}>

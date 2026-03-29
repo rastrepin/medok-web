@@ -28,7 +28,7 @@ export default function MedokWhy() {
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
           ПЕРЕВАГИ
         </div>
-        <h2 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+        <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
           Чому MED OK
         </h2>
         <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, maxWidth: 620, lineHeight: 1.75 }}>
@@ -43,7 +43,7 @@ export default function MedokWhy() {
         color: '#fff',
       }}>
         <div style={{ maxWidth: 760 }}>
-          <h3 style={{ fontFamily: 'var(--font-playfair),"Playfair Display",serif', fontSize: 24, fontWeight: 600, color: '#fff', marginBottom: 16, lineHeight: 1.3 }}>
+          <h3 style={{ fontFamily: 'var(--font)', fontSize: 24, fontWeight: 600, color: '#fff', marginBottom: 16, lineHeight: 1.3 }}>
             Лікар бачить повну картину — ви не маєте приводу для тривог
           </h3>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,.65)', lineHeight: 1.8, marginBottom: 20 }}>
