@@ -51,7 +51,7 @@ export default function MedokOnboarding() {
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
+      <div className="onboarding-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
         {/* Steps */}
         <div>
           {STEPS.map((s, i) => (
@@ -111,8 +111,16 @@ export default function MedokOnboarding() {
 
       <style>{`
         @media(max-width:768px){
-          #onboarding{padding:52px 20px!important}
-          #onboarding > div:last-child{grid-template-columns:1fr!important;gap:32px!important}
+          #onboarding{ padding: 48px 20px !important }
+          .onboarding-grid{
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 36px !important;
+          }
+          .onboarding-grid > div{ width: 100% !important; min-width: 0 !important; }
+        }
+        @media(max-width:414px){
+          #onboarding{ padding: 40px 16px !important }
         }
       `}</style>
     </section>
