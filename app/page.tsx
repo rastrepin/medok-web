@@ -10,6 +10,8 @@ import MedokOnboarding from './components/MedokOnboarding';
 import MedokWhy from './components/MedokWhy';
 import MedokTransfer from './components/MedokTransfer';
 import MedokFaq from './components/MedokFaq';
+import MedokGeoBlock from './components/MedokGeoBlock';
+import MedokEeat from './components/MedokEeat';
 import CallbackForm from './components/CallbackForm';
 import MedokFooter from './components/MedokFooter';
 
@@ -69,11 +71,17 @@ export default function Home() {
           <MedokFaq />
         </div>
 
-        {/* 13. Callback Form — темна зона */}
+        {/* 13. GEO-block — статичний HTML для пошукових систем */}
+        <MedokGeoBlock />
+
+        {/* 14. E-E-A-T — автор, рецензент, джерела */}
+        <MedokEeat />
+
+        {/* 15. Callback Form — темна CTA-зона */}
         <CallbackForm />
       </main>
 
-      {/* 14. Footer — темна зона */}
+      {/* 16. Footer — темна зона */}
       <MedokFooter />
     </>
   );
