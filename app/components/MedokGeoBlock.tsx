@@ -9,9 +9,9 @@ export default function MedokGeoBlock() {
     <section
       id="geo"
       style={{
-        background: 'var(--g50)',
-        borderTop: '1px solid var(--g100)',
-        padding: '48px 48px 44px',
+        background: '#F3F4F6',
+        borderTop: '1px solid var(--g200)',
+        padding: '64px 48px 56px',
       }}
     >
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
@@ -52,7 +52,7 @@ export default function MedokGeoBlock() {
 
       <style>{`
         @media(max-width:768px){
-          section#geo{ padding: 36px 20px 32px !important }
+          section#geo{ padding: 44px 20px 36px !important }
           section#geo h2{ font-size: 18px !important }
         }
       `}</style>
