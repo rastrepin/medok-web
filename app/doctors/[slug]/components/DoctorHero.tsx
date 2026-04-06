@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import { CLINIC } from '@/lib/data';
 
@@ -82,14 +81,27 @@ export default function DoctorHero({
                 width: 128, height: 128, borderRadius: 24,
                 overflow: 'hidden', border: '2px solid rgba(255,255,255,.15)',
               }}>
-                <Image
-                  src={`/images/doctors/${photoFilename}`}
-                  alt={name}
-                  width={128}
-                  height={128}
-                  priority
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
+                {(() => {
+                  const base = photoFilename.replace(/\.[^.]+$/, '');
+                  return (
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcSet={`/images/doctors/${base}-400w.webp 400w, /images/doctors/${base}-200w.webp 200w, /images/doctors/${base}-100w.webp 100w`}
+                        sizes="128px"
+                      />
+                      <img
+                        src={`/images/doctors/${photoFilename}`}
+                        alt={name}
+                        width={128}
+                        height={128}
+                        loading="eager"
+                        decoding="async"
+                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                      />
+                    </picture>
+                  );
+                })()}
               </div>
             ) : (
               <div style={{

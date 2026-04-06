@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { createServiceClient } from '@/lib/supabase';
+import { getScheduleBySlug } from '@/lib/doctor-schedules';
 import DoctorHero from './components/DoctorHero';
 import DoctorSpecialization from './components/DoctorSpecialization';
 import DoctorBase from './components/DoctorBase';
 import DoctorCases from './components/DoctorCases';
+import DoctorSchedule from './components/DoctorSchedule';
 
 // ----------------------------------------------------------------
 // Types
@@ -125,6 +127,10 @@ export default async function DoctorPage({
     ? specializations.find((s) => s.case_type === activeCase)
     : null;
 
+  // Schedule data (hardcoded from content/medok/doctors/doctors.md)
+  const schedule = getScheduleBySlug(slug);
+  const doctorFirstName = doctor.name.split(' ')[1] ?? doctor.name.split(' ')[0];
+
   // All case types this doctor has
   const caseTypes = specializations.map((s) => s.case_type) as ('pregnancy' | 'ultrasound')[];
 
@@ -191,6 +197,14 @@ export default async function DoctorPage({
         achievements={doctor.achievements}
         branches={doctor.branches ?? []}
       />
+
+      {/* Schedule block */}
+      {schedule && (
+        <DoctorSchedule
+          days={schedule.days}
+          doctorFirstName={doctorFirstName}
+        />
+      )}
 
       {/* Footer CTA strip */}
       <section style={{
