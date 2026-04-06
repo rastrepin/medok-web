@@ -97,6 +97,26 @@ const schemaOrg = {
         { "@type": "ListItem", "position": 2, "name": "Вагітність", "item": "https://pregnancy.check-up.in.ua" },
         { "@type": "ListItem", "position": 3, "name": "MED OK Вінниця" }
       ]
+    },
+    {
+      "@type": "MedicalWebPage",
+      "name": "Ведення вагітності у Вінниці — МЦ MED OK",
+      "url": "https://medok.check-up.in.ua",
+      "author": {
+        "@type": "Person",
+        "name": "Ігор Растрепін",
+        "jobTitle": "медичний редактор"
+      },
+      "reviewedBy": {
+        "@type": "Physician",
+        "name": "Кельман Вікторія Володимирівна",
+        "medicalSpecialty": "Акушерство та гінекологія"
+      },
+      "lastReviewed": "2026-04-06",
+      "medicalAudience": {
+        "@type": "PatientAudience",
+        "suggestedGender": "Female"
+      }
     }
   ]
 };
