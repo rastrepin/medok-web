@@ -122,9 +122,12 @@ export default async function DoctorPage({
 
   const specializations: Specialization[] = doctor.medok_doctor_specializations ?? [];
 
-  // Find specialization matching ?case= param
+  // Find specialization: match ?case= param, or default to first spec
+  // when the doctor has exactly one specialization (e.g. UZD-only doctors)
   const activeSpec = activeCase
     ? specializations.find((s) => s.case_type === activeCase)
+    : specializations.length === 1
+    ? specializations[0]
     : null;
 
   // Schedule data (hardcoded from content/medok/doctors/doctors.md)

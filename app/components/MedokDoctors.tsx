@@ -217,7 +217,7 @@ export default function MedokDoctors() {
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
             <a href={`tel:${CLINIC.phone}`} style={{
               display: 'block', textAlign: 'center',
-              background: 'var(--c)', color: '#fff',
+              background: 'var(--cl)', color: 'var(--c)',
               padding: '10px 22px', borderRadius: 9999,
               textDecoration: 'none', fontSize: 13, fontWeight: 700,
               whiteSpace: 'nowrap',
@@ -226,8 +226,8 @@ export default function MedokDoctors() {
             </a>
             <a href={`/doctors/${UZD_DOCTOR.slug}`} style={{
               display: 'block', textAlign: 'center',
-              background: 'var(--tp)', color: 'var(--td)',
-              border: '1.5px solid var(--tl)',
+              background: 'var(--g50)', color: 'var(--g600)',
+              border: '1.5px solid var(--g200)',
               padding: '9px 22px', borderRadius: 9999,
               textDecoration: 'none', fontSize: 13, fontWeight: 600,
               whiteSpace: 'nowrap',
