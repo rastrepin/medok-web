@@ -1,8 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PROGRAMS, DOCTORS, formatPrice } from '@/lib/data';
 import { Trimester, PregnancyType, Program } from '@/lib/types';
 import MedokDatePicker, { SelectedDate } from './MedokDatePicker';
+import SlotPicker from './SlotPicker';
+import { getAvailableSlots, Slot } from '@/lib/slot-utils';
 
 type Step = 1 | 2 | 'result' | 'form' | 'success';
 
@@ -68,6 +70,8 @@ export default function MedokQuiz() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [dates, setDates] = useState<SelectedDate[]>([]);
+  const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<Slot[]>([]);
   const [contactMethod, setContactMethod] = useState<'viber' | 'telegram' | 'none'>('none');
   const [messengerContact, setMessengerContact] = useState('');
   const [doctorId, setDoctorId] = useState('');
@@ -75,6 +79,18 @@ export default function MedokQuiz() {
   const [cabinetUrl, setCabinetUrl] = useState('');
 
   const obDoctors = DOCTORS.filter((d) => d.doctor_type === 'obstetrician' && d.is_active);
+
+  // Reload slots when doctor changes
+  useEffect(() => {
+    if (doctorId) {
+      setAvailableSlots(getAvailableSlots(doctorId, 6));
+      setSelectedSlots([]);
+      setDates([]);
+    } else {
+      setAvailableSlots([]);
+      setSelectedSlots([]);
+    }
+  }, [doctorId]);
 
   const selectTrimester = (t: Trimester) => {
     setTrimester(t);
@@ -103,7 +119,8 @@ export default function MedokQuiz() {
           pregnancy_type: pregType,
           program_id: program.id,
           doctor_id: doctorId || undefined,
-          preferred_dates: dates,
+          preferred_dates: doctorId ? undefined : dates,
+          preferred_slots: selectedSlots.length > 0 ? selectedSlots : undefined,
           contact_method: contactMethod,
           messenger_contact: messengerContact || undefined,
           form_type: 'quiz',
@@ -314,8 +331,17 @@ export default function MedokQuiz() {
                   </select>
                 </div>
 
-                {/* DatePicker */}
-                <MedokDatePicker value={dates} onChange={setDates} />
+                {/* Slot picker when doctor chosen, date picker otherwise */}
+                {doctorId && availableSlots.length > 0 ? (
+                  <SlotPicker
+                    slots={availableSlots}
+                    selected={selectedSlots}
+                    onChange={setSelectedSlots}
+                    max={3}
+                  />
+                ) : (
+                  <MedokDatePicker value={dates} onChange={setDates} />
+                )}
 
                 {/* Messenger */}
                 <div>
