@@ -208,13 +208,14 @@ export default async function DoctorPage({
 
       {/* Footer CTA strip */}
       <section style={{
-        background: 'var(--g900)',
-        padding: '40px 48px',
+        background: 'var(--tp)',
+        borderTop: '1px solid var(--t)',
+        padding: '48px 48px',
         textAlign: 'center',
       }}>
         <div style={{ maxWidth: 560, margin: '0 auto' }}>
           <p style={{
-            fontSize: 18, fontWeight: 700, color: '#fff',
+            fontSize: 18, fontWeight: 700, color: 'var(--td)',
             marginBottom: 20,
             fontFamily: 'var(--font)',
           }}>
@@ -224,8 +225,8 @@ export default async function DoctorPage({
             href="/#quiz"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
-              background: 'var(--c)', color: '#fff',
-              padding: '14px 32px', borderRadius: 9999,
+              background: 'var(--t)', color: '#fff',
+              padding: '14px 32px', borderRadius: 10,
               fontSize: 14, fontWeight: 700, textDecoration: 'none',
             }}
           >
@@ -234,7 +235,7 @@ export default async function DoctorPage({
         </div>
         <style>{`
           @media(max-width:768px){
-            section[style*="var(--g900)"]{padding:32px 20px!important}
+            section[style*="var(--tp)"]{padding:32px 20px!important}
           }
         `}</style>
       </section>

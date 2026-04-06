@@ -29,25 +29,16 @@ export default function MedokNav() {
       >
         {/* Brand */}
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-          {/* Logo placeholder — replace with <img src="/logo.png"> when available */}
-          <svg width="34" height="30" viewBox="0 0 36 32" fill="none">
-            <path
-              d="M18 28C7.5 20.5 2 15 2 9.5C2 5.2 5.5 2 10 2C13.3 2 16 4 18 7C20 4 22.7 2 26 2C30.5 2 34 5.2 34 9.5"
-              stroke="#d60242" strokeWidth="4.2" strokeLinecap="round" strokeLinejoin="round"
-            />
-            <polyline
-              points="10,19 16,26 28,12"
-              stroke="#52b2ad" strokeWidth="3.8" strokeLinecap="round" strokeLinejoin="round"
-            />
-          </svg>
-          <div>
-            <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--td)', letterSpacing: '2px', lineHeight: 1 }}>
-              МЦ MED OK
-            </div>
-            <span style={{ fontSize: 9, color: 'var(--g400)', letterSpacing: '1.5px', textTransform: 'uppercase', display: 'block', marginTop: 2 }}>
-              медичний центр · Вінниця
-            </span>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="МЦ MED OK — медичний центр Вінниця"
+            height={40}
+            style={{ height: 40, width: 'auto', display: 'block' }}
+          />
+          <span style={{ fontSize: 10, color: 'var(--g400)', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+            медичний центр · Вінниця
+          </span>
         </a>
 
         {/* Desktop links */}
@@ -80,7 +71,7 @@ export default function MedokNav() {
           <button
             onClick={() => scrollTo('quiz')}
             style={{
-              background: 'var(--c)', color: '#fff', border: 'none',
+              background: 'var(--t)', color: '#fff', border: 'none',
               padding: '9px 24px', borderRadius: 9999, fontSize: 13,
               fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
             }}
@@ -152,7 +143,7 @@ export default function MedokNav() {
           <a
             href={`tel:${CLINIC.phone}`}
             style={{
-              display: 'block', background: 'var(--c)', color: '#fff',
+              display: 'block', background: 'var(--t)', color: '#fff',
               padding: '14px 20px', borderRadius: 9999, fontWeight: 700,
               fontSize: 15, textAlign: 'center', textDecoration: 'none',
             }}

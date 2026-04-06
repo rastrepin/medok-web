@@ -36,10 +36,6 @@ export default function DoctorHero({
   const days = daysSince(lastActiveAt);
   const showActivity = doctorType === 'obstetrician' && days !== null && days < 14;
 
-  const handleCall = () => {
-    window.location.href = `tel:${CLINIC.phone}`;
-  };
-
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -52,9 +48,9 @@ export default function DoctorHero({
 
   return (
     <section style={{
-      background: 'linear-gradient(160deg, #05121e 0%, #0a1f30 60%, #0d2840 100%)',
-      color: '#fff',
-      padding: '64px 48px 56px',
+      background: '#fff',
+      borderBottom: '1px solid var(--g200)',
+      padding: '56px 48px 48px',
     }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         {/* Back breadcrumb */}
@@ -62,9 +58,8 @@ export default function DoctorHero({
           href="/#doctors"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
-            fontSize: 12, color: 'rgba(255,255,255,.4)', textDecoration: 'none',
-            marginBottom: 36, letterSpacing: '.3px',
-            transition: 'color .15s',
+            fontSize: 12, color: 'var(--g500)', textDecoration: 'none',
+            marginBottom: 32, letterSpacing: '.3px',
           }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -78,8 +73,10 @@ export default function DoctorHero({
           <div style={{ flexShrink: 0 }}>
             {photoFilename ? (
               <div style={{
-                width: 128, height: 128, borderRadius: 24,
-                overflow: 'hidden', border: '2px solid rgba(255,255,255,.15)',
+                width: 140, height: 140, borderRadius: 20,
+                overflow: 'hidden',
+                border: '2px solid var(--tp)',
+                boxShadow: '0 4px 16px rgba(82,178,173,.15)',
               }}>
                 {(() => {
                   const base = photoFilename.replace(/\.[^.]+$/, '');
@@ -88,13 +85,14 @@ export default function DoctorHero({
                       <source
                         type="image/webp"
                         srcSet={`/images/doctors/${base}-400w.webp 400w, /images/doctors/${base}-200w.webp 200w, /images/doctors/${base}-100w.webp 100w`}
-                        sizes="128px"
+                        sizes="140px"
                       />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`/images/doctors/${photoFilename}`}
                         alt={name}
-                        width={128}
-                        height={128}
+                        width={140}
+                        height={140}
                         loading="eager"
                         decoding="async"
                         style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -105,11 +103,11 @@ export default function DoctorHero({
               </div>
             ) : (
               <div style={{
-                width: 128, height: 128, borderRadius: 24,
+                width: 140, height: 140, borderRadius: 20,
                 background: avatarColor,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 36, fontWeight: 800, color: '#fff',
-                border: '2px solid rgba(255,255,255,.15)',
+                fontSize: 40, fontWeight: 800, color: '#fff',
+                border: '2px solid var(--tp)',
               }}>
                 {avatarInitials}
               </div>
@@ -121,8 +119,8 @@ export default function DoctorHero({
             {/* Role eyebrow */}
             <div style={{
               fontSize: 11, fontWeight: 700, letterSpacing: '2px',
-              textTransform: 'uppercase', color: 'var(--tl)',
-              marginBottom: 10,
+              textTransform: 'uppercase', color: 'var(--t)',
+              marginBottom: 8,
             }}>
               {role}
             </div>
@@ -130,20 +128,19 @@ export default function DoctorHero({
             {/* Name */}
             <h1 style={{
               fontFamily: 'var(--font)',
-              fontSize: 38, fontWeight: 600, lineHeight: 1.15,
-              color: '#fff', marginBottom: 16, letterSpacing: '-.3px',
+              fontSize: 36, fontWeight: 600, lineHeight: 1.15,
+              color: 'var(--g900)', marginBottom: 14, letterSpacing: '-.3px',
             }}>
               {name}
             </h1>
 
-            {/* Activity line — only obstetricians, recent */}
+            {/* Activity line */}
             {showActivity && (
               <div style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
-                fontSize: 12, color: 'rgba(255,255,255,.45)',
-                marginBottom: 16,
+                fontSize: 12, color: 'var(--g500)', marginBottom: 12,
               }}>
-                <span style={{ color: '#4ade80', fontSize: 8 }}>●</span>
+                <span style={{ color: '#22c55e', fontSize: 8 }}>●</span>
                 Веде прийом
                 {days !== null && days === 0 && ' · Оновила дані сьогодні'}
                 {days !== null && days === 1 && ' · Оновила дані вчора'}
@@ -154,13 +151,13 @@ export default function DoctorHero({
 
             {/* Branches */}
             {branches.length > 0 && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 28 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 24 }}>
                 {branches.map((b) => (
                   <span key={b} style={{
-                    background: 'rgba(255,255,255,.08)',
-                    border: '1px solid rgba(255,255,255,.14)',
+                    background: 'var(--tp)',
+                    border: '1px solid var(--t)',
                     borderRadius: 9999, padding: '4px 12px',
-                    fontSize: 12, color: 'rgba(255,255,255,.65)',
+                    fontSize: 12, color: 'var(--td)', fontWeight: 500,
                   }}>
                     📍 {b}
                   </span>
@@ -170,23 +167,23 @@ export default function DoctorHero({
 
             {/* CTAs */}
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <button
-                onClick={handleCall}
+              <a
+                href={`tel:${CLINIC.phone}`}
                 style={{
-                  background: 'var(--c)', color: '#fff', border: 'none',
-                  padding: '13px 28px', borderRadius: 9999,
-                  fontSize: 14, fontWeight: 700, cursor: 'pointer',
-                  fontFamily: 'inherit',
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  background: 'var(--t)', color: '#fff',
+                  padding: '13px 28px', borderRadius: 10,
+                  fontSize: 14, fontWeight: 700, textDecoration: 'none',
                 }}
               >
                 Записатись
-              </button>
+              </a>
               <button
                 onClick={handleShare}
                 style={{
-                  background: 'rgba(255,255,255,.08)', color: 'rgba(255,255,255,.7)',
-                  border: '1px solid rgba(255,255,255,.15)',
-                  padding: '13px 20px', borderRadius: 9999,
+                  background: 'transparent', color: 'var(--g500)',
+                  border: '1px solid var(--g200)',
+                  padding: '13px 20px', borderRadius: 10,
                   fontSize: 14, cursor: 'pointer', fontFamily: 'inherit',
                 }}
               >
@@ -199,8 +196,8 @@ export default function DoctorHero({
 
       <style>{`
         @media(max-width:768px){
-          section[style*="64px 48px"]{padding:40px 20px 36px!important}
-          h1{font-size:28px!important}
+          section[style*="56px 48px 48px"]{padding:32px 20px 28px!important}
+          h1{font-size:26px!important}
         }
       `}</style>
     </section>
