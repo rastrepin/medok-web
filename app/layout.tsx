@@ -22,6 +22,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://medok.check-up.in.ua/",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "Ведення вагітності у Вінниці — МЦ MED OK",
     description: "Пакетне ведення вагітності. Один лікар, фіксована ціна від 9 970 ₴, контроль між візитами.",

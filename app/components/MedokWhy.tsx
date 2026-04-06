@@ -1,7 +1,7 @@
 const SUPPORT_CARDS = [
   {
     title: 'УЗД-діагностика експертного рівня',
-    text: 'Скринінги проводить Бондарчук Жанна — сертифікація FMF London, член ISUOG. Апарат Voluson E8 з 3D/4D. Ваш гінеколог отримує максимально точну інформацію для рішень.',
+    text: 'Скринінги проводить Бондарчук Жанна — сертифікація FMF (Fetal Medicine Foundation, Лондон), член ISUOG (International Society of Ultrasound in Obstetrics and Gynecology). Апарат Voluson E8 з 3D/4D. Ваш гінеколог отримує максимально точну інформацію для рішень.',
     iconBg: 'var(--tp)',
   },
   {
