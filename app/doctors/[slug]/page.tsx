@@ -7,6 +7,8 @@ import DoctorSpecialization from './components/DoctorSpecialization';
 import DoctorBase from './components/DoctorBase';
 import DoctorCases from './components/DoctorCases';
 import DoctorSchedule from './components/DoctorSchedule';
+import DoctorGeoEeat from './components/DoctorGeoEeat';
+import { getDoctorGeoEeat } from '@/lib/doctor-geo-eeat';
 
 // ----------------------------------------------------------------
 // Types
@@ -132,6 +134,7 @@ export default async function DoctorPage({
 
   // Schedule data (hardcoded from content/medok/doctors/doctors.md)
   const schedule = getScheduleBySlug(slug);
+  const doctorGeoEeat = getDoctorGeoEeat(slug);
   const doctorFirstName = doctor.name.split(' ')[1] ?? doctor.name.split(' ')[0];
 
   // All case types this doctor has
@@ -206,6 +209,17 @@ export default async function DoctorPage({
         <DoctorSchedule
           days={schedule.days}
           doctorFirstName={doctorFirstName}
+        />
+      )}
+
+      {/* GEO + E-E-A-T block */}
+      {doctorGeoEeat && (
+        <DoctorGeoEeat
+          geoText={doctorGeoEeat.geoText}
+          reviewerName={doctorGeoEeat.reviewerName}
+          reviewerTitle={doctorGeoEeat.reviewerTitle}
+          sources={doctorGeoEeat.sources}
+          doctorName={doctor.name}
         />
       )}
 
