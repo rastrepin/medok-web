@@ -70,9 +70,9 @@ export default function DoctorSpecialization({
           </div>
         )}
 
-        {/* CTA */}
+        {/* CTA — links to quiz on main page */}
         <a
-          href={`/${ctaCaseSlug}`}
+          href="/#quiz"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'var(--td)', color: '#fff',
