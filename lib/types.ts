@@ -36,8 +36,9 @@ export interface LeadPayload {
   program_id?: string;
   doctor_id?: string;
   preferred_dates?: { date: string; ranges: string[] }[];
+  preferred_slots?: string[];
   messenger?: Messenger;
-  form_type?: 'quiz' | 'transfer';
+  form_type?: 'quiz' | 'transfer' | 'callback';
   // transfer-specific
   transfer_week?: number;
   has_medical_records?: 'yes' | 'no' | 'partial';
