@@ -10,6 +10,7 @@ import MedokOnboarding from './components/MedokOnboarding';
 import MedokWhy from './components/MedokWhy';
 import MedokTransfer from './components/MedokTransfer';
 import MedokFaq from './components/MedokFaq';
+import CallbackForm from './components/CallbackForm';
 import MedokFooter from './components/MedokFooter';
 
 export const revalidate = 3600;
@@ -67,9 +68,12 @@ export default function Home() {
         <div style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)' }}>
           <MedokFaq />
         </div>
+
+        {/* 13. Callback Form — темна зона */}
+        <CallbackForm />
       </main>
 
-      {/* 13. Footer — темна зона */}
+      {/* 14. Footer — темна зона */}
       <MedokFooter />
     </>
   );
