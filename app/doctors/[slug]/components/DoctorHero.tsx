@@ -34,7 +34,7 @@ export default function DoctorHero({
 }: DoctorHeroProps) {
   const [copied, setCopied] = useState(false);
   const days = daysSince(lastActiveAt);
-  const showActivity = doctorType === 'obstetrician' && days !== null && days < 14;
+  const showActivity = days !== null && days < 14;
 
   const handleShare = async () => {
     try {
