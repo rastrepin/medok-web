@@ -87,7 +87,7 @@ function ObBio({ id, onInfo }: { id: string; onInfo: (k: string) => void }) {
   if (id === 'kelman') {
     return (
       <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, textAlign: 'center' }}>
-        Фокус на пренатальній діагностиці та доказовій медицині. Навчання за програмою FMF<InfoBtn termKey="fmf" onInfo={onInfo} /> — міжнародний стандарт скринінгу. Детально пояснює кожен результат і план дій.
+        Фокус на пренатальній діагностиці та доказовій медицині. Навчання за програмою FMF (Fetal Medicine Foundation) — міжнародний стандарт скринінгу. Детально пояснює кожен результат і план дій.
       </p>
     );
   }
@@ -212,7 +212,7 @@ export default function MedokDoctors() {
             </div>
           </div>
           <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.7, maxWidth: 440, flex: 1 }}>
-            Лікар, до якого направляють ваші гінекологи на планові скринінги. Сертифікація FMF London<InfoBtn termKey="fmf" onInfo={setTermKey} />, член ISUOG<InfoBtn termKey="isuog" onInfo={setTermKey} />. Апарат Voluson E8<InfoBtn termKey="voluson" onInfo={setTermKey} /> з 3D/4D — деталізація, яка дає вашому лікарю повну інформацію для рішень. Жанна не веде вагітність — вона проводить ключові дослідження, на які спирається ваш акушер-гінеколог.
+            Лікар, до якого направляють ваші гінекологи на планові скринінги. Сертифікація FMF (Fetal Medicine Foundation, Лондон), член ISUOG (International Society of Ultrasound in Obstetrics and Gynecology). Апарат Voluson E8 з 3D/4D — деталізація, яка дає вашому лікарю повну інформацію для рішень. Жанна не веде вагітність — вона проводить ключові дослідження, на які спирається ваш акушер-гінеколог.
           </p>
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
             <a href={`tel:${CLINIC.phone}`} style={{
