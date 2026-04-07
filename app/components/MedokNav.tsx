@@ -47,7 +47,7 @@ export default function MedokNav() {
             { label: 'Послуги', id: 'services' },
             { label: 'Лікарі', id: 'doctors' },
             { label: 'Програми', id: 'programs' },
-            { label: 'Перехід', id: 'transfer' },
+            { label: 'Перехід з іншої клініки', id: 'transfer' },
           ].map((l) => (
             <li key={l.id}>
               <button
@@ -125,7 +125,7 @@ export default function MedokNav() {
             { label: 'Послуги', id: 'services' },
             { label: 'Лікарі', id: 'doctors' },
             { label: 'Програми', id: 'programs' },
-            { label: 'Перехід', id: 'transfer' },
+            { label: 'Перехід з іншої клініки', id: 'transfer' },
             { label: 'Питання', id: 'faq' },
           ].map((l) => (
             <button
