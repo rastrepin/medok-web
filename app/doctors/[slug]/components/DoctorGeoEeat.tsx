@@ -125,7 +125,15 @@ export default function DoctorGeoEeat({
         <style>{`
           @media(max-width:768px){
             section[data-doctor-eeat]{ padding: 24px 20px !important }
-            section[data-doctor-eeat] > div{ gap: 20px !important }
+            section[data-doctor-eeat] > div{
+              flex-direction: column !important;
+              gap: 16px !important;
+            }
+            section[data-doctor-eeat] > div > div{
+              min-width: unset !important;
+              width: 100% !important;
+              flex: unset !important;
+            }
           }
         `}</style>
       </section>

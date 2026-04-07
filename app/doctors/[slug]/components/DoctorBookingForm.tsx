@@ -331,7 +331,7 @@ const inputStyle: React.CSSProperties = {
   width: '100%', boxSizing: 'border-box',
   padding: '11px 14px',
   border: '1.5px solid var(--g200)',
-  borderRadius: 10, fontSize: 14, fontFamily: 'inherit',
+  borderRadius: 10, fontSize: 16, fontFamily: 'inherit',
   color: 'var(--g800)', background: '#fff',
   outline: 'none',
 };

@@ -93,7 +93,7 @@ const PACKAGES: PackageItem[] = [
   },
   {
     id: 'full',
-    name: 'Повне ведення',
+    name: 'Вся вагітність',
     price: '39 830 ₴',
     priceTwin: '46 190 ₴',
     isPrimary: true,
@@ -248,15 +248,21 @@ function PackageCard({ pkg, onInfo }: { pkg: PackageItem; onInfo: (k: string) =>
 
       {/* CTA */}
       <div style={{ padding: '14px 24px 22px', marginTop: 'auto' }}>
-        <a href="#quiz" style={{
-          display: 'block', textAlign: 'center',
-          background: pkg.isPrimary ? 'var(--c)' : 'transparent',
-          color: pkg.isPrimary ? '#fff' : 'var(--td)',
-          border: `2px solid ${pkg.isPrimary ? 'var(--c)' : 'var(--g200)'}`,
-          borderRadius: 9999, padding: '11px 16px',
-          fontSize: 13, fontWeight: 700, textDecoration: 'none',
-          transition: 'all .2s',
-        }}>
+        <a
+          href="#quiz"
+          onClick={() => {
+            try { sessionStorage.setItem('medok_prefill_trimester', pkg.id); } catch { /* private mode */ }
+          }}
+          style={{
+            display: 'block', textAlign: 'center',
+            background: pkg.isPrimary ? 'var(--c)' : 'transparent',
+            color: pkg.isPrimary ? '#fff' : 'var(--td)',
+            border: `2px solid ${pkg.isPrimary ? 'var(--c)' : 'var(--g200)'}`,
+            borderRadius: 9999, padding: '11px 16px',
+            fontSize: 13, fontWeight: 700, textDecoration: 'none',
+            transition: 'all .2s',
+          }}
+        >
           Обрати програму
         </a>
       </div>

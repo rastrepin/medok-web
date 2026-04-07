@@ -162,8 +162,8 @@ export default function MedokDoctors() {
 
               <ObBio id={doc.id} onInfo={setTermKey} />
 
-              <div style={{ display: 'flex', gap: 7, width: '100%' }}>
-                <a href={`tel:${CLINIC.phone}`} style={{
+              <div className="doctor-card-btns" style={{ display: 'flex', gap: 7, width: '100%' }}>
+                <a href={`/doctors/${doc.slug}#booking`} style={{
                   flex: 1, display: 'block', textAlign: 'center', padding: '9px 6px',
                   background: 'var(--cl)', color: 'var(--c)',
                   borderRadius: 9999, fontSize: 12, fontWeight: 700,
@@ -215,7 +215,7 @@ export default function MedokDoctors() {
             Лікар, до якого направляють ваші гінекологи на планові скринінги. Сертифікація FMF (Fetal Medicine Foundation, Лондон), член ISUOG (International Society of Ultrasound in Obstetrics and Gynecology). Апарат Voluson E8 з 3D/4D — деталізація, яка дає вашому лікарю повну інформацію для рішень. Жанна не веде вагітність — вона проводить ключові дослідження, на які спирається ваш акушер-гінеколог.
           </p>
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <a href={`tel:${CLINIC.phone}`} style={{
+            <a href={`/doctors/${UZD_DOCTOR.slug}#booking`} style={{
               display: 'block', textAlign: 'center',
               background: 'var(--cl)', color: 'var(--c)',
               padding: '10px 22px', borderRadius: 9999,
@@ -336,13 +336,13 @@ export default function MedokDoctors() {
         @media(max-width:1024px){ .doctors-grid{grid-template-columns:repeat(2,1fr)!important} }
         @media(max-width:768px){
           #doctors{padding:52px 20px!important}
-          .doctors-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
-          .uzd-card{flex-direction:column!important;align-items:flex-start!important;gap:16px!important}
+          .doctors-grid{grid-template-columns:1fr!important;gap:12px!important}
+          .uzd-card{flex-direction:column!important;align-items:stretch!important;gap:16px!important}
+          .uzd-card > div:last-child{flex-direction:column!important;width:100%!important}
           .uzd-card p{max-width:100%!important}
-          .uzd-card a{width:100%!important;text-align:center!important;display:block!important}
-        }
-        @media(max-width:480px){
-          .doctors-grid{grid-template-columns:1fr!important}
+          .uzd-card a{width:100%!important;text-align:center!important;display:block!important;white-space:normal!important}
+          .doctor-card-btns{flex-direction:column!important;gap:8px!important}
+          .doctor-card-btns a{flex:unset!important;min-height:44px!important;display:flex!important;align-items:center!important;justify-content:center!important}
         }
       `}</style>
     </section>

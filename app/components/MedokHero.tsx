@@ -46,7 +46,7 @@ export default function MedokHero() {
 
       {/* Description */}
       <p style={{
-        fontSize: 16, color: 'var(--g500)', lineHeight: 1.75,
+        fontSize: 16, color: '#1A1A2E', lineHeight: 1.75, fontWeight: 500,
         marginBottom: 36, maxWidth: 580,
       }}>
         Персоналізована програма з I до III триместру. Команда MED OK супроводжує вас між візитами — лікарі перевіряють ваші аналізи та висновки і повідомляють, якщо потрібна увага.

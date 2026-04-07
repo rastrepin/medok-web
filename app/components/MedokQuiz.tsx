@@ -12,7 +12,7 @@ const TRIMESTER_OPTIONS: { key: Trimester; label: string; sub: string }[] = [
   { key: 'i', label: 'I триместр', sub: '11–16 тиждень' },
   { key: 'ii', label: 'II триместр', sub: '18–28 тиждень' },
   { key: 'iii', label: 'III триместр', sub: '30–41 тиждень' },
-  { key: 'full', label: 'Повне ведення', sub: 'від постановки на облік' },
+  { key: 'full', label: 'Вся вагітність', sub: 'від постановки на облік' },
 ];
 
 function CheckIcon() {
@@ -80,6 +80,19 @@ export default function MedokQuiz() {
   const [errorMsg, setErrorMsg] = useState('');
 
   const obDoctors = DOCTORS.filter((d) => d.doctor_type === 'obstetrician' && d.is_active);
+
+  // Pre-fill trimester from sessionStorage (set by "Обрати програму" in MedokPackages)
+  useEffect(() => {
+    try {
+      const pre = sessionStorage.getItem('medok_prefill_trimester');
+      if (pre && (['i', 'ii', 'iii', 'full'] as string[]).includes(pre)) {
+        sessionStorage.removeItem('medok_prefill_trimester');
+        setTrimester(pre as Trimester);
+        setStep(2);
+      }
+    } catch { /* private mode / SSR */ }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Reload slots when doctor changes
   useEffect(() => {
@@ -186,7 +199,7 @@ export default function MedokQuiz() {
               Який триместр вас цікавить?
             </div>
             <div style={{ textAlign: 'center', color: 'var(--g400)', fontSize: 14, marginBottom: 34, fontWeight: 500 }}>
-              Або оберіть повне ведення від I до III
+              Або оберіть всю вагітність від I до III
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {TRIMESTER_OPTIONS.map((opt) => (
@@ -274,7 +287,7 @@ export default function MedokQuiz() {
               <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--g400)', marginBottom: 12 }}>
                 Що входить:
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7, marginBottom: 24 }}>
+              <div className="quiz-includes-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7, marginBottom: 24 }}>
                 {program.includes.map((item) => (
                   <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 12, color: 'var(--g600)', fontWeight: 500, lineHeight: 1.4 }}>
                     <CheckIcon />
@@ -283,7 +296,7 @@ export default function MedokQuiz() {
                 ))}
               </div>
 
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <div className="quiz-result-btns" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <button
                   onClick={() => setStep('form')}
                   style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '13px 28px', borderRadius: 9999, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
@@ -322,7 +335,7 @@ export default function MedokQuiz() {
                   <input
                     value={name} onChange={(e) => setName(e.target.value)}
                     placeholder="Олена" required
-                    style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 14, fontFamily: 'inherit', outline: 'none' }}
+                    style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 16, fontFamily: 'inherit', outline: 'none' }}
                   />
                 </div>
 
@@ -332,7 +345,7 @@ export default function MedokQuiz() {
                   <input
                     type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}
                     placeholder="+380" required
-                    style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 14, fontFamily: 'inherit', outline: 'none' }}
+                    style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 16, fontFamily: 'inherit', outline: 'none' }}
                   />
                 </div>
 
@@ -341,7 +354,7 @@ export default function MedokQuiz() {
                   <label style={{ fontSize: 12, fontWeight: 700, color: 'var(--g600)', marginBottom: 6, display: 'block' }}>Лікар (необов&apos;язково)</label>
                   <select
                     value={doctorId} onChange={(e) => setDoctorId(e.target.value)}
-                    style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 14, fontFamily: 'inherit', outline: 'none', background: '#fff' }}
+                    style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 16, fontFamily: 'inherit', outline: 'none', background: '#fff' }}
                   >
                     <option value="">Буду вдячна за рекомендацію</option>
                     {obDoctors.map((d) => (
@@ -389,7 +402,7 @@ export default function MedokQuiz() {
                     <input
                       value={messengerContact} onChange={(e) => setMessengerContact(e.target.value)}
                       placeholder="Номер або @username"
-                      style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 14, fontFamily: 'inherit', outline: 'none' }}
+                      style={{ width: '100%', padding: '11px 14px', border: '1.5px solid var(--g200)', borderRadius: 12, fontSize: 16, fontFamily: 'inherit', outline: 'none' }}
                     />
                   )}
                   {contactMethod !== 'none' && (
@@ -495,6 +508,9 @@ export default function MedokQuiz() {
           @media(max-width:768px){
             #quiz{padding:52px 20px!important}
             section[id="quiz"] .quiz-grid{grid-template-columns:1fr!important}
+            .quiz-includes-grid{grid-template-columns:1fr!important}
+            .quiz-result-btns{flex-direction:column!important;gap:8px!important}
+            .quiz-result-btns button{width:100%!important;min-height:48px!important}
           }
         `}</style>
       </div>
