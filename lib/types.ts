@@ -38,10 +38,18 @@ export interface LeadPayload {
   preferred_dates?: { date: string; ranges: string[] }[];
   preferred_slots?: string[];
   messenger?: Messenger;
-  form_type?: 'quiz' | 'transfer' | 'callback';
+  form_type?: 'quiz' | 'transfer' | 'callback' | 'doctor_booking';
   // transfer-specific
   transfer_week?: number;
   has_medical_records?: 'yes' | 'no' | 'partial';
+  // doctor_booking-specific
+  contact_method?: 'phone' | 'telegram' | 'viber';
+  visit_purpose?: 'program' | 'consultation' | 'gynecology';
+  preferred_day?: string; // ISO date "2026-04-09" or "other"
+  doctor_slug?: string;
+  doctor_name?: string;
+  referrer_url?: string;
+  city?: string;
 }
 
 export interface Cabinet {
