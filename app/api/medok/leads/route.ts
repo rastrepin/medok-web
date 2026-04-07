@@ -8,26 +8,39 @@ import { randomUUID } from 'crypto';
 
 function buildEmailBody(lead: LeadPayload, cabinetUrl: string): string {
   const formLabel =
-    lead.form_type === 'transfer' ? 'Перехід з клініки'
-    : lead.form_type === 'callback' ? 'Зворотній дзвінок'
+    lead.form_type === 'transfer'       ? 'Перехід з клініки'
+    : lead.form_type === 'callback'     ? 'Зворотній дзвінок'
+    : lead.form_type === 'doctor_booking' ? 'Запис до лікаря (сторінка лікаря)'
     : 'Квіз / підбір програми';
 
-  const messenger = lead.messenger === 'telegram' ? 'Telegram'
-    : lead.messenger === 'viber' ? 'Viber'
-    : lead.messenger === 'phone' ? 'Дзвінок'
+  const contactStr = lead.contact_method === 'telegram' ? 'Telegram'
+    : lead.contact_method === 'viber'    ? 'Viber'
+    : lead.contact_method === 'phone'    ? 'Дзвінок'
+    : lead.messenger === 'telegram'      ? 'Telegram'
+    : lead.messenger === 'viber'         ? 'Viber'
+    : lead.messenger === 'phone'         ? 'Дзвінок'
     : '—';
+
+  const purposeStr = lead.visit_purpose === 'program'      ? 'Програма ведення вагітності'
+    : lead.visit_purpose === 'consultation' ? 'Консультація вагітної'
+    : lead.visit_purpose === 'gynecology'   ? 'Жіноча консультація'
+    : '';
 
   const rows = [
     `Ім'я:        ${lead.name}`,
     `Телефон:     ${lead.phone}`,
     `Тип форми:   ${formLabel}`,
-    `Месенджер:   ${messenger}`,
-    lead.trimester         ? `Триместр:    ${lead.trimester}` : '',
-    lead.pregnancy_type    ? `Тип вагітн.: ${lead.pregnancy_type === 'twin' ? 'Двоплідна' : 'Одноплідна'}` : '',
-    lead.program_id        ? `Пакет:       ${lead.program_id}` : '',
-    lead.doctor_id         ? `Лікар:       ${lead.doctor_id}` : '',
-    lead.transfer_week     ? `Тиждень:     ${lead.transfer_week}` : '',
-    lead.has_medical_records ? `Документи: ${lead.has_medical_records}` : '',
+    `Зв'язок:     ${contactStr}`,
+    lead.visit_purpose      ? `Мета:        ${purposeStr}` : '',
+    lead.preferred_day      ? `День:        ${lead.preferred_day}` : '',
+    lead.doctor_name        ? `Лікар:       ${lead.doctor_name}` : lead.doctor_id ? `Лікар:       ${lead.doctor_id}` : '',
+    lead.referrer_url       ? `Сторінка:    ${lead.referrer_url}` : '',
+    lead.city               ? `Місто:       ${lead.city}` : '',
+    lead.trimester          ? `Триместр:    ${lead.trimester}` : '',
+    lead.pregnancy_type     ? `Тип вагітн.: ${lead.pregnancy_type === 'twin' ? 'Двоплідна' : 'Одноплідна'}` : '',
+    lead.program_id         ? `Пакет:       ${lead.program_id}` : '',
+    lead.transfer_week      ? `Тиждень:     ${lead.transfer_week}` : '',
+    lead.has_medical_records ? `Документи:  ${lead.has_medical_records}` : '',
     '',
     `Кабінет:     ${cabinetUrl}`,
   ].filter(Boolean);
@@ -72,8 +85,9 @@ async function sendEmailViaResend(lead: LeadPayload, cabinetUrl: string): Promis
 
 function buildTelegramText(lead: LeadPayload, cabinetUrl: string): string {
   const lines: string[] = [];
-  const emoji = lead.form_type === 'transfer' ? '🔄'
-    : lead.form_type === 'callback' ? '📞'
+  const emoji = lead.form_type === 'transfer'        ? '🔄'
+    : lead.form_type === 'callback'      ? '📞'
+    : lead.form_type === 'doctor_booking' ? '🩺'
     : '📋';
 
   lines.push(`${emoji} Новий запит — МЦ MED OK`);
@@ -91,6 +105,18 @@ function buildTelegramText(lead: LeadPayload, cabinetUrl: string): string {
       : 'Дзвінок';
     lines.push(`💬 Зв'язок: ${messenger}`);
     lines.push(`🏷️ Тип: Зворотній дзвінок`);
+  } else if (lead.form_type === 'doctor_booking') {
+    if (lead.doctor_name)  lines.push(`👩‍⚕️ Лікар: ${lead.doctor_name}`);
+    const contactStr = lead.contact_method === 'telegram' ? 'Telegram'
+      : lead.contact_method === 'viber'    ? 'Viber'
+      : 'Дзвінок';
+    lines.push(`💬 Зв'язок: ${contactStr}`);
+    const purposeStr = lead.visit_purpose === 'program'      ? 'Програма вагітності'
+      : lead.visit_purpose === 'consultation' ? 'Консультація вагітної'
+      : 'Жіноча консультація';
+    lines.push(`🏷️ Мета: ${purposeStr}`);
+    if (lead.preferred_day && lead.preferred_day !== 'other') lines.push(`📅 День: ${lead.preferred_day}`);
+    if (lead.referrer_url) lines.push(`🔗 Сторінка: ${lead.referrer_url}`);
   } else {
     if (lead.trimester)      lines.push(`🗓️ Триместр: ${lead.trimester}`);
     if (lead.pregnancy_type) lines.push(`👶 Тип: ${lead.pregnancy_type === 'twin' ? 'Двоплідна' : 'Одноплідна'}`);
@@ -185,6 +211,14 @@ export async function POST(req: NextRequest) {
       preferred_dates:    sanitizedBody.preferred_dates    ?? null,
       transfer_week:      sanitizedBody.transfer_week      ?? null,
       has_medical_records: sanitizedBody.has_medical_records ?? null,
+      // doctor_booking fields
+      contact_method:     sanitizedBody.contact_method     ?? null,
+      visit_purpose:      sanitizedBody.visit_purpose      ?? null,
+      preferred_day:      sanitizedBody.preferred_day      ?? null,
+      doctor_slug:        sanitizedBody.doctor_slug        ?? null,
+      doctor_name:        sanitizedBody.doctor_name        ?? null,
+      referrer_url:       sanitizedBody.referrer_url       ?? null,
+      city:               sanitizedBody.city               ?? null,
       status: 'new',
     })
     .select('id')

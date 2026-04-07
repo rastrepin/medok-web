@@ -8,6 +8,7 @@ import DoctorBase from './components/DoctorBase';
 import DoctorCases from './components/DoctorCases';
 import DoctorSchedule from './components/DoctorSchedule';
 import DoctorGeoEeat from './components/DoctorGeoEeat';
+import DoctorBookingForm from './components/DoctorBookingForm';
 import { getDoctorGeoEeat } from '@/lib/doctor-geo-eeat';
 
 // ----------------------------------------------------------------
@@ -232,73 +233,29 @@ export default async function DoctorPage({
         />
       )}
 
-      {/* Footer CTA strip */}
+      {/* Footer CTA — booking form */}
       <section style={{
         background: 'var(--tp)',
         borderTop: '1px solid var(--t)',
-        padding: '40px 48px',
+        padding: '48px 48px 56px',
       }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
-          <div className="doctor-cta-row" style={{
-            display: 'flex', alignItems: 'center',
-            gap: 20, flexWrap: 'wrap',
-          }}>
-            {/* Photo */}
-            {doctor.photo_filename && (
-              <div style={{
-                width: 64, height: 64, borderRadius: '50%',
-                overflow: 'hidden', flexShrink: 0,
-                border: '2px solid var(--tl)',
-              }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/images/doctors/${doctor.photo_filename}`}
-                  alt={doctor.name}
-                  width={64}
-                  height={64}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
-              </div>
-            )}
-
-            {/* Text + buttons */}
-            <div style={{ flex: 1, minWidth: 220 }}>
-              <p style={{
-                fontSize: 17, fontWeight: 700, color: 'var(--td)',
-                marginBottom: 14, fontFamily: 'var(--font)',
-              }}>
-                Хочете записатись до {doctorNameGenitive}?
-              </p>
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-                <a
-                  href="/#quiz"
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 8,
-                    background: 'var(--t)', color: '#fff',
-                    padding: '12px 28px', borderRadius: 9999,
-                    fontSize: 14, fontWeight: 700, textDecoration: 'none',
-                  }}
-                >
-                  Підібрати програму
-                </a>
-                <a
-                  href="/#doctors"
-                  style={{
-                    fontSize: 13, color: 'var(--td)', fontWeight: 600,
-                    textDecoration: 'none', whiteSpace: 'nowrap',
-                  }}
-                >
-                  Або перегляньте всю команду гінекологів →
-                </a>
-              </div>
-            </div>
-          </div>
+          <DoctorBookingForm
+            doctorSlug={slug}
+            doctorName={doctor.name}
+            doctorNameGenitive={doctorNameGenitive}
+            photoFilename={doctor.photo_filename}
+          />
+          <p style={{ marginTop: 20, fontSize: 13, color: 'var(--g500)' }}>
+            <a href="/#doctors" style={{ color: 'var(--td)', fontWeight: 600, textDecoration: 'none' }}>
+              ← Переглянути всю команду гінекологів
+            </a>
+          </p>
         </div>
 
         <style>{`
           @media(max-width:768px){
-            section[style*="var(--tp)"]{padding:32px 20px!important}
-            .doctor-cta-row{flex-direction:column!important;align-items:flex-start!important}
+            section[style*="var(--tp)"]{padding:32px 20px 44px!important}
           }
         `}</style>
       </section>
