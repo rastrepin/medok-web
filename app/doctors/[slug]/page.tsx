@@ -137,6 +137,15 @@ export default async function DoctorPage({
   const doctorGeoEeat = getDoctorGeoEeat(slug);
   const doctorFirstName = doctor.name.split(' ')[1] ?? doctor.name.split(' ')[0];
 
+  // Per-doctor genitive name for CTA ("Хочете записатись до...")
+  const DOCTOR_NAME_GENITIVE: Record<string, string> = {
+    'yanyuk-olha': 'Ольги Янюк',
+    'kelman-viktoriia': 'Вікторії Кельман',
+    'trofimchuk-tetiana': 'Тетяни Трофімчук',
+    'bondarchuk-zhanna': 'Жанни Бондарчук',
+  };
+  const doctorNameGenitive = DOCTOR_NAME_GENITIVE[slug] ?? doctorFirstName;
+
   // All case types this doctor has
   const caseTypes = specializations.map((s) => s.case_type) as ('pregnancy' | 'ultrasound')[];
 
@@ -227,32 +236,69 @@ export default async function DoctorPage({
       <section style={{
         background: 'var(--tp)',
         borderTop: '1px solid var(--t)',
-        padding: '48px 48px',
-        textAlign: 'center',
+        padding: '40px 48px',
       }}>
-        <div style={{ maxWidth: 560, margin: '0 auto' }}>
-          <p style={{
-            fontSize: 18, fontWeight: 700, color: 'var(--td)',
-            marginBottom: 20,
-            fontFamily: 'var(--font)',
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div className="doctor-cta-row" style={{
+            display: 'flex', alignItems: 'center',
+            gap: 20, flexWrap: 'wrap',
           }}>
-            Хочете записатись до {doctor.name.split(' ')[0]}?
-          </p>
-          <a
-            href="/#quiz"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              background: 'var(--t)', color: '#fff',
-              padding: '14px 32px', borderRadius: 10,
-              fontSize: 14, fontWeight: 700, textDecoration: 'none',
-            }}
-          >
-            Підібрати програму
-          </a>
+            {/* Photo */}
+            {doctor.photo_filename && (
+              <div style={{
+                width: 64, height: 64, borderRadius: '50%',
+                overflow: 'hidden', flexShrink: 0,
+                border: '2px solid var(--tl)',
+              }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/doctors/${doctor.photo_filename}`}
+                  alt={doctor.name}
+                  width={64}
+                  height={64}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                />
+              </div>
+            )}
+
+            {/* Text + buttons */}
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <p style={{
+                fontSize: 17, fontWeight: 700, color: 'var(--td)',
+                marginBottom: 14, fontFamily: 'var(--font)',
+              }}>
+                Хочете записатись до {doctorNameGenitive}?
+              </p>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                <a
+                  href="/#quiz"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    background: 'var(--t)', color: '#fff',
+                    padding: '12px 28px', borderRadius: 9999,
+                    fontSize: 14, fontWeight: 700, textDecoration: 'none',
+                  }}
+                >
+                  Підібрати програму
+                </a>
+                <a
+                  href="/#doctors"
+                  style={{
+                    fontSize: 13, color: 'var(--td)', fontWeight: 600,
+                    textDecoration: 'none', whiteSpace: 'nowrap',
+                  }}
+                >
+                  Або перегляньте всю команду гінекологів →
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+
         <style>{`
           @media(max-width:768px){
             section[style*="var(--tp)"]{padding:32px 20px!important}
+            .doctor-cta-row{flex-direction:column!important;align-items:flex-start!important}
           }
         `}</style>
       </section>
