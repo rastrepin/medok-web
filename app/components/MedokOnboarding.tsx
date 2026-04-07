@@ -44,10 +44,7 @@ export default function MedokOnboarding() {
           Що відбувається після запису
         </h2>
         <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, lineHeight: 1.75 }}>
-          Від першого дзвінка до кабінету з дорожньою картою — чотири кроки
-        </p>
-        <p style={{ fontSize: 12, color: 'var(--g400)', marginTop: 6, fontStyle: 'italic' }}>
-          Приклад дорожньої карти → Ваша карта складається індивідуально на першому прийомі
+          Від запису до першого прийому — чотири кроки
         </p>
       </div>
 
