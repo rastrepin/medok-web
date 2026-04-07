@@ -77,6 +77,7 @@ export default function MedokQuiz() {
   const [doctorId, setDoctorId] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [cabinetUrl, setCabinetUrl] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const obDoctors = DOCTORS.filter((d) => d.doctor_type === 'obstetrician' && d.is_active);
 
@@ -108,6 +109,7 @@ export default function MedokQuiz() {
     e.preventDefault();
     if (!trimester || !pregType || !program) return;
     setSubmitting(true);
+    setErrorMsg('');
     try {
       const res = await fetch('/api/medok/leads', {
         method: 'POST',
@@ -121,18 +123,35 @@ export default function MedokQuiz() {
           doctor_id: doctorId || undefined,
           preferred_dates: doctorId ? undefined : dates,
           preferred_slots: selectedSlots.length > 0 ? selectedSlots : undefined,
-          contact_method: contactMethod,
+          messenger: contactMethod !== 'none' ? contactMethod : undefined,
           messenger_contact: messengerContact || undefined,
           form_type: 'quiz',
         }),
       });
       const data = await res.json();
-      if (data.cabinet_url) {
-        setCabinetUrl(data.cabinet_url);
-        setStep('success');
+      if (!res.ok) {
+        throw new Error(
+          (data as { error?: string }).error ||
+          'Помилка сервера. Спробуйте ще раз.'
+        );
       }
-    } catch {
-      alert('Помилка. Спробуйте ще раз або зателефонуйте нам.');
+      // Spam silently passes through
+      if ((data as { spam?: boolean }).spam) {
+        setStep('success');
+        return;
+      }
+      if ((data as { cabinet_url?: string }).cabinet_url) {
+        setCabinetUrl((data as { cabinet_url: string }).cabinet_url);
+        setStep('success');
+      } else {
+        throw new Error('Щось пішло не так. Спробуйте ще раз.');
+      }
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : 'Помилка. Зателефонуйте нам: +38 (043) 265-99-77'
+      );
     } finally {
       setSubmitting(false);
     }
@@ -378,6 +397,16 @@ export default function MedokQuiz() {
                   )}
                 </div>
 
+                {errorMsg && (
+                  <div style={{
+                    background: '#fef2f2', border: '1px solid #fca5a5',
+                    borderRadius: 10, padding: '12px 14px',
+                    fontSize: 13, color: '#dc2626', lineHeight: 1.5,
+                  }}>
+                    {errorMsg}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={submitting}
@@ -419,27 +448,45 @@ export default function MedokQuiz() {
                   display: 'inline-flex', alignItems: 'center', gap: 10,
                   background: 'var(--t)', color: '#fff', textDecoration: 'none',
                   padding: '13px 30px', borderRadius: 9999, fontSize: 15, fontWeight: 700,
+                  marginBottom: 20,
                 }}
               >
                 Відкрити мій кабінет
               </a>
             )}
-            {contactMethod === 'viber' && messengerContact && (
+
+            {/* Clinic messenger links — завжди видимі */}
+            <p style={{ fontSize: 13, color: 'var(--g400)', marginBottom: 12 }}>
+              Або напишіть нам у месенджер:
+            </p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a
-                href={`viber://chat?number=${encodeURIComponent(messengerContact)}&text=${encodeURIComponent('Привіт, я записалась через сайт')}`}
-                style={{ display: 'block', marginTop: 14, color: 'var(--td)', fontSize: 14, fontWeight: 600 }}
+                href="https://t.me/+380674542880"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  padding: '10px 20px', borderRadius: 9999,
+                  border: '1.5px solid var(--tl)', background: 'var(--tp)',
+                  fontSize: 14, fontWeight: 600, color: 'var(--td)',
+                  textDecoration: 'none',
+                }}
               >
-                Написати у Viber
+                ✈️ Telegram
               </a>
-            )}
-            {contactMethod === 'telegram' && messengerContact && (
               <a
-                href={`https://t.me/${messengerContact.replace('@', '')}?text=${encodeURIComponent('Привіт, я записалась через сайт')}`}
-                style={{ display: 'block', marginTop: 14, color: 'var(--td)', fontSize: 14, fontWeight: 600 }}
+                href="viber://chat?number=+380674542880"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  padding: '10px 20px', borderRadius: 9999,
+                  border: '1.5px solid var(--tl)', background: 'var(--tp)',
+                  fontSize: 14, fontWeight: 600, color: 'var(--td)',
+                  textDecoration: 'none',
+                }}
               >
-                Написати у Telegram
+                💬 Viber
               </a>
-            )}
+            </div>
           </div>
         )}
 
