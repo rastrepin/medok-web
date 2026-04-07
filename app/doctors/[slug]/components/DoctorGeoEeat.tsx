@@ -30,12 +30,6 @@ export default function DoctorGeoEeat({
         }}
       >
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
-          <div style={{
-            fontSize: 10, fontWeight: 800, letterSpacing: '2px',
-            textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12,
-          }}>
-            Контакти та графік
-          </div>
           <p style={{
             fontSize: 14,
             color: 'var(--g600)',
