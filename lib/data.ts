@@ -56,7 +56,7 @@ export const PROGRAMS: Program[] = [
   {
     id: 'trimester-full',
     trimester: 'full',
-    name: 'Повне ведення',
+    name: 'Вся вагітність',
     description:
       'I + II + III триместр від постановки на облік до огляду після пологів. Один лікар, фіксована ціна.',
     includes: [

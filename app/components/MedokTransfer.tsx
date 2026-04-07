@@ -247,6 +247,7 @@ export default function MedokTransfer() {
         @media(max-width:768px){
           #transfer{padding:52px 20px!important}
           #transfer > div:last-child{grid-template-columns:1fr!important;gap:24px!important}
+          #transfer input,#transfer select{font-size:16px!important}
         }
       `}</style>
     </section>

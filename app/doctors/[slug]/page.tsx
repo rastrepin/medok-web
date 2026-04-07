@@ -234,7 +234,7 @@ export default async function DoctorPage({
       )}
 
       {/* Footer CTA — booking form */}
-      <section style={{
+      <section id="booking" style={{
         background: 'var(--tp)',
         borderTop: '1px solid var(--t)',
         padding: '48px 48px 56px',
