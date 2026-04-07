@@ -15,12 +15,6 @@ type DoctorHeroProps = {
   patientsCount: number;
 };
 
-function daysSince(iso: string | null): number | null {
-  if (!iso) return null;
-  const diff = Date.now() - new Date(iso).getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
-}
-
 export default function DoctorHero({
   name,
   role,
@@ -29,12 +23,10 @@ export default function DoctorHero({
   avatarColor,
   doctorType,
   branches,
-  lastActiveAt,
-  patientsCount,
+  lastActiveAt: _lastActiveAt,
+  patientsCount: _patientsCount,
 }: DoctorHeroProps) {
   const [copied, setCopied] = useState(false);
-  const days = daysSince(lastActiveAt);
-  const showActivity = days !== null && days < 14;
 
   const handleShare = async () => {
     try {
@@ -134,20 +126,14 @@ export default function DoctorHero({
               {name}
             </h1>
 
-            {/* Activity line */}
-            {showActivity && (
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                fontSize: 12, color: 'var(--g500)', marginBottom: 12,
-              }}>
-                <span style={{ color: '#22c55e', fontSize: 8 }}>●</span>
-                Веде прийом
-                {days !== null && days === 0 && ' · Оновила дані сьогодні'}
-                {days !== null && days === 1 && ' · Оновила дані вчора'}
-                {days !== null && days > 1 && ` · Оновила дані ${days} дн. тому`}
-                {patientsCount > 0 && ` · ${patientsCount} пацієнток`}
-              </div>
-            )}
+            {/* Activity line — static schedule status */}
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              fontSize: 12, color: 'var(--g500)', marginBottom: 12,
+            }}>
+              <span style={{ color: '#22c55e', fontSize: 8 }}>●</span>
+              Актуальний графік на квітень 2026
+            </div>
 
             {/* Branches */}
             {branches.length > 0 && (
