@@ -134,8 +134,8 @@ export default function MedokDoctors() {
           </p>
         </div>
 
-        {/* Obstetricians grid */}
-        <div className="doctors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, marginBottom: 28 }}>
+        {/* All 4 doctors — unified vertical cards grid */}
+        <div className="doctors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 18, marginBottom: 28 }}>
           {OB_DOCTORS.map((doc) => (
             <div key={doc.id} style={{
               background: '#fff', border: '1.5px solid var(--g200)',
@@ -143,7 +143,7 @@ export default function MedokDoctors() {
               transition: 'all .25s', display: 'flex', flexDirection: 'column', alignItems: 'center',
             }}>
               {/* Photo */}
-              <div style={{ width: 80, height: 80, borderRadius: 18, overflow: 'hidden', marginBottom: 14, flexShrink: 0, border: '2px solid var(--g100)' }}>
+              <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', marginBottom: 14, flexShrink: 0, border: '2px solid var(--g100)' }}>
                 <Image
                   src={doc.photo}
                   alt={doc.name}
@@ -162,7 +162,7 @@ export default function MedokDoctors() {
 
               <ObBio id={doc.id} onInfo={setTermKey} />
 
-              <div className="doctor-card-btns" style={{ display: 'flex', gap: 7, width: '100%' }}>
+              <div className="doctor-card-btns" style={{ display: 'flex', gap: 7, width: '100%', marginTop: 'auto' }}>
                 <a href={`/doctors/${doc.slug}#booking`} style={{
                   flex: 1, display: 'block', textAlign: 'center', padding: '9px 6px',
                   background: 'var(--cl)', color: 'var(--c)',
@@ -183,57 +183,63 @@ export default function MedokDoctors() {
               </div>
             </div>
           ))}
-        </div>
 
-        {/* UZD specialist — wide card */}
-        <div className="uzd-card" style={{
-          background: 'linear-gradient(150deg,var(--tp) 0%,#fff 60%)',
-          border: '1.5px solid var(--tl)', borderRadius: 20,
-          padding: '24px 28px', display: 'flex', alignItems: 'center', gap: 24,
-          marginBottom: 24,
-        }}>
-          {/* Photo */}
-          <div style={{ width: 72, height: 72, borderRadius: 16, overflow: 'hidden', flexShrink: 0, border: '2px solid var(--tl)' }}>
-            <Image
-              src={UZD_DOCTOR.photo}
-              alt={UZD_DOCTOR.name}
-              width={72}
-              height={72}
-              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--td)', marginBottom: 4 }}>
+          {/* UZD specialist — unified vertical card */}
+          <div style={{
+            background: '#fff', border: '1.5px solid var(--g200)',
+            borderRadius: 20, padding: '28px 18px',
+            transition: 'all .25s', display: 'flex', flexDirection: 'column', alignItems: 'center',
+          }}>
+            {/* Photo */}
+            <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', marginBottom: 10, flexShrink: 0, border: '2px solid var(--g100)' }}>
+              <Image
+                src={UZD_DOCTOR.photo}
+                alt={UZD_DOCTOR.name}
+                width={80}
+                height={80}
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </div>
+
+            {/* ДІАГНОСТИКА badge */}
+            <div style={{
+              fontSize: 9, fontWeight: 800, letterSpacing: '1.2px',
+              textTransform: 'uppercase', color: 'var(--td)',
+              marginBottom: 4, textAlign: 'center',
+            }}>
               ДІАГНОСТИКА
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 6 }}>{UZD_DOCTOR.name}</div>
-            <div style={{ fontSize: 11, color: 'var(--g400)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.3px' }}>
+
+            <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--g900)', textAlign: 'center', marginBottom: 3, lineHeight: 1.35 }}>
+              {UZD_DOCTOR.name}
+            </div>
+            <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, textAlign: 'center', marginBottom: 14, textTransform: 'uppercase', letterSpacing: '.5px' }}>
               {UZD_DOCTOR.role}
             </div>
-          </div>
-          <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.7, maxWidth: 440, flex: 1 }}>
-            Лікар, до якого направляють ваші гінекологи на планові скринінги. Сертифікація FMF (Fetal Medicine Foundation, Лондон), член ISUOG (International Society of Ultrasound in Obstetrics and Gynecology). Апарат Voluson E8 з 3D/4D — деталізація, яка дає вашому лікарю повну інформацію для рішень. Жанна не веде вагітність — вона проводить ключові дослідження, на які спирається ваш акушер-гінеколог.
-          </p>
-          <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
-            <a href={`/doctors/${UZD_DOCTOR.slug}#booking`} style={{
-              display: 'block', textAlign: 'center',
-              background: 'var(--cl)', color: 'var(--c)',
-              padding: '10px 22px', borderRadius: 9999,
-              textDecoration: 'none', fontSize: 13, fontWeight: 700,
-              whiteSpace: 'nowrap',
-            }}>
-              Записатись
-            </a>
-            <a href={`/doctors/${UZD_DOCTOR.slug}`} style={{
-              display: 'block', textAlign: 'center',
-              background: 'var(--g50)', color: 'var(--g600)',
-              border: '1.5px solid var(--g200)',
-              padding: '9px 22px', borderRadius: 9999,
-              textDecoration: 'none', fontSize: 13, fontWeight: 600,
-              whiteSpace: 'nowrap',
-            }}>
-              Профіль
-            </a>
+
+            <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, textAlign: 'center' }}>
+              Сертифікація FMF London, член ISUOG. Скринінги I, II, III триместру на Voluson E8 з 3D/4D. Проводить ключові дослідження для вашого акушера.
+            </p>
+
+            <div className="doctor-card-btns" style={{ display: 'flex', gap: 7, width: '100%', marginTop: 'auto' }}>
+              <a href={`/doctors/${UZD_DOCTOR.slug}#booking`} style={{
+                flex: 1, display: 'block', textAlign: 'center', padding: '9px 6px',
+                background: 'var(--cl)', color: 'var(--c)',
+                borderRadius: 9999, fontSize: 12, fontWeight: 700,
+                textDecoration: 'none',
+              }}>
+                Записатись
+              </a>
+              <a href={`/doctors/${UZD_DOCTOR.slug}`} style={{
+                flex: 1, display: 'block', textAlign: 'center', padding: '9px 6px',
+                background: 'var(--g50)', color: 'var(--g600)',
+                border: '1.5px solid var(--g200)',
+                borderRadius: 9999, fontSize: 12, fontWeight: 600,
+                textDecoration: 'none',
+              }}>
+                Профіль
+              </a>
+            </div>
           </div>
         </div>
 
@@ -333,14 +339,10 @@ export default function MedokDoctors() {
 
       <style>{`
         @keyframes slideUpSheet { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
-        @media(max-width:1024px){ .doctors-grid{grid-template-columns:repeat(2,1fr)!important} }
+        @media(max-width:1280px){ .doctors-grid{grid-template-columns:repeat(2,1fr)!important} }
         @media(max-width:768px){
           #doctors{padding:52px 20px!important}
           .doctors-grid{grid-template-columns:1fr!important;gap:12px!important}
-          .uzd-card{flex-direction:column!important;align-items:stretch!important;gap:16px!important}
-          .uzd-card > div:last-child{flex-direction:column!important;width:100%!important}
-          .uzd-card p{max-width:100%!important}
-          .uzd-card a{width:100%!important;text-align:center!important;display:block!important;white-space:normal!important}
           .doctor-card-btns{flex-direction:column!important;gap:8px!important}
           .doctor-card-btns a{flex:unset!important;min-height:44px!important;display:flex!important;align-items:center!important;justify-content:center!important}
         }

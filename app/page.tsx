@@ -1,4 +1,3 @@
-import MedokNav from './components/MedokNav';
 import MedokHero from './components/MedokHero';
 import MedokGeoSummary from './components/MedokGeoSummary';
 import MedokTrustBar from './components/MedokTrustBar';
@@ -13,18 +12,13 @@ import MedokFaq from './components/MedokFaq';
 import MedokGeoBlock from './components/MedokGeoBlock';
 import MedokEeat from './components/MedokEeat';
 import CallbackForm from './components/CallbackForm';
-import MedokFooter from './components/MedokFooter';
 
 export const revalidate = 3600;
 
 export default function Home() {
   return (
     <>
-      {/* 1. Header */}
-      <MedokNav />
-
-      <main>
-        {/* 2. Hero — темна зона (white bg, але окремий блок) */}
+      {/* Hero — white bg */}
         <MedokHero />
 
         {/* 3. GEO Summary — темна зона, статичний HTML для Google */}
@@ -77,12 +71,8 @@ export default function Home() {
         {/* 14. E-E-A-T — автор, рецензент, джерела */}
         <MedokEeat />
 
-        {/* 15. Callback Form — темна CTA-зона */}
+        {/* Callback Form — темна CTA-зона */}
         <CallbackForm />
-      </main>
-
-      {/* 16. Footer — темна зона */}
-      <MedokFooter />
     </>
   );
 }

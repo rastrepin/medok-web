@@ -56,8 +56,9 @@ async function sendEmailViaResend(lead: LeadPayload, cabinetUrl: string): Promis
   if (!apiKey || !toEmail) return;
 
   const formLabel =
-    lead.form_type === 'transfer' ? 'Перехід'
-    : lead.form_type === 'callback' ? 'Дзвінок'
+    lead.form_type === 'transfer'        ? 'Перехід'
+    : lead.form_type === 'callback'      ? 'Дзвінок'
+    : lead.form_type === 'doctor_booking' ? 'Запис до лікаря'
     : 'Квіз';
 
   const subject = `[MED OK] ${formLabel}: ${lead.name} ${lead.phone}`;

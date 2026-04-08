@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Onest, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import MedokNav from "./components/MedokNav";
+import MedokFooter from "./components/MedokFooter";
 
 const onest = Onest({
   variable: "--font",
@@ -133,7 +135,11 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col" style={{ fontFamily: "var(--font), Onest, sans-serif" }}>
-        {children}
+        <MedokNav />
+        <main style={{ flex: 1 }}>
+          {children}
+        </main>
+        <MedokFooter />
       </body>
     </html>
   );

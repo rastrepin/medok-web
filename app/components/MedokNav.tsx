@@ -1,13 +1,36 @@
 'use client';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { CLINIC } from '@/lib/data';
+
+const NAV_LINKS = [
+  { label: 'Послуги',                id: 'services' },
+  { label: 'Лікарі',                 id: 'doctors' },
+  { label: 'Програми',               id: 'programs' },
+  { label: 'Перехід з іншої клініки', id: 'transfer' },
+];
 
 export default function MedokNav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === '/';
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const handleLink = (id: string) => {
     setOpen(false);
+    if (isHome) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/#${id}`;
+    }
+  };
+
+  const handleQuiz = () => {
+    setOpen(false);
+    if (isHome) {
+      document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/#quiz';
+    }
   };
 
   return (
@@ -40,15 +63,10 @@ export default function MedokNav() {
 
         {/* Desktop links */}
         <ul style={{ display: 'flex', gap: 32, listStyle: 'none', margin: 0, padding: 0 }} className="nav-desktop">
-          {[
-            { label: 'Послуги', id: 'services' },
-            { label: 'Лікарі', id: 'doctors' },
-            { label: 'Програми', id: 'programs' },
-            { label: 'Перехід з іншої клініки', id: 'transfer' },
-          ].map((l) => (
+          {NAV_LINKS.map((l) => (
             <li key={l.id}>
               <button
-                onClick={() => scrollTo(l.id)}
+                onClick={() => handleLink(l.id)}
                 style={{ background: 'none', border: 'none', color: 'var(--g500)', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}
               >
                 {l.label}
@@ -66,7 +84,7 @@ export default function MedokNav() {
             {CLINIC.phoneDisplay}
           </a>
           <button
-            onClick={() => scrollTo('quiz')}
+            onClick={handleQuiz}
             style={{
               background: 'var(--t)', color: '#fff', border: 'none',
               padding: '9px 24px', borderRadius: 9999, fontSize: 13,
@@ -118,16 +136,10 @@ export default function MedokNav() {
           borderTop: '1px solid var(--g200)',
           boxShadow: '0 8px 24px rgba(0,0,0,.1)',
         }}>
-          {[
-            { label: 'Послуги', id: 'services' },
-            { label: 'Лікарі', id: 'doctors' },
-            { label: 'Програми', id: 'programs' },
-            { label: 'Перехід з іншої клініки', id: 'transfer' },
-            { label: 'Питання', id: 'faq' },
-          ].map((l) => (
+          {[...NAV_LINKS, { label: 'Питання', id: 'faq' }].map((l) => (
             <button
               key={l.id}
-              onClick={() => scrollTo(l.id)}
+              onClick={() => handleLink(l.id)}
               style={{
                 background: 'none', border: 'none', borderBottom: '1px solid var(--g100)',
                 paddingBottom: 12, fontFamily: 'inherit', fontSize: 16,

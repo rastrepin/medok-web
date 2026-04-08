@@ -5,7 +5,25 @@ type DoctorBaseProps = {
   branches: string[];
 };
 
+/**
+ * Parse structured achievements text into groups.
+ * Format: "Group title:\nContent\n\nGroup title:\nContent"
+ */
+function parseAchievements(text: string): { title: string; content: string }[] {
+  const groups = text.split(/\n\n+/);
+  return groups.map((group) => {
+    const lines = group.split('\n').filter(Boolean);
+    const firstLine = lines[0] ?? '';
+    if (firstLine.endsWith(':')) {
+      return { title: firstLine.slice(0, -1), content: lines.slice(1).join('\n') };
+    }
+    return { title: '', content: group };
+  }).filter((g) => g.content.trim());
+}
+
 export default function DoctorBase({ bio, education, achievements, branches }: DoctorBaseProps) {
+  const achievementGroups = achievements ? parseAchievements(achievements) : [];
+
   return (
     <section style={{ background: '#fff', padding: '56px 48px' }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
@@ -37,12 +55,34 @@ export default function DoctorBase({ bio, education, achievements, branches }: D
 
           {/* Right column */}
           <div>
-            {achievements && (
+            {achievementGroups.length > 0 && (
               <>
                 <SectionLabel>Підвищення кваліфікації</SectionLabel>
-                <p style={{ fontSize: 14, color: 'var(--g600)', lineHeight: 1.85, marginBottom: 32 }}>
-                  {achievements}
-                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }}>
+                  {achievementGroups.map((group, i) => (
+                    <div key={i}>
+                      {group.title && (
+                        <div style={{
+                          fontSize: 12, fontWeight: 700, color: 'var(--g700)',
+                          marginBottom: 4, letterSpacing: '.2px',
+                        }}>
+                          {group.title}
+                        </div>
+                      )}
+                      <p style={{
+                        fontSize: 13, color: 'var(--g500)', lineHeight: 1.75,
+                        margin: 0,
+                      }}>
+                        {group.content.split('\n').map((line, j) => (
+                          <span key={j}>
+                            {line}
+                            {j < group.content.split('\n').length - 1 && <br />}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </>
             )}
 
