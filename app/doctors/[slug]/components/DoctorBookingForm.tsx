@@ -4,13 +4,25 @@ import { useState, useRef, useEffect } from 'react';
 import { getAvailableDays } from '@/lib/doctor-booking-utils';
 
 type ContactMethod = 'phone' | 'telegram' | 'viber';
-type VisitPurpose  = 'program' | 'consultation' | 'gynecology';
+type VisitPurpose  = string;
+
+export type VisitPurposeOption = {
+  value: string;
+  label: string;
+};
+
+const DEFAULT_VISIT_PURPOSES: VisitPurposeOption[] = [
+  { value: 'program',      label: 'Запис на програму ведення вагітності' },
+  { value: 'consultation', label: 'Консультація вагітної (без програми)' },
+  { value: 'gynecology',   label: 'Звичайна жіноча консультація' },
+];
 
 type DoctorBookingFormProps = {
   doctorSlug: string;
   doctorName: string;
   doctorNameGenitive: string; // "Ольги Янюк"
   photoFilename: string | null;
+  visitPurposes?: VisitPurposeOption[];
 };
 
 declare global {
@@ -28,11 +40,12 @@ export default function DoctorBookingForm({
   doctorName,
   doctorNameGenitive,
   photoFilename,
+  visitPurposes = DEFAULT_VISIT_PURPOSES,
 }: DoctorBookingFormProps) {
   const [name,          setName]          = useState('');
   const [phone,         setPhone]         = useState('');
   const [contact,       setContact]       = useState<ContactMethod>('phone');
-  const [purpose,       setPurpose]       = useState<VisitPurpose>('program');
+  const [purpose,       setPurpose]       = useState<VisitPurpose>(visitPurposes[0]?.value ?? 'program');
   const [day,           setDay]           = useState('');
   const [honeypot,      setHoneypot]      = useState('');
   const [status,        setStatus]        = useState<'idle'|'submitting'|'success'|'error'>('idle');
@@ -250,11 +263,7 @@ export default function DoctorBookingForm({
       <div style={{ marginBottom: 14 }}>
         <label style={labelStyle}>Мета візиту</label>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-          {([
-            { value: 'program',      label: 'Запис на програму ведення вагітності' },
-            { value: 'consultation', label: 'Консультація вагітної (без програми)' },
-            { value: 'gynecology',   label: 'Звичайна жіноча консультація' },
-          ] as { value: VisitPurpose; label: string }[]).map((opt) => (
+          {visitPurposes.map((opt) => (
             <label key={opt.value} style={{
               display: 'flex', alignItems: 'center', gap: 10,
               cursor: 'pointer', fontSize: 14, color: 'var(--g700)',

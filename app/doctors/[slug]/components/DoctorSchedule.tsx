@@ -4,15 +4,17 @@ import { CLINIC } from '@/lib/data';
 type DoctorScheduleProps = {
   days: ScheduleDay[];
   doctorFirstName: string;
+  /** When provided, renders GEO text in the same container (Task 8) */
+  geoText?: string;
 };
 
-export default function DoctorSchedule({ days, doctorFirstName }: DoctorScheduleProps) {
+export default function DoctorSchedule({ days, doctorFirstName, geoText }: DoctorScheduleProps) {
   if (!days || days.length === 0) return null;
 
   return (
     <section style={{
-      background: 'var(--tp)',
-      borderTop: '1px solid var(--t)',
+      background: '#F3F4F6',
+      borderTop: '1px solid var(--g200)',
       padding: '40px 48px',
     }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
@@ -53,7 +55,7 @@ export default function DoctorSchedule({ days, doctorFirstName }: DoctorSchedule
                   key={day}
                   style={{
                     background: '#fff',
-                    border: '1px solid var(--t)',
+                    border: '1px solid var(--g200)',
                     borderRadius: 12,
                     padding: '10px 18px',
                     display: 'flex', flexDirection: 'column', gap: 3,
@@ -77,6 +79,16 @@ export default function DoctorSchedule({ days, doctorFirstName }: DoctorSchedule
               ))}
             </div>
 
+            {/* GEO text (if combined mode) */}
+            {geoText && (
+              <p style={{
+                fontSize: 13, color: 'var(--g600)', lineHeight: 1.8,
+                marginBottom: 20, maxWidth: 680,
+              }}>
+                {geoText}
+              </p>
+            )}
+
             <a
               href={`tel:${CLINIC.phone}`}
               style={{
@@ -97,7 +109,7 @@ export default function DoctorSchedule({ days, doctorFirstName }: DoctorSchedule
 
       <style>{`
         @media(max-width:768px){
-          section[style*="var(--tp)"]{padding:32px 20px!important}
+          section[data-schedule]{padding:32px 20px!important}
         }
       `}</style>
     </section>

@@ -8,7 +8,7 @@ import DoctorBase from './components/DoctorBase';
 import DoctorCases from './components/DoctorCases';
 import DoctorSchedule from './components/DoctorSchedule';
 import DoctorGeoEeat from './components/DoctorGeoEeat';
-import DoctorBookingForm from './components/DoctorBookingForm';
+import DoctorBookingForm, { VisitPurposeOption } from './components/DoctorBookingForm';
 import { getDoctorGeoEeat } from '@/lib/doctor-geo-eeat';
 
 // ----------------------------------------------------------------
@@ -138,6 +138,15 @@ export default async function DoctorPage({
   const doctorGeoEeat = getDoctorGeoEeat(slug);
   const doctorFirstName = doctor.name.split(' ')[1] ?? doctor.name.split(' ')[0];
 
+  // Custom visit purposes for UZD doctors
+  const CUSTOM_VISIT_PURPOSES: Record<string, VisitPurposeOption[]> = {
+    'bondarchuk-zhanna': [
+      { value: 'uzd_screening', label: 'Планове УЗД вагітних (скринінг)' },
+      { value: 'uzd_referral',  label: 'УЗД за направленням лікаря' },
+      { value: 'uzd_consult',   label: 'Консультація з питань діагностики' },
+    ],
+  };
+
   // Per-doctor genitive name for CTA ("Хочете записатись до...")
   const DOCTOR_NAME_GENITIVE: Record<string, string> = {
     'yanyuk-olha': 'Ольги Янюк',
@@ -214,22 +223,21 @@ export default async function DoctorPage({
         branches={doctor.branches ?? []}
       />
 
-      {/* Schedule block */}
+      {/* Schedule + GEO — combined container (Task 8) */}
       {schedule && (
         <DoctorSchedule
           days={schedule.days}
           doctorFirstName={doctorFirstName}
+          geoText={doctorGeoEeat?.geoText}
         />
       )}
 
-      {/* GEO + E-E-A-T block */}
+      {/* E-E-A-T block — white, minimal */}
       {doctorGeoEeat && (
         <DoctorGeoEeat
-          geoText={doctorGeoEeat.geoText}
           reviewerName={doctorGeoEeat.reviewerName}
           reviewerTitle={doctorGeoEeat.reviewerTitle}
           sources={doctorGeoEeat.sources}
-          doctorName={doctor.name}
         />
       )}
 
@@ -245,6 +253,7 @@ export default async function DoctorPage({
             doctorName={doctor.name}
             doctorNameGenitive={doctorNameGenitive}
             photoFilename={doctor.photo_filename}
+            visitPurposes={CUSTOM_VISIT_PURPOSES[slug]}
           />
           <p style={{ marginTop: 20, fontSize: 13, color: 'var(--g500)' }}>
             <a href="/#doctors" style={{ color: 'var(--td)', fontWeight: 600, textDecoration: 'none' }}>
