@@ -28,17 +28,14 @@ export default function MedokNav() {
         }}
       >
         {/* Brand */}
-        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+        <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo.png"
             alt="МЦ MED OK — медичний центр Вінниця"
-            height={40}
-            style={{ height: 40, width: 'auto', display: 'block' }}
+            height={56}
+            style={{ height: 56, width: 'auto', display: 'block' }}
           />
-          <span style={{ fontSize: 10, color: 'var(--g400)', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-            медичний центр · Вінниця
-          </span>
         </a>
 
         {/* Desktop links */}
