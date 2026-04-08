@@ -39,9 +39,8 @@ export default function CallbackForm() {
   const [formState,     setFormState]     = useState<FormState>('idle');
   const [errorMsg,      setErrorMsg]      = useState('');
 
-  const phoneDigits = CLINIC.phone.replace(/\D/g, '');
-  const tgLink  = `https://t.me/${phoneDigits}`;
-  const vbrLink = `viber://chat?number=%2B${phoneDigits}`;
+  const tgLink  = 'https://t.me/+380674542880';
+  const vbrLink = 'viber://chat?number=+380674542880';
 
   function handleFocus() {
     if (!startedRef.current) {
