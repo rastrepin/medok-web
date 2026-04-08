@@ -27,19 +27,19 @@ export default function MedokHero() {
       <h1 style={{
         fontFamily: 'var(--font)',
         fontSize: 48, fontWeight: 600, color: 'var(--g900)',
-        lineHeight: 1.1, marginBottom: 14, letterSpacing: '-.5px',
+        lineHeight: 1.1, marginBottom: 16, letterSpacing: '-.5px',
         maxWidth: 720,
       }}>
         Ведення вагітності у Вінниці — МЦ MED OK
       </h1>
 
       {/* Accent subtitle — Cormorant Garamond italic */}
-      <p style={{
+      <p className="hero-subtitle" style={{
         fontFamily: 'var(--font-acc)',
-        fontSize: 56, fontStyle: 'italic', fontWeight: 300,
+        fontSize: 40, fontStyle: 'italic', fontWeight: 300,
         color: 'var(--td)',
-        lineHeight: 1.15, marginBottom: 22, maxWidth: 640,
-        letterSpacing: '-.3px',
+        lineHeight: 1.2, marginBottom: 22, maxWidth: 580,
+        letterSpacing: '-.2px',
       }}>
         Ваша вагітність — під повним контролем
       </p>
@@ -102,12 +102,13 @@ export default function MedokHero() {
         @media(max-width:768px){
           #hero{padding:48px 20px 44px!important}
           #hero h1{font-size:32px!important;max-width:100%!important}
-          #hero h1 + p{font-size:18px!important}
+          .hero-subtitle{font-size:28px!important;max-width:100%!important}
           #hero .hero-btns{flex-direction:column!important;align-items:flex-start!important}
           #hero .hero-btns button{width:100%!important;justify-content:center!important}
         }
         @media(max-width:480px){
           #hero h1{font-size:28px!important}
+          .hero-subtitle{font-size:24px!important}
         }
       `}</style>
     </section>

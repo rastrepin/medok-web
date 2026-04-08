@@ -93,16 +93,7 @@ export default function MedokFooter() {
                 </span>
               </div>
 
-              {/* CAREWAY badge */}
-              <div style={{ marginTop: 8, display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 12, padding: '10px 14px' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--tl)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
-                </svg>
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--tl)' }}>CAREWAY App</div>
-                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,.4)', marginTop: 1 }}>кабінет пацієнтки · 24/7</div>
-                </div>
-              </div>
+              {/* CAREWAY badge removed */}
             </div>
           </div>
         </div>
