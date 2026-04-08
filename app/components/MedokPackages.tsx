@@ -251,7 +251,8 @@ function PackageCard({ pkg, onInfo }: { pkg: PackageItem; onInfo: (k: string) =>
         <a
           href="#quiz"
           onClick={() => {
-            try { sessionStorage.setItem('medok_prefill_trimester', pkg.id); } catch { /* private mode */ }
+            // Dispatch custom event so MedokQuiz (already mounted) can react immediately
+            window.dispatchEvent(new CustomEvent('medok:prefill', { detail: { trimester: pkg.id } }));
           }}
           style={{
             display: 'block', textAlign: 'center',

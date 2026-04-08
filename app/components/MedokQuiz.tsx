@@ -81,16 +81,19 @@ export default function MedokQuiz() {
 
   const obDoctors = DOCTORS.filter((d) => d.doctor_type === 'obstetrician' && d.is_active);
 
-  // Pre-fill trimester from sessionStorage (set by "Обрати програму" in MedokPackages)
+  // Pre-fill trimester from "Обрати програму" button in MedokPackages.
+  // CustomEvent fires while the quiz is already mounted — sessionStorage
+  // on-mount approach doesn't work because the component is already rendered.
   useEffect(() => {
-    try {
-      const pre = sessionStorage.getItem('medok_prefill_trimester');
-      if (pre && (['i', 'ii', 'iii', 'full'] as string[]).includes(pre)) {
-        sessionStorage.removeItem('medok_prefill_trimester');
-        setTrimester(pre as Trimester);
+    const handler = (e: Event) => {
+      const t = (e as CustomEvent<{ trimester: string }>).detail?.trimester;
+      if (t && (['i', 'ii', 'iii', 'full'] as string[]).includes(t)) {
+        setTrimester(t as Trimester);
         setStep(2);
       }
-    } catch { /* private mode / SSR */ }
+    };
+    window.addEventListener('medok:prefill', handler);
+    return () => window.removeEventListener('medok:prefill', handler);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
