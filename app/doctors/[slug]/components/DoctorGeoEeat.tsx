@@ -58,7 +58,7 @@ export default function DoctorGeoEeat({
       style={{
         background: '#fff',
         borderTop: '1px solid var(--g100)',
-        padding: '36px 48px 40px',
+        padding: '64px 48px',
       }}
     >
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
@@ -147,7 +147,7 @@ export default function DoctorGeoEeat({
 
       <style>{`
         @media(max-width:768px){
-          section#doctor-eeat{ padding: 28px 20px 32px !important }
+          section#doctor-eeat{ padding: 48px 20px !important }
           section#doctor-eeat > div > div:first-child{ flex-direction: column; gap: 16px }
           section#doctor-eeat > div > div:first-child > div:last-child{ margin-left: 0 }
         }

@@ -11,17 +11,17 @@ const DOCTORS = [
 ];
 
 const PROGRAMS = [
-  { id: 'trimester-i', name: 'I триместр', price: 14540, priceTwin: 16790, oneLiner: 'Постановка на облік, перший скринінг, генетичний аналіз' },
-  { id: 'trimester-ii', name: 'II триместр', price: 9970, priceTwin: 13830, oneLiner: 'Анатомічний скринінг, КТГ, контроль шийки матки' },
-  { id: 'trimester-iii', name: 'III триместр', price: 15320, priceTwin: 15570, oneLiner: 'УЗД + доплер, КТГ, підготовка до пологів, огляд після пологів' },
-  { id: 'trimester-full', name: 'Вся вагітність', price: 39830, priceTwin: 46190, oneLiner: 'Все з I, II та III триместру. Один лікар на весь термін.', best: true },
+  { id: 'trimester-i', name: 'I триместр', price: 14540, priceTwin: 16790, weeks: '11–16 тиж', highlights: ['УЗД з 3D + генетичний скринінг Astraia', 'Аналізи: ЗАК, феритин, ТТГ, вітамін D', 'УЗД щитоподібної та молочних залоз', 'Огляд терапевта + ЕКГ', 'Консультації гінеколога: очна + онлайн'] },
+  { id: 'trimester-ii', name: 'II триместр', price: 9970, priceTwin: 13830, weeks: '18–28 тиж', highlights: ['Анатомічний скринінг з 3D (18–22 тиж)', 'Цервікометрія ×2 + КТГ', 'Глюкозо-толерантний тест', 'Аналізи крові ×4, сечі ×2', 'Консультації: очні ×3, онлайн ×2'] },
+  { id: 'trimester-iii', name: 'III триместр', price: 15320, priceTwin: 15570, weeks: '30–41 тиж', highlights: ['УЗД ×2 + доплерометрія плоду', 'КТГ-моніторинг ×5', 'Школа батьківства (3 год)', 'Консультації: очні ×4, онлайн ×1', 'Огляд після пологів + педіатр'] },
+  { id: 'trimester-full', name: 'Вся вагітність', price: 39830, priceTwin: 46190, weeks: 'від постановки до пологів', highlights: ['Все з I + II + III триместру', 'Один лікар на весь термін', 'Консультації: очні ×8, онлайн ×4', 'КТГ ×6, УЗД всіх скринінгів', 'Пріоритетний запис + CAREWAY 24/7'], best: true },
 ];
 
 const STEPS = [
-  { num: 1, title: 'Запис', desc: 'Залишаєте заявку, адміністратор передзвонить.' },
-  { num: 2, title: 'Перший прийом', desc: 'Огляд, карта, план дослідження. Вартість фіксована.' },
-  { num: 3, title: 'Дорожня карта', desc: 'Знаєте план: які дослідження, на яких тижнях.' },
-  { num: 4, title: 'Контроль між візитами', desc: "Лікар перевіряє показники, зв'яжеться якщо потрібно." },
+  { num: 1, title: 'Заявка та підбір програми', desc: 'Залишаєте заявку на сайті або телефоном. Адміністратор передзвонює протягом робочого дня, допомагає обрати програму (I, II, III триместр або повне ведення) та записує на перший прийом до вашого лікаря.' },
+  { num: 2, title: 'Перший прийом — постановка на облік', desc: 'Акушер-гінеколог проводить огляд, оформлює обмінну карту та складає індивідуальний план спостереження: які дослідження, аналізи та скринінги заплановані на кожен тиждень. Вартість програми фіксована.' },
+  { num: 3, title: 'Програма досліджень по тижнях', desc: 'Ви знаєте план наперед: УЗД-скринінги з 3D, біохімічні аналізи, КТГ, цервікометрія — кожне дослідження прив\'язане до конкретного тижня вагітності. Не потрібно нічого шукати самостійно.' },
+  { num: 4, title: 'Контроль між візитами', desc: 'Лікар відстежує ваші результати аналізів та досліджень між прийомами через систему CAREWAY. Якщо щось потребує уваги — зв\'яжеться з вами, не чекаючи наступного запису. Огляд після пологів також входить у програму.' },
 ];
 
 const ADVANTAGES = [
@@ -110,7 +110,20 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.6, maxWidth: 520 }}>Не знаєте, кого обрати? Залиште заявку — адміністратор допоможе підібрати лікаря.</p>
+          <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.6, maxWidth: 520 }}>
+            Не знаєте, кого обрати?{' '}
+            <a
+              href="#quiz"
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault();
+                const quizEl = document.getElementById('quiz');
+                if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
+              }}
+              style={{ color: 'var(--td)', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 2, cursor: 'pointer' }}
+            >
+              Оберіть програму — ми підберемо лікаря
+            </a>
+          </p>
         </div>
       </section>
       {/* 3. PROGRAMS */}
@@ -124,10 +137,18 @@ export default function HomePage() {
             {PROGRAMS.map((prog) => (
               <div key={prog.id} style={{ background: '#fff', border: prog.best ? '2px solid var(--t)' : '1.5px solid var(--g200)', borderRadius: 16, padding: '24px 20px', display: 'flex', flexDirection: 'column', position: 'relative' }}>
                 {prog.best && <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: 'var(--td)', color: '#fff', fontSize: 10, fontWeight: 800, letterSpacing: '1px', padding: '4px 14px', borderRadius: 9999, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Найкраща ціна</div>}
-                <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 8 }}>{prog.name}</div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 2 }}>{prog.name}</div>
+                <div style={{ fontSize: 11, color: 'var(--g400)', marginBottom: 10, fontWeight: 500 }}>{prog.weeks}</div>
                 <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--g900)', marginBottom: 4, lineHeight: 1.1 }}>{fmt(prog.price)} ₴</div>
                 <div style={{ fontSize: 12, color: 'var(--g500)', marginBottom: 14 }}>двоплідна: {fmt(prog.priceTwin)} ₴</div>
-                <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.55, marginBottom: 20, flex: 1 }}>{prog.oneLiner}</p>
+                <div style={{ marginBottom: 20, flex: 1 }}>
+                  {prog.highlights.map((h: string, i: number) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 6, fontSize: 12, color: 'var(--g600)', lineHeight: 1.45, marginBottom: 5 }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--t)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><polyline points="20 6 9 17 4 12" /></svg>
+                      {h}
+                    </div>
+                  ))}
+                </div>
                 <button onClick={() => { const m: Record<string, string> = { 'trimester-i': 'i', 'trimester-ii': 'ii', 'trimester-iii': 'iii', 'trimester-full': 'full' }; window.dispatchEvent(new CustomEvent('medok:prefill', { detail: { trimester: m[prog.id] } })); document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ background: '#005485', color: '#fff', border: 'none', padding: '11px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', width: '100%', minHeight: 44 }}>Обрати програму</button>
               </div>
             ))}
@@ -145,12 +166,14 @@ export default function HomePage() {
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>МАРШРУТ</div>
             <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Як це працює</h2>
           </div>
-          <div className="v2-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
+          <div className="v2-steps-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             {STEPS.map((step) => (
-              <div key={step.num} style={{ background: 'var(--g50)', borderRadius: 16, padding: '24px 20px', border: '1px solid var(--g100)' }}>
-                <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--td)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 800, marginBottom: 14 }}>{step.num}</div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 6 }}>{step.title}</div>
-                <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
+              <div key={step.num} style={{ background: 'var(--g50)', borderRadius: 16, padding: '28px 24px', border: '1px solid var(--g100)', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ width: 40, height: 40, minWidth: 40, borderRadius: '50%', background: 'var(--td)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 800 }}>{step.num}</div>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--g900)', marginBottom: 8 }}>{step.title}</div>
+                  <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.7, margin: 0 }}>{step.desc}</p>
+                </div>
               </div>
             ))}
           </div>

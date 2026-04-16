@@ -24,7 +24,7 @@ export default function DoctorCases({ caseTypes }: DoctorCasesProps) {
   if (caseTypes.length === 0) return null;
 
   return (
-    <section style={{ background: 'var(--g50)', padding: '56px 48px' }}>
+    <section style={{ background: 'var(--g50)', padding: '96px 48px' }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         <div style={{
           fontSize: 11, fontWeight: 700, letterSpacing: '2.2px',
@@ -91,7 +91,7 @@ export default function DoctorCases({ caseTypes }: DoctorCasesProps) {
       <style>{`
         @media(max-width:768px){
           .cases-grid{grid-template-columns:1fr!important}
-          section[style*="var(--g50)"]{padding:40px 20px!important}
+          section[style*="var(--g50)"]{padding:64px 20px!important}
         }
       `}</style>
     </section>

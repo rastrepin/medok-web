@@ -25,7 +25,7 @@ export default function DoctorBase({ bio, education, achievements, branches }: D
   const achievementGroups = achievements ? parseAchievements(achievements) : [];
 
   return (
-    <section style={{ background: '#fff', padding: '56px 48px' }}>
+    <section style={{ background: '#fff', padding: '96px 48px' }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         <div style={{
           display: 'grid',
@@ -46,9 +46,13 @@ export default function DoctorBase({ bio, education, achievements, branches }: D
             {education && (
               <>
                 <SectionLabel>Освіта</SectionLabel>
-                <p style={{ fontSize: 14, color: 'var(--g600)', lineHeight: 1.8 }}>
-                  {education}
-                </p>
+                <ul style={{ margin: 0, paddingLeft: 18, listStyleType: 'disc' }}>
+                  {education.split(/\.\s+/).filter(Boolean).map((item, i) => (
+                    <li key={i} style={{ fontSize: 14, color: 'var(--g600)', lineHeight: 1.8, marginBottom: 4 }}>
+                      {item.endsWith('.') ? item : `${item}.`}
+                    </li>
+                  ))}
+                </ul>
               </>
             )}
           </div>
@@ -114,7 +118,7 @@ export default function DoctorBase({ bio, education, achievements, branches }: D
       <style>{`
         @media(max-width:768px){
           .doctor-base-grid{grid-template-columns:1fr!important;gap:28px!important}
-          section[style*="background: rgb(255, 255, 255)"]{padding:40px 20px!important}
+          section[style*="background: rgb(255, 255, 255)"]{padding:64px 20px!important}
         }
       `}</style>
     </section>

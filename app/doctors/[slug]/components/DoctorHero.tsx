@@ -27,7 +27,7 @@ export default function DoctorHero({
     <section style={{
       background: '#fff',
       borderBottom: '1px solid var(--g200)',
-      padding: '56px 48px 48px',
+      padding: '96px 48px',
     }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         {/* Back breadcrumb */}
@@ -156,7 +156,7 @@ export default function DoctorHero({
 
       <style>{`
         @media(max-width:768px){
-          section[style*="56px 48px 48px"]{padding:32px 20px 28px!important}
+          section[style*="96px 48px"]{padding:64px 20px!important}
           h1{font-size:26px!important}
         }
       `}</style>

@@ -245,7 +245,7 @@ export default async function DoctorPage({
       <section id="booking" style={{
         background: 'var(--g50)',
         borderTop: '1px solid var(--g100)',
-        padding: '48px 48px 56px',
+        padding: '96px 48px',
       }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <DoctorBookingForm
@@ -264,7 +264,7 @@ export default async function DoctorPage({
 
         <style>{`
           @media(max-width:768px){
-            #booking{padding:32px 20px 44px!important}
+            #booking{padding:64px 20px!important}
           }
         `}</style>
       </section>

@@ -15,7 +15,7 @@ export default function DoctorSchedule({ days, doctorFirstName, geoText }: Docto
     <section style={{
       background: '#F3F4F6',
       borderTop: '1px solid var(--g200)',
-      padding: '40px 48px',
+      padding: '96px 48px',
     }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         <div style={{
@@ -109,7 +109,7 @@ export default function DoctorSchedule({ days, doctorFirstName, geoText }: Docto
 
       <style>{`
         @media(max-width:768px){
-          section[data-schedule]{padding:32px 20px!important}
+          section[data-schedule]{padding:64px 20px!important}
         }
       `}</style>
     </section>

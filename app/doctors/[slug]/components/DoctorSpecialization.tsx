@@ -19,7 +19,7 @@ export default function DoctorSpecialization({
     <section style={{
       background: 'var(--tp)',
       borderBottom: '1px solid var(--tl)',
-      padding: '56px 48px',
+      padding: '96px 48px',
     }}>
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
         {/* Eyebrow */}
@@ -89,7 +89,7 @@ export default function DoctorSpecialization({
 
       <style>{`
         @media(max-width:768px){
-          section[style*="56px 48px"]{padding:40px 20px!important}
+          section[style*="96px 48px"]{padding:64px 20px!important}
           h2{font-size:24px!important}
         }
       `}</style>

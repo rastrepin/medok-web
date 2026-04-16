@@ -302,13 +302,13 @@ export default function MedokQuiz() {
               <div className="quiz-result-btns" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <button
                   onClick={() => setStep('form')}
-                  style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '13px 28px', borderRadius: 9999, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
+                  style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '13px 28px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
                 >
                   Записатись
                 </button>
                 <button
                   onClick={() => document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' })}
-                  style={{ background: 'transparent', color: 'var(--td)', border: '2px solid var(--t)', padding: '12px 22px', borderRadius: 9999, fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
+                  style={{ background: 'transparent', color: 'var(--td)', border: '2px solid var(--t)', padding: '12px 22px', borderRadius: 10, fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
                 >
                   Обрати лікаря
                 </button>
@@ -428,7 +428,7 @@ export default function MedokQuiz() {
                   disabled={submitting}
                   style={{
                     padding: '14px', background: submitting ? 'var(--g300)' : 'var(--c)', color: '#fff',
-                    border: 'none', borderRadius: 9999, fontSize: 15,
+                    border: 'none', borderRadius: 10, fontSize: 15,
                     fontWeight: 700, cursor: submitting ? 'default' : 'pointer',
                     fontFamily: 'inherit',
                   }}
@@ -463,7 +463,7 @@ export default function MedokQuiz() {
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 10,
                   background: 'var(--t)', color: '#fff', textDecoration: 'none',
-                  padding: '13px 30px', borderRadius: 9999, fontSize: 15, fontWeight: 700,
+                  padding: '13px 30px', borderRadius: 10, fontSize: 15, fontWeight: 700,
                   marginBottom: 20,
                 }}
               >
