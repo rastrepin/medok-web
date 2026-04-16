@@ -88,7 +88,7 @@ export default function MedokEeat() {
                 Ігор Растрепін
               </div>
               <div style={{ fontSize: 12, color: 'var(--g500)' }}>
-                Медичний редактор check-up.in.ua
+                засновник check-up.in.ua
               </div>
             </div>
           </div>

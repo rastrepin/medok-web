@@ -139,7 +139,7 @@ export default function DoctorBookingForm({
               padding: '8px 14px', borderRadius: 9999, background: '#fff',
             }}
           >
-            ✈️ Telegram
+            Telegram
           </a>
           <a
             href="viber://chat?number=+380674542880"
@@ -150,7 +150,7 @@ export default function DoctorBookingForm({
               padding: '8px 14px', borderRadius: 9999, background: '#fff',
             }}
           >
-            💬 Viber
+            Viber
           </a>
         </div>
         {purpose === 'program' && (
@@ -240,9 +240,9 @@ export default function DoctorBookingForm({
         <label style={labelStyle}>Спосіб зв'язку</label>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {([
-            { value: 'phone',    label: '📞 Дзвінок' },
-            { value: 'telegram', label: '✈️ Telegram' },
-            { value: 'viber',    label: '💬 Viber' },
+            { value: 'phone',    label: 'Дзвінок' },
+            { value: 'telegram', label: 'Telegram' },
+            { value: 'viber',    label: 'Viber' },
           ] as { value: ContactMethod; label: string }[]).map((opt) => (
             <label key={opt.value} style={radioLabelStyle(contact === opt.value)}>
               <input
@@ -310,9 +310,9 @@ export default function DoctorBookingForm({
         disabled={status === 'submitting'}
         style={{
           width: '100%',
-          background: status === 'submitting' ? 'var(--g300)' : 'var(--t)',
+          background: status === 'submitting' ? 'var(--g300)' : 'var(--c)',
           color: '#fff', border: 'none',
-          padding: '14px 24px', borderRadius: 9999,
+          padding: '14px 24px', borderRadius: 10,
           fontSize: 15, fontWeight: 700,
           cursor: status === 'submitting' ? 'default' : 'pointer',
           fontFamily: 'inherit', transition: 'background .2s',

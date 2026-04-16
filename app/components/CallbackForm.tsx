@@ -6,10 +6,10 @@ import { CLINIC } from '@/lib/data';
 type ContactMethod = 'telegram' | 'viber' | 'phone';
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
-const CONTACT_OPTIONS: { value: ContactMethod; label: string; icon: string }[] = [
-  { value: 'telegram', label: 'Telegram', icon: '✈️' },
-  { value: 'viber',    label: 'Viber',    icon: '📲' },
-  { value: 'phone',    label: 'Дзвінок',  icon: '📞' },
+const CONTACT_OPTIONS: { value: ContactMethod; label: string }[] = [
+  { value: 'telegram', label: 'Telegram' },
+  { value: 'viber',    label: 'Viber' },
+  { value: 'phone',    label: 'Дзвінок' },
 ];
 
 function gtag(...args: unknown[]) {
@@ -130,7 +130,7 @@ export default function CallbackForm() {
                 fontSize: 14, fontWeight: 700, textDecoration: 'none',
               }}
             >
-              ✈️ Telegram
+              Telegram
             </a>
             <a
               href={vbrLink}
@@ -141,7 +141,7 @@ export default function CallbackForm() {
                 fontSize: 14, fontWeight: 700, textDecoration: 'none',
               }}
             >
-              📲 Viber
+              Viber
             </a>
             <a
               href={`tel:${CLINIC.phone}`}
@@ -153,7 +153,7 @@ export default function CallbackForm() {
                 fontSize: 14, fontWeight: 700, textDecoration: 'none',
               }}
             >
-              📞 {CLINIC.phone}
+              Тел. {CLINIC.phone}
             </a>
           </div>
         </div>
@@ -272,7 +272,7 @@ export default function CallbackForm() {
               Як зв'язатись
             </label>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {CONTACT_OPTIONS.map(({ value, label, icon }) => {
+              {CONTACT_OPTIONS.map(({ value, label }) => {
                 const active = contactMethod === value;
                 return (
                   <label
@@ -297,7 +297,7 @@ export default function CallbackForm() {
                       disabled={isSubmitting}
                       style={{ display: 'none' }}
                     />
-                    {icon} {label}
+                    {label}
                   </label>
                 );
               })}

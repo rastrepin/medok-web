@@ -1,8 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-import { CLINIC } from '@/lib/data';
-
 type DoctorHeroProps = {
   name: string;
   role: string;
@@ -26,18 +23,6 @@ export default function DoctorHero({
   lastActiveAt: _lastActiveAt,
   patientsCount: _patientsCount,
 }: DoctorHeroProps) {
-  const [copied, setCopied] = useState(false);
-
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* fallback: do nothing */
-    }
-  };
-
   return (
     <section style={{
       background: '#fff',
@@ -140,41 +125,30 @@ export default function DoctorHero({
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 24 }}>
                 {branches.map((b) => (
                   <span key={b} style={{
-                    background: 'var(--tp)',
-                    border: '1px solid var(--t)',
+                    background: '#fff',
+                    border: '1px solid var(--g200)',
                     borderRadius: 9999, padding: '4px 12px',
-                    fontSize: 12, color: 'var(--td)', fontWeight: 500,
+                    fontSize: 12, color: 'var(--g700)', fontWeight: 500,
                   }}>
-                    📍 {b}
+                    {b}
                   </span>
                 ))}
               </div>
             )}
 
-            {/* CTAs */}
+            {/* CTA */}
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               <a
-                href={`tel:${CLINIC.phone}`}
+                href="#booking"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
-                  background: 'var(--t)', color: '#fff',
+                  background: 'var(--c)', color: '#fff',
                   padding: '13px 28px', borderRadius: 10,
                   fontSize: 14, fontWeight: 700, textDecoration: 'none',
                 }}
               >
                 Записатись
               </a>
-              <button
-                onClick={handleShare}
-                style={{
-                  background: 'transparent', color: 'var(--g500)',
-                  border: '1px solid var(--g200)',
-                  padding: '13px 20px', borderRadius: 10,
-                  fontSize: 14, cursor: 'pointer', fontFamily: 'inherit',
-                }}
-              >
-                {copied ? '✓ Скопійовано' : 'Поділитись'}
-              </button>
             </div>
           </div>
         </div>

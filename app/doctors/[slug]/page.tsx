@@ -149,10 +149,10 @@ export default async function DoctorPage({
 
   // Per-doctor genitive name for CTA ("Хочете записатись до...")
   const DOCTOR_NAME_GENITIVE: Record<string, string> = {
-    'yanyuk-olha': 'Ольги Янюк',
-    'kelman-viktoriia': 'Вікторії Кельман',
-    'trofimchuk-tetiana': 'Тетяни Трофімчук',
-    'bondarchuk-zhanna': 'Жанни Бондарчук',
+    'yanyuk-olha': 'Янюк О.О.',
+    'kelman-viktoriia': 'Кельман В.В.',
+    'trofimchuk-tetiana': 'Трофімчук Т.І.',
+    'bondarchuk-zhanna': 'Бондарчук Ж.Г.',
   };
   const doctorNameGenitive = DOCTOR_NAME_GENITIVE[slug] ?? doctorFirstName;
 

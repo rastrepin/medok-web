@@ -67,7 +67,7 @@ export default function V2Page() {
   return (
     <>
       {/* 1. HERO */}
-      <section id="v2-hero" style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px 48px' }}>
+      <section id="v2-hero" style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px 64px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 18 }}>
           <span style={{ width: 26, height: 2, background: 'var(--t)', borderRadius: 1, flexShrink: 0, display: 'inline-block' }} />
           ВЕДЕННЯ ВАГІТНОСТІ · ВІННИЦЯ
@@ -76,7 +76,7 @@ export default function V2Page() {
           Ведення вагітності у Вінниці — МЦ MED OK
         </h1>
         <p style={{ fontSize: 16, fontWeight: 500, color: '#1A1A2E', lineHeight: 1.5, marginBottom: 28, maxWidth: 580 }}>
-          Ваша вагітність — під повним контролем
+          Лікар завжди на зв'язку — ваші аналізи та УЗД під рукою між візитами
         </p>
         <button onClick={() => document.getElementById('v2-quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: 9999, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginBottom: 12 }}>
           Підібрати програму
@@ -90,32 +90,32 @@ export default function V2Page() {
 
       {/* 2. DOCTORS */}
       <section ref={doctorsRef} id="v2-doctors" style={{ background: '#fff', borderTop: '1px solid var(--g100)' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px' }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>КОМАНДА</div>
             <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Лікарі, які ведуть вагітність</h2>
           </div>
           <div className="v2-doctors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 20 }}>
             {DOCTORS.map((doc) => (
-              <div key={doc.id} style={{ background: '#fff', border: '1.5px solid var(--g200)', borderRadius: 16, padding: '24px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div key={doc.id} style={{ background: '#fff', border: '1.5px solid var(--g200)', borderRadius: 16, padding: '24px 16px', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', marginBottom: 12, flexShrink: 0, border: '2px solid var(--g100)' }}>
                   <Image src={doc.photo} alt={doc.name} width={80} height={80} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
                 </div>
                 {doc.badge && <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 4 }}>{doc.badge}</div>}
-                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--g900)', textAlign: 'center', marginBottom: 3, lineHeight: 1.35 }}>{doc.name}</div>
-                <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, textAlign: 'center', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '.5px' }}>{doc.role}</div>
-                <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, textAlign: 'center', flex: 1 }}>{doc.bio}</p>
-                <a href={`/doctors/${doc.slug}#booking`} style={{ display: 'block', textAlign: 'center', padding: '10px 6px', background: 'var(--c)', color: '#fff', borderRadius: 12, fontSize: 13, fontWeight: 700, textDecoration: 'none', width: '100%', minHeight: 44, lineHeight: '24px' }}>Записатись</a>
+                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--g900)', marginBottom: 3, lineHeight: 1.35 }}>{doc.name}</div>
+                <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '.5px' }}>{doc.role}</div>
+                <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, flex: 1 }}>{doc.bio}</p>
+                <a href={`/doctors/${doc.slug}#booking`} style={{ display: 'block', textAlign: 'center', padding: '10px 6px', background: '#005485', color: '#fff', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', width: '100%', minHeight: 44, lineHeight: '24px' }}>Записатись</a>
                 <a href={`/doctors/${doc.slug}?case=pregnancy`} style={{ display: 'block', textAlign: 'center', fontSize: 12, fontWeight: 600, color: 'var(--td)', textDecoration: 'none', marginTop: 8, padding: '4px 0' }}>Профіль →</a>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.6, textAlign: 'center', maxWidth: 520, margin: '0 auto' }}>Не знаєте, кого обрати? Залиште заявку — адміністратор допоможе підібрати лікаря.</p>
+          <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.6, maxWidth: 520 }}>Не знаєте, кого обрати? Залиште заявку — адміністратор допоможе підібрати лікаря.</p>
         </div>
       </section>
       {/* 3. PROGRAMS */}
       <section ref={programsRef} id="v2-programs" style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)', borderBottom: '1px solid var(--g100)' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px' }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>ПРОГРАМИ</div>
             <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Програми ведення вагітності</h2>
@@ -128,11 +128,11 @@ export default function V2Page() {
                 <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--g900)', marginBottom: 4, lineHeight: 1.1 }}>{fmt(prog.price)} ₴</div>
                 <div style={{ fontSize: 12, color: 'var(--g500)', marginBottom: 14 }}>двоплідна: {fmt(prog.priceTwin)} ₴</div>
                 <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.55, marginBottom: 20, flex: 1 }}>{prog.oneLiner}</p>
-                <button onClick={() => { const m: Record<string, string> = { 'trimester-i': 'i', 'trimester-ii': 'ii', 'trimester-iii': 'iii', 'trimester-full': 'full' }; window.dispatchEvent(new CustomEvent('medok:prefill', { detail: { trimester: m[prog.id] } })); document.getElementById('v2-quiz')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '11px 16px', borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', width: '100%', minHeight: 44 }}>Обрати програму</button>
+                <button onClick={() => { const m: Record<string, string> = { 'trimester-i': 'i', 'trimester-ii': 'ii', 'trimester-iii': 'iii', 'trimester-full': 'full' }; window.dispatchEvent(new CustomEvent('medok:prefill', { detail: { trimester: m[prog.id] } })); document.getElementById('v2-quiz')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ background: '#005485', color: '#fff', border: 'none', padding: '11px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', width: '100%', minHeight: 44 }}>Обрати програму</button>
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 16 }}>
+          <div style={{ marginTop: 16 }}>
             <button onClick={() => document.getElementById('v2-quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'transparent', border: 'none', padding: '4px 0', fontSize: 13, fontWeight: 600, color: 'var(--td)', cursor: 'pointer', fontFamily: 'inherit' }}>Подивитись повний склад програми ↓</button>
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function V2Page() {
 
       {/* 4. HOW IT WORKS */}
       <section id="v2-onboarding" style={{ background: '#fff' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px' }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>МАРШРУТ</div>
             <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Як це працює</h2>
@@ -159,7 +159,7 @@ export default function V2Page() {
 
       {/* 5. ADVANTAGES */}
       <section id="v2-advantages" style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)', borderBottom: '1px solid var(--g100)' }}>
-        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px' }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>ЧОМУ MED OK</div>
             <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Переваги</h2>
@@ -194,13 +194,13 @@ export default function V2Page() {
       <style>{`
         .v2-sticky-cta{display:none}
         @media(max-width:767px){.v2-sticky-cta{display:block}body{padding-bottom:68px!important}}
-        @media(max-width:768px){#v2-hero{padding:48px 20px 36px!important}#v2-hero h1{font-size:28px!important;max-width:100%!important}}
+        @media(max-width:768px){#v2-hero{padding:64px 20px 36px!important}#v2-hero h1{font-size:28px!important;max-width:100%!important}}
         @media(max-width:1280px){.v2-doctors-grid{grid-template-columns:repeat(2,1fr)!important}}
-        @media(max-width:768px){#v2-doctors>div{padding:48px 20px!important}.v2-doctors-grid{grid-template-columns:1fr!important;gap:12px!important}}
+        @media(max-width:768px){#v2-doctors>div{padding:64px 20px!important}.v2-doctors-grid{grid-template-columns:1fr!important;gap:12px!important}}
         @media(max-width:1024px){.v2-programs-grid{grid-template-columns:repeat(2,1fr)!important}}
-        @media(max-width:600px){#v2-programs>div{padding:48px 20px!important}.v2-programs-grid{grid-template-columns:1fr!important;gap:12px!important}}
-        @media(max-width:768px){#v2-onboarding>div{padding:48px 20px!important}.v2-steps-grid{grid-template-columns:1fr!important;gap:12px!important}}
-        @media(max-width:768px){#v2-advantages>div{padding:48px 20px!important}.v2-advantages-grid{grid-template-columns:1fr!important;gap:12px!important}}
+        @media(max-width:600px){#v2-programs>div{padding:64px 20px!important}.v2-programs-grid{grid-template-columns:1fr!important;gap:12px!important}}
+        @media(max-width:768px){#v2-onboarding>div{padding:64px 20px!important}.v2-steps-grid{grid-template-columns:1fr!important;gap:12px!important}}
+        @media(max-width:768px){#v2-advantages>div{padding:64px 20px!important}.v2-advantages-grid{grid-template-columns:1fr!important;gap:12px!important}}
       `}</style>
     </>
   );

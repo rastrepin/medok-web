@@ -40,7 +40,7 @@ export default function DoctorGeoEeat({
             Ігор Растрепін
           </div>
           <div style={{ fontSize: 11, color: 'var(--g500)', marginTop: 2 }}>
-            медичний редактор check-up.in.ua
+            засновник check-up.in.ua
           </div>
         </div>
 
