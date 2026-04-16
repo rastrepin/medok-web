@@ -243,8 +243,8 @@ export default async function DoctorPage({
 
       {/* Footer CTA — booking form */}
       <section id="booking" style={{
-        background: 'var(--tp)',
-        borderTop: '1px solid var(--t)',
+        background: 'var(--g50)',
+        borderTop: '1px solid var(--g100)',
         padding: '48px 48px 56px',
       }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
@@ -264,7 +264,7 @@ export default async function DoctorPage({
 
         <style>{`
           @media(max-width:768px){
-            section[style*="var(--tp)"]{padding:32px 20px 44px!important}
+            #booking{padding:32px 20px 44px!important}
           }
         `}</style>
       </section>

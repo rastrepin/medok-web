@@ -78,11 +78,11 @@ export default function HomePage() {
         <p style={{ fontSize: 16, fontWeight: 500, color: '#1A1A2E', lineHeight: 1.5, marginBottom: 28, maxWidth: 580 }}>
           Лікар завжди на зв'язку — ваші аналізи та УЗД під рукою між візитами
         </p>
-        <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: 9999, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', marginBottom: 12 }}>
-          Підібрати програму
-        </button>
-        <div>
-          <button onClick={() => document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'transparent', border: 'none', padding: 0, fontSize: 14, fontWeight: 600, color: 'var(--td)', cursor: 'pointer', fontFamily: 'inherit' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 12 }}>
+          <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
+            Підібрати програму
+          </button>
+          <button onClick={() => document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'transparent', border: 'none', padding: '4px 0', fontSize: 14, fontWeight: 600, color: 'var(--td)', cursor: 'pointer', fontFamily: 'inherit' }}>
             Наші лікарі ↓
           </button>
         </div>
@@ -188,7 +188,7 @@ export default function HomePage() {
 
       {/* STICKY CTA — mobile only */}
       <div className="v2-sticky-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, padding: '8px 16px', paddingBottom: 'max(8px, env(safe-area-inset-bottom))', background: '#fff', boxShadow: '0 -2px 8px rgba(0,0,0,0.08)' }}>
-        <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ width: '100%', height: 52, background: '#d60242', color: '#fff', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>{ctaText}</button>
+        <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ width: '100%', height: 52, background: '#d60242', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>{ctaText}</button>
       </div>
 
       <style>{`
