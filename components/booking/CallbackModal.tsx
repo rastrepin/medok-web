@@ -81,7 +81,7 @@ export default function CallbackModal({ open, onClose, source }: Props) {
             </div>
             <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
               color: 'var(--gray-900)', marginBottom: 12, textTransform: 'uppercase' }}>
-              Дякуємо!
+              ЗАЯВКУ НАДІСЛАНО
             </p>
             <p style={{ fontSize: 15, color: 'var(--gray-700)', lineHeight: 1.6, marginBottom: 28 }}>
               Адміністратор зателефонує протягом робочого дня.

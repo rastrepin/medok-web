@@ -10,10 +10,10 @@ type ContactMethod = 'phone' | 'telegram' | 'viber';
 
 // Doctors shown in modal (name lookup for display)
 const DOCTOR_NAMES: Record<string, { name: string; nameGenitive: string; role: string }> = {
-  'kelman-viktoriia':   { name: 'Кельман Вікторія',  nameGenitive: 'до Вікторії',  role: 'Акушер-гінеколог, FMF' },
-  'yanyuk-olha':        { name: 'Янюк Ольга',         nameGenitive: 'до Ольги',     role: 'Акушер-гінеколог, УЗД' },
-  'trofimchuk-tetiana': { name: 'Трофімчук Тетяна',   nameGenitive: 'до Тетяни',    role: 'Акушер-гінеколог' },
-  'bondarchuk-zhanna':  { name: 'Бондарчук Жанна',    nameGenitive: 'до Жанни',     role: 'УЗД-спеціаліст, FMF London' },
+  'kelman-viktoriia':   { name: 'Кельман Вікторія Володимирівна',  nameGenitive: 'до Кельман Вікторії',  role: 'Акушер-гінеколог, член FMF (Fetal Medicine Foundation)' },
+  'yanyuk-olha':        { name: 'Янюк Ольга Олександрівна',         nameGenitive: 'до Янюк Ольги',     role: 'Акушер-гінеколог, УЗД' },
+  'trofimchuk-tetiana': { name: 'Трофімчук Тетяна Ігорівна',   nameGenitive: 'до Трофімчук Тетяни',    role: 'Акушер-гінеколог' },
+  'bondarchuk-zhanna':  { name: 'Бондарчук Жанна Геннадіївна',    nameGenitive: 'до Бондарчук Жанни',     role: 'УЗД-спеціаліст, член FMF (Fetal Medicine Foundation)' },
 };
 
 type Props = {
@@ -123,7 +123,7 @@ export default function BookingModal({ open, onClose, prefilledDoctorSlug, sourc
           </div>
           <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
             color: 'var(--gray-900)', marginBottom: 12, textTransform: 'uppercase' }}>
-            Записано!
+            ЗАЯВКУ НАДІСЛАНО
           </p>
           <p style={{ fontSize: 15, color: 'var(--gray-700)', lineHeight: 1.6, marginBottom: 24 }}>
             Адміністратор зателефонує протягом дня для підтвердження запису.

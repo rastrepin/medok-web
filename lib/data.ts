@@ -143,7 +143,7 @@ export const CLINIC = {
   phoneDisplay: '+38 (043) 265-99-77',
   website: 'https://medok.vn.ua',
   mapsUrl: 'https://maps.google.com/?q=МЦ+MED+OK+Вінниця',
-  workHours: 'пн–пт 8:00–20:00 · сб 9:00–15:00',
+  workHours: 'пн–пт 09.00–20.00 · сб 09.00–17.00 · нд 09.00–15.00',
 };
 
 export const TERMS: Record<string, { title: string; body: string }> = {

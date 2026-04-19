@@ -51,18 +51,18 @@ export default function DoctorStickyCta({ slug, ctaLabel: _ctaLabel, stickyCtaLa
         }
         .sticky-cta-btn {
           width: 100%;
-          background: var(--teal);
+          background: #1a7c75;
           color: #fff;
           border: none;
           border-radius: 9999px;
-          padding: 14px 24px;
+          padding: 16px 24px;
           font-family: inherit;
           font-size: 14px;
           font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
           cursor: pointer;
-          min-height: 44px;
+          min-height: 48px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;

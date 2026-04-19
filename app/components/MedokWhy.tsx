@@ -23,7 +23,7 @@ const SUPPORT_CARDS = [
 
 export default function MedokWhy() {
   return (
-    <section style={{ maxWidth: 1140, margin: '0 auto', padding: '72px 48px' }}>
+    <section id="why" style={{ maxWidth: 1140, margin: '0 auto', padding: '72px 48px' }}>
       <div style={{ marginBottom: 44 }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
           ПЕРЕВАГИ

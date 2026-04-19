@@ -141,9 +141,9 @@
 
 /* ── Buttons ── */
 .btn-primary {
-  background: var(--teal);
+  background: var(--teal-dark);
   color: var(--white);
-  padding: 14px 24px;
+  padding: 16px 24px;
   border: none;
   border-radius: var(--r-pill);
   font-family: var(--font-text);
@@ -153,33 +153,33 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.15s;
-  min-height: 44px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-.btn-primary:hover { background: var(--teal-dark); }
+.btn-primary:hover { background: #155f59; }
 .btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; }
 
 .btn-primary-long {
-  background: var(--teal);
+  background: var(--teal-dark);
   color: var(--white);
-  padding: 14px 24px;
+  padding: 16px 24px;
   border: none;
   border-radius: var(--r-pill);
   font-family: var(--font-text);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: normal;
   text-transform: none;
   cursor: pointer;
   transition: background 0.15s;
-  min-height: 44px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
 }
-.btn-primary-long:hover { background: var(--teal-dark); }
+.btn-primary-long:hover { background: #155f59; }
 
 .btn-secondary {
   background: var(--white);

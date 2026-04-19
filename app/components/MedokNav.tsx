@@ -18,21 +18,16 @@ export default function MedokNav() {
   const booking               = useBookingModal();
   const isHome                = pathname === '/';
 
-  // Extract doctor slug when on /doctors/[slug]
   const doctorSlug = pathname.startsWith('/doctors/')
     ? pathname.split('/doctors/')[1]?.split('/')[0] ?? undefined
     : undefined;
 
-  // Scroll-hide: hide on scroll down, show on scroll up
   useEffect(() => {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      if (y > lastY && y > 80) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
+      if (y > lastY && y > 80) setHidden(true);
+      else setHidden(false);
       lastY = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -102,7 +97,7 @@ export default function MedokNav() {
           </ul>
         )}
 
-        {/* Right */}
+        {/* Desktop right: phone + CTA */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }} className="nav-desktop">
           <a
             href={`tel:${CLINIC.phone}`}
@@ -113,46 +108,67 @@ export default function MedokNav() {
           <button
             onClick={handleBooking}
             style={{
-              background: 'var(--teal)', color: '#fff', border: 'none',
-              padding: '9px 24px', borderRadius: 9999, fontSize: 13,
+              background: 'var(--teal-dark)', color: '#fff', border: 'none',
+              padding: '10px 24px', borderRadius: 9999, fontSize: 13,
               fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-              letterSpacing: '0.05em',
+              letterSpacing: '0.08em', minHeight: 40,
             }}
           >
             ЗАПИСАТИСЬ
           </button>
         </div>
 
-        {/* Burger */}
+        {/* Mobile right: CTA button + burger */}
+        <div className="nav-mobile-right" style={{ display: 'none', alignItems: 'center', gap: 10 }}>
+          <button
+            onClick={handleBooking}
+            style={{
+              background: 'var(--teal-dark)', color: '#fff', border: 'none',
+              padding: '9px 16px', borderRadius: 9999, fontSize: 12,
+              fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+              letterSpacing: '0.06em', minHeight: 36,
+            }}
+          >
+            ЗАПИСАТИСЬ
+          </button>
+          <button
+            onClick={() => setOpen(!open)}
+            className="nav-burger"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, display: 'flex', flexDirection: 'column', gap: 5 }}
+            aria-label="Меню"
+          >
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                style={{
+                  display: 'block', width: 22, height: 2,
+                  background: 'var(--gray-700)', borderRadius: 2,
+                  transition: 'all .3s',
+                  transform:
+                    open && i === 0 ? 'rotate(45deg) translate(5px,5px)' :
+                    open && i === 2 ? 'rotate(-45deg) translate(5px,-5px)' : 'none',
+                  opacity: open && i === 1 ? 0 : 1,
+                }}
+              />
+            ))}
+          </button>
+        </div>
+
+        {/* Desktop-only burger (hidden — kept for layout parity) */}
         <button
           onClick={() => setOpen(!open)}
-          className="nav-burger"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, display: 'none', flexDirection: 'column', gap: 5 }}
+          className="nav-burger-desktop"
+          style={{ display: 'none' }}
           aria-label="Меню"
-        >
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              style={{
-                display: 'block', width: 22, height: 2,
-                background: 'var(--gray-700)', borderRadius: 2,
-                transition: 'all .3s',
-                transform:
-                  open && i === 0 ? 'rotate(45deg) translate(5px,5px)' :
-                  open && i === 2 ? 'rotate(-45deg) translate(5px,-5px)' : 'none',
-                opacity: open && i === 1 ? 0 : 1,
-              }}
-            />
-          ))}
-        </button>
+        />
 
         <style>{`
-          .nav-logo { height: 40px; width: auto; }
-          @media (min-width: 768px) { .nav-logo { height: 48px; } }
-          @media (max-width: 768px) {
-            .nav-desktop { display: none !important; }
-            .nav-burger  { display: flex !important; }
-            nav          { padding: 0 20px !important; }
+          .nav-logo { height: 48px; width: auto; }
+          @media (min-width: 768px) { .nav-logo { height: 64px; } }
+          @media (max-width: 767px) {
+            .nav-desktop      { display: none !important; }
+            .nav-mobile-right { display: flex !important; }
+            nav               { padding: 0 16px !important; }
           }
         `}</style>
       </nav>
@@ -184,9 +200,10 @@ export default function MedokNav() {
           <a
             href={`tel:${CLINIC.phone}`}
             style={{
-              display: 'block', background: 'var(--teal)', color: '#fff',
-              padding: '14px 20px', borderRadius: 9999, fontWeight: 700,
-              fontSize: 15, textAlign: 'center', textDecoration: 'none',
+              display: 'block', color: 'var(--gray-700)',
+              padding: '12px 0', fontWeight: 600,
+              fontSize: 15, textDecoration: 'none',
+              borderBottom: '1px solid var(--gray-100)',
             }}
           >
             {CLINIC.phoneDisplay}

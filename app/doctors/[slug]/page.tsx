@@ -319,7 +319,7 @@ export default async function DoctorPage({
                   {schedule.days.map((d, i) => (
                     <span key={i}>
                       {i > 0 ? ' · ' : ''}
-                      {d.day.slice(0, 2)} {d.hours}
+                      {d.day} {d.hours}
                     </span>
                   ))}
                 </span>
@@ -525,7 +525,38 @@ export default async function DoctorPage({
         </section>
       )}
 
-      {/* ── 8. GEO + E-E-A-T ────────────────────────────────── */}
+      {/* ── 8. GEO ──────────────────────────────────────────── */}
+      {geoEeat?.geoText && (
+        <section
+          id="geo"
+          style={{
+            background: '#F3F4F6',
+            borderTop: '1px solid var(--gray-200)',
+            padding: '48px 48px 40px',
+          }}
+        >
+          <div style={{ maxWidth: 860, margin: '0 auto' }}>
+            <p
+              style={{
+                fontSize: 14,
+                color: 'var(--gray-600)',
+                lineHeight: 1.8,
+                maxWidth: 820,
+                margin: 0,
+              }}
+            >
+              {geoEeat.geoText}
+            </p>
+          </div>
+          <style>{`
+            @media(max-width:768px){
+              section#geo{ padding: 32px 20px 28px !important }
+            }
+          `}</style>
+        </section>
+      )}
+
+      {/* ── 9. E-E-A-T ──────────────────────────────────────── */}
       {geoEeat && (
         <DoctorGeoEeat
           reviewerName={geoEeat.reviewerName}
