@@ -140,7 +140,7 @@ export default function MedokFooter() {
               {[
                 'Соборна, вул. Соборна 18',
                 'Вишенька, вул. М. Ващука 20б',
-                'Бар, площа Пам'яті 5',
+                'Бар, площа Пам’яті 5',
               ].map((branch) => (
                 <div key={branch} style={{ fontSize: 12, color: TEXT }}>— {branch}</div>
               ))}
