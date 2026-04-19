@@ -40,29 +40,20 @@ import MedokHero from './components/MedokHero';
 
 export default function HomePage() {
   const booking = useBookingModal();
-  const [ctaText, setCtaText] = useState('Підібрати програму');
+  const [heroVisible, setHeroVisible] = useState(true);
   const doctorsRef = useRef<HTMLElement>(null);
   const programsRef = useRef<HTMLElement>(null);
 
+  // Hide sticky CTA while hero quiz is visible in viewport
   useEffect(() => {
-    const sections = [
-      { ref: doctorsRef, text: 'Записатись до лікаря' },
-      { ref: programsRef, text: 'Обрати програму' },
-    ];
-    const observers: IntersectionObserver[] = [];
-    const visible = new Set<string>();
-    sections.forEach(({ ref, text }) => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) { visible.add(text); setCtaText(text); }
-          else { visible.delete(text); if (visible.size === 0) setCtaText('Підібрати програму'); else setCtaText([...visible][visible.size - 1]); }
-        },
-        { threshold: 0.2 },
-      );
-      if (ref.current) observer.observe(ref.current);
-      observers.push(observer);
-    });
-    return () => observers.forEach((o) => o.disconnect());
+    const heroEl = document.getElementById('hero');
+    if (!heroEl) { setHeroVisible(false); return; }
+    const obs = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(heroEl);
+    return () => obs.disconnect();
   }, []);
 
   return (
@@ -202,10 +193,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* STICKY CTA — mobile only */}
-      <div className="v2-sticky-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, padding: '8px 16px', paddingBottom: 'max(8px, env(safe-area-inset-bottom))', background: '#fff', boxShadow: '0 -2px 8px rgba(0,0,0,0.08)' }}>
-        <button onClick={() => booking.open('quiz', { source: 'sticky-mobile' })} style={{ width: '100%', height: 52, background: '#1a7c75', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Підібрати програму</button>
-      </div>
+      {/* STICKY CTA — mobile only, hidden while hero is visible */}
+      {!heroVisible && (
+        <div className="v2-sticky-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, padding: '8px 16px', paddingBottom: 'max(8px, env(safe-area-inset-bottom))', background: '#fff', boxShadow: '0 -2px 8px rgba(0,0,0,0.08)' }}>
+          <button
+            onClick={() => booking.open('booking', { source: 'sticky-mobile' })}
+            style={{ width: '100%', height: 52, background: '#1a7c75', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}
+          >
+            ЗАПИСАТИСЬ
+          </button>
+        </div>
+      )}
 
       <style>{`
         .v2-sticky-cta{display:none}
