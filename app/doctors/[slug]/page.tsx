@@ -167,7 +167,8 @@ export default async function DoctorPage({
   const facts       = content?.facts ?? [];
   const education   = content?.education ?? [];
   const cpd         = content?.cpd ?? [];
-  const ctaLabel    = content?.ctaLabel ?? 'ЗАПИСАТИСЬ';
+  const ctaLabel       = content?.ctaLabel ?? 'ЗАПИСАТИСЬ';
+  const stickyCtaLabel = content?.stickyCtaLabel ?? ctaLabel;
 
   // Photo src helper
   const photoBase = doctor.photo_filename?.replace(/\.[^.]+$/, '');
@@ -534,7 +535,7 @@ export default async function DoctorPage({
       )}
 
       {/* ── Mobile sticky CTA ───────────────────────────────── */}
-      <DoctorStickyCta slug={slug} ctaLabel={ctaLabel} />
+      <DoctorStickyCta slug={slug} ctaLabel={ctaLabel} stickyCtaLabel={stickyCtaLabel} />
     </>
   );
 }

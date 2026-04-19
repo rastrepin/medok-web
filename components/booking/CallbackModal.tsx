@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import BottomSheet from './BottomSheet';
+import { IMaskInput } from 'react-imask';
 import { track } from '@/lib/track';
 
 const PURPOSES = [
@@ -34,6 +35,11 @@ export default function CallbackModal({ open, onClose, source }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (honeypot) return;
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 12) {
+      setErrorMsg('Введіть повний номер телефону');
+      return;
+    }
     setStatus('submitting');
     setErrorMsg('');
     void track({ event_type: 'form_submitted', modal_type: 'callback', source_cta: source });
@@ -110,9 +116,16 @@ export default function CallbackModal({ open, onClose, source }: Props) {
               </div>
               <div>
                 <label className="label">Телефон</label>
-                <input
-                  className="input" type="tel" placeholder="+380 XX XXX XXXX"
-                  value={phone} onChange={e => setPhone(e.target.value)} required
+                <IMaskInput
+                  mask="+{38} (000) 000-00-00"
+                  lazy={false}
+                  placeholderChar="_"
+                  type="tel"
+                  inputMode="numeric"
+                  className="input"
+                  value={phone}
+                  onAccept={(val: string) => setPhone(val)}
+                  required
                 />
               </div>
 

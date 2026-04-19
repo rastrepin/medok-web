@@ -30,6 +30,7 @@ export type DoctorContent = {
   education: EducationItem[];
   cpd: CpdCard[];
   ctaLabel: string;
+  stickyCtaLabel: string;
 };
 
 export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
@@ -53,6 +54,7 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'Наукова діяльність', body: 'Аспірантка кафедри акушерства та гінекології №2 ВНМУ ім. М.І. Пирогова.', tag: 'ВНМУ ім. Пирогова' },
     ],
     ctaLabel: 'ЗАПИСАТИСЬ ДО ВІКТОРІЇ',
+    stickyCtaLabel: 'ЗАПИСАТИСЬ ДО КЕЛЬМАН ВІКТОРІЇ',
   },
 
   'yanyuk-olha': {
@@ -74,6 +76,7 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'Кольпоскопія', body: 'Кваліфікаційний курс кольпоскопії та лікування патологій шийки матки.', tag: 'Кольпоскопія' },
     ],
     ctaLabel: 'ЗАПИСАТИСЬ ДО ОЛЬГИ',
+    stickyCtaLabel: 'ЗАПИСАТИСЬ ДО ЯНЮК ОЛЬГИ',
   },
 
   'trofimchuk-tetiana': {
@@ -95,6 +98,7 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'Академічна база', body: 'Диплом ВНМУ ім. М.І. Пирогова з відзнакою — міцна теоретична підготовка.', tag: 'ВНМУ з відзнакою' },
     ],
     ctaLabel: 'ЗАПИСАТИСЬ ДО ТЕТЯНИ',
+    stickyCtaLabel: 'ЗАПИСАТИСЬ ДО ТРОФІМЧУК ТЕТЯНИ',
   },
 
   'bondarchuk-zhanna': {
@@ -116,6 +120,7 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'Обладнання', body: 'Дослідження на апараті GE Voluson E8 — 3D/4D зображення найвищої якості.', tag: 'Voluson E8' },
     ],
     ctaLabel: 'ЗАПИСАТИСЬ НА УЗД',
+    stickyCtaLabel: 'ЗАПИСАТИСЬ НА УЗД',
   },
 };
 

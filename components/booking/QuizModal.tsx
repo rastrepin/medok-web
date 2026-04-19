@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import BottomSheet from './BottomSheet';
+import { IMaskInput } from 'react-imask';
 import { track } from '@/lib/track';
 import { getAvailableDays } from '@/lib/doctor-booking-utils';
 
@@ -74,10 +75,17 @@ export default function QuizModal({ open, onClose, prefilledTrimester, prefilled
   useEffect(() => {
     if (open) {
       void track({ event_type: 'modal_opened', modal_type: 'quiz', source_cta: source });
-      setStep(startStep);
+      // Compute start step fresh each open (avoids stale closure bug)
+      const st = prefilledTrimester && prefilledPregnancyType ? 3
+        : prefilledTrimester ? 2 : 1;
+      setStep(st);
+      setTrimester(prefilledTrimester ?? '');
+      setPregnancyType(prefilledPregnancyType ?? '');
+      setIsExisting(null);
+      setTransferWeek('');
       setShowResult(false);
     }
-  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [open, prefilledTrimester, prefilledPregnancyType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (datePills.length > 0 && !day) setDay(datePills[0].value);
@@ -108,6 +116,12 @@ export default function QuizModal({ open, onClose, prefilledTrimester, prefilled
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (honeypot || !trimester || !pregnancyType) return;
+    // Phone validation: must have 12 digits (38 + 10)
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 12) {
+      setErrorMsg('Введіть повний номер телефону');
+      return;
+    }
     setStatus('submitting');
     setErrorMsg('');
 
@@ -322,8 +336,17 @@ export default function QuizModal({ open, onClose, prefilledTrimester, prefilled
             </div>
             <div>
               <label className="label">Телефон</label>
-              <input className="input" type="tel" placeholder="+380 XX XXX XXXX"
-                value={phone} onChange={e => setPhone(e.target.value)} required />
+              <IMaskInput
+                mask="+{38} (000) 000-00-00"
+                lazy={false}
+                placeholderChar="_"
+                type="tel"
+                inputMode="numeric"
+                className="input"
+                value={phone}
+                onAccept={(val: string) => setPhone(val)}
+                required
+              />
             </div>
 
             <div>

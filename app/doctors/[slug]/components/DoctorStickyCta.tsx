@@ -1,13 +1,14 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useBookingModal } from '@/components/booking/useBookingModal';
 
 type Props = {
   slug: string;
   ctaLabel: string;
+  stickyCtaLabel: string;
 };
 
-export default function DoctorStickyCta({ slug, ctaLabel }: Props) {
+export default function DoctorStickyCta({ slug, ctaLabel: _ctaLabel, stickyCtaLabel }: Props) {
   const [visible, setVisible] = useState(false);
   const booking = useBookingModal();
 
@@ -32,23 +33,9 @@ export default function DoctorStickyCta({ slug, ctaLabel }: Props) {
       <div className="doctor-sticky-cta">
         <button
           onClick={() => booking.open('booking', { prefilledDoctorSlug: slug, source: 'sticky-mobile' })}
-          style={{
-            width: '100%',
-            background: 'var(--teal)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 9999,
-            padding: '14px 24px',
-            fontFamily: 'inherit',
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            cursor: 'pointer',
-            minHeight: 44,
-          }}
+          className="sticky-cta-btn"
         >
-          {ctaLabel}
+          {stickyCtaLabel}
         </button>
       </div>
       <style>{`
@@ -58,11 +45,32 @@ export default function DoctorStickyCta({ slug, ctaLabel }: Props) {
           bottom: 0; left: 0; right: 0;
           background: #fff;
           padding: 12px 20px;
-          border-top: 1px solid var(--gray-200);
-          box-shadow: var(--shadow-accent);
-          z-index: 50;
+          box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+          z-index: 150;
+          border-top: 1px solid #E5E7EB;
         }
-        @media (max-width: 767px) {
+        .sticky-cta-btn {
+          width: 100%;
+          background: var(--teal);
+          color: #fff;
+          border: none;
+          border-radius: 9999px;
+          padding: 14px 24px;
+          font-family: inherit;
+          font-size: 14px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          cursor: pointer;
+          min-height: 44px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        @media (max-width: 375px) {
+          .sticky-cta-btn { font-size: 13px; letter-spacing: 0.05em; }
+        }
+        @media (max-width: 768px) {
           .doctor-sticky-cta { display: block; }
         }
       `}</style>

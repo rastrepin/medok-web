@@ -81,7 +81,8 @@ export default function MedokNav() {
           <img
             src="/logo.png"
             alt="МЦ MED OK — медичний центр Вінниця"
-            style={{ height: doctorSlug ? 32 : 56, width: 'auto', display: 'block' }}
+            className="nav-logo"
+            style={{ display: 'block' }}
           />
         </a>
 
@@ -146,6 +147,8 @@ export default function MedokNav() {
         </button>
 
         <style>{`
+          .nav-logo { height: 40px; width: auto; }
+          @media (min-width: 768px) { .nav-logo { height: 48px; } }
           @media (max-width: 768px) {
             .nav-desktop { display: none !important; }
             .nav-burger  { display: flex !important; }
