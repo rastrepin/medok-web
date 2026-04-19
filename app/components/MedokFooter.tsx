@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: 'Лікарі',            anchor: 'doctors' },
   { label: 'Як це працює',      anchor: 'onboarding' },
   { label: 'Переваги',          anchor: 'why' },
-  { label: 'Запис',             anchor: 'quiz' },
+
   { label: 'FAQ',               anchor: 'faq' },
 ];
 

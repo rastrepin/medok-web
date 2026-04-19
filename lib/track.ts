@@ -41,7 +41,13 @@ export type TrackEvent = {
     | 'quiz_dropped'
     | 'quiz_to_callback'
     | 'quiz_to_form'
-    | 'form_submitted';
+    | 'form_submitted'
+    | 'quiz_inline_started'
+    | 'quiz_offer_viewed'
+    | 'quiz_offer_chose_full_pregnancy'
+    | 'quiz_doctor_selection_viewed'
+    | 'quiz_doctor_selected'
+    | 'quiz_doctor_skip';
   modal_type?: 'quiz' | 'booking' | 'callback';
   step_number?: number;
   step_value?: object;

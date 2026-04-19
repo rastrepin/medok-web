@@ -36,7 +36,7 @@ import MedokTransfer from './components/MedokTransfer';
 import MedokFaq from './components/MedokFaq';
 import MedokGeoBlock from './components/MedokGeoBlock';
 import MedokEeat from './components/MedokEeat';
-import MedokQuiz from './components/MedokQuiz';
+import MedokHero from './components/MedokHero';
 
 export default function HomePage() {
   const booking = useBookingModal();
@@ -68,26 +68,7 @@ export default function HomePage() {
   return (
     <>
       {/* 1. HERO */}
-      <section id="hero" style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px 64px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 18 }}>
-          <span style={{ width: 26, height: 2, background: 'var(--t)', borderRadius: 1, flexShrink: 0, display: 'inline-block' }} />
-          ВЕДЕННЯ ВАГІТНОСТІ · ВІННИЦЯ
-        </div>
-        <h1 style={{ fontFamily: 'var(--font)', fontSize: 48, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.1, marginBottom: 14, letterSpacing: '-.5px', maxWidth: 720 }}>
-          Ведення вагітності у Вінниці — МЦ MED OK
-        </h1>
-        <p style={{ fontSize: 16, fontWeight: 500, color: '#1A1A2E', lineHeight: 1.5, marginBottom: 28, maxWidth: 580 }}>
-          Лікар завжди на зв'язку — ваші аналізи та УЗД під рукою між візитами
-        </p>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 12 }}>
-          <button onClick={() => booking.open('quiz', { source: 'hero' })} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
-            Підібрати програму
-          </button>
-          <button onClick={() => document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'transparent', border: 'none', padding: '4px 0', fontSize: 14, fontWeight: 600, color: 'var(--td)', cursor: 'pointer', fontFamily: 'inherit' }}>
-            Наші лікарі ↓
-          </button>
-        </div>
-      </section>
+      <MedokHero />
 
       {/* 2. DOCTORS */}
       <section ref={doctorsRef} id="doctors" style={{ background: '#fff', borderTop: '1px solid var(--g100)' }}>
@@ -114,11 +95,10 @@ export default function HomePage() {
           <p style={{ fontSize: 14, color: 'var(--g500)', lineHeight: 1.6, maxWidth: 520 }}>
             Не знаєте, кого обрати?{' '}
             <a
-              href="#quiz"
+              href="#programs"
               onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
-                const quizEl = document.getElementById('quiz');
-                if (quizEl) quizEl.scrollIntoView({ behavior: 'smooth' });
+                booking.open('quiz', { source: 'doctors-link' });
               }}
               style={{ color: 'var(--td)', fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 2, cursor: 'pointer' }}
             >
@@ -152,13 +132,13 @@ export default function HomePage() {
                 </div>
                 <button onClick={() => {
                   const tMap: Record<string, 'first'|'second'|'third'|'full'> = { 'trimester-i': 'first', 'trimester-ii': 'second', 'trimester-iii': 'third', 'trimester-full': 'full' };
-                  booking.open('quiz', { prefilledTrimester: tMap[prog.id], prefilledPregnancyType: 'single', source: 'program-card' });
+                  booking.open('quiz', { source: 'doctors-link' });
                 }} style={{ background: '#005485', color: '#fff', border: 'none', padding: '11px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', width: '100%', minHeight: 44 }}>Обрати програму</button>
               </div>
             ))}
           </div>
           <div style={{ marginTop: 16 }}>
-            <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'transparent', border: 'none', padding: '4px 0', fontSize: 13, fontWeight: 600, color: 'var(--td)', cursor: 'pointer', fontFamily: 'inherit' }}>Подивитись повний склад програми ↓</button>
+
           </div>
         </div>
       </section>
@@ -208,7 +188,6 @@ export default function HomePage() {
       {/* 6-11. Reused sections */}
       <div id="transfer" style={{ borderTop: '1px solid var(--g100)' }}><MedokTransfer /></div>
       <div style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)' }}><MedokFaq /></div>
-      <div id="quiz"><MedokQuiz /></div>
       <MedokGeoBlock />
       <MedokEeat />
       {/* Callback CTA — replaces inline form */}
@@ -225,7 +204,7 @@ export default function HomePage() {
 
       {/* STICKY CTA — mobile only */}
       <div className="v2-sticky-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, padding: '8px 16px', paddingBottom: 'max(8px, env(safe-area-inset-bottom))', background: '#fff', boxShadow: '0 -2px 8px rgba(0,0,0,0.08)' }}>
-        <button onClick={() => booking.open('quiz', { source: 'sticky-mobile' })} style={{ width: '100%', height: 52, background: '#d60242', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Підібрати програму</button>
+        <button onClick={() => booking.open('quiz', { source: 'sticky-mobile' })} style={{ width: '100%', height: 52, background: '#1a7c75', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Підібрати програму</button>
       </div>
 
       <style>{`
