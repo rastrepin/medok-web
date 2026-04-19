@@ -11,7 +11,7 @@ const NAV_LINKS = [
 
 export default function MedokFooter() {
   return (
-    <footer style={{ background: 'var(--g900)', color: '#fff', marginTop: 0 }}>
+    <footer style={{ background: '#0d1f1e', color: '#fff', marginTop: 0 }}>
       <div style={{ maxWidth: 1140, margin: '0 auto', padding: '56px 48px 32px' }}>
         {/* Top row */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 48, marginBottom: 48 }}>

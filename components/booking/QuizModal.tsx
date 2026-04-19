@@ -50,7 +50,8 @@ export default function QuizModal({ open, onClose, prefilledTrimester, prefilled
   const [phone,    setPhone]    = useState('');
   const [contact,  setContact]  = useState<ContactMethod>('phone');
   const [day,      setDay]      = useState('');
-  const [status,   setStatus]   = useState<'idle' | 'submitting'>('idle');
+  const [status,   setStatus]   = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [cabinetUuid, setCabinetUuid] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [honeypot, setHoneypot] = useState('');
 
@@ -130,16 +131,49 @@ export default function QuizModal({ open, onClose, prefilledTrimester, prefilled
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Помилка');
       void track({ event_type: 'form_submitted', modal_type: 'quiz', source_cta: source });
-      if (data.cabinet_uuid) {
-        router.push(`/o/${data.cabinet_uuid}`);
-      } else {
-        onClose();
-      }
+      setCabinetUuid(data.cabinet_uuid ?? null);
+      setStatus('success');
+      setTimeout(() => {
+        if (data.cabinet_uuid) router.push(`/o/${data.cabinet_uuid}`);
+        else onClose();
+      }, 3000);
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Щось пішло не так. Спробуйте ще раз.');
       setStatus('idle');
     }
   };
+
+
+  // ── Success screen ──────────────────────────────────────────
+  if (status === 'success') {
+    return (
+      <BottomSheet open={open} onClose={onClose} title="">
+        <div style={{ textAlign: 'center', padding: '40px 8px' }}>
+          <div style={{ marginBottom: 20 }}>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none"
+              stroke="var(--teal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              style={{ margin: '0 auto', display: 'block' }}>
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
+            color: 'var(--gray-900)', marginBottom: 12, textTransform: 'uppercase' }}>
+            Заявку отримали!
+          </p>
+          <p style={{ fontSize: 15, color: 'var(--gray-700)', lineHeight: 1.6, marginBottom: 24 }}>
+            Адміністратор зв&apos;яжеться з вами для підтвердження та узгодження дати.
+          </p>
+          {cabinetUuid && (
+            <a href={`/o/${cabinetUuid}`}
+              style={{ fontSize: 13, color: 'var(--teal-dark)', fontWeight: 600, textDecoration: 'none' }}>
+              Деталі запису →
+            </a>
+          )}
+        </div>
+      </BottomSheet>
+    );
+  }
 
   // Progress bar
   const totalSteps = 4;

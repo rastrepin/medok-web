@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BottomSheet from './BottomSheet';
 import { track } from '@/lib/track';
 
@@ -64,16 +64,25 @@ export default function CallbackModal({ open, onClose, source }: Props) {
     <BottomSheet open={open} onClose={onClose} title="Передзвонимо вам">
       <div onMouseEnter={handleOpen}>
         {status === 'success' ? (
-          <div style={{ textAlign: 'center', padding: '32px 0' }}>
-            <div style={{ fontSize: 40, marginBottom: 16 }}>
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" strokeWidth="2" strokeLinecap="round" style={{ margin: '0 auto' }}>
-                <polyline points="20 6 9 17 4 12"/>
+          <div style={{ textAlign: 'center', padding: '40px 8px' }}>
+            <div style={{ marginBottom: 20 }}>
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none"
+                stroke="var(--teal)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                style={{ margin: '0 auto', display: 'block' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="9 12 11 14 15 10"/>
               </svg>
             </div>
-            <p className="h3" style={{ marginBottom: 8 }}>Дякуємо!</p>
-            <p className="body" style={{ color: 'var(--gray-700)' }}>
+            <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
+              color: 'var(--gray-900)', marginBottom: 12, textTransform: 'uppercase' }}>
+              Дякуємо!
+            </p>
+            <p style={{ fontSize: 15, color: 'var(--gray-700)', lineHeight: 1.6, marginBottom: 28 }}>
               Адміністратор зателефонує протягом робочого дня.
             </p>
+            <button onClick={onClose} className="btn-secondary" style={{ padding: '12px 32px' }}>
+              Закрити
+            </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
