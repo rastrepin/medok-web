@@ -5,14 +5,15 @@
 
 import { DOCTOR_SCHEDULES } from './doctor-schedules';
 
+// Maps abbreviated lowercase day codes (used in DOCTOR_SCHEDULES) → JS getDay() value
 const DAY_OF_WEEK: Record<string, number> = {
-  'Неділя':    0,
-  'Понеділок': 1,
-  'Вівторок':  2,
-  'Середа':    3,
-  'Четвер':    4,
-  'П\'ятниця': 5,
-  'Субота':    6,
+  'нд': 0,  // неділя
+  'пн': 1,  // понеділок
+  'вт': 2,  // вівторок
+  'ср': 3,  // середа
+  'чт': 4,  // четвер
+  'пт': 5,  // п'ятниця
+  'сб': 6,  // субота
 };
 
 export type AvailableDay = {

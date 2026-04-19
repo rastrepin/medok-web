@@ -185,7 +185,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. ADVANTAGES */}
-      <section id="advantages" style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)', borderBottom: '1px solid var(--g100)' }}>
+      <section id="why" style={{ background: 'var(--g50)', borderTop: '1px solid var(--g100)', borderBottom: '1px solid var(--g100)' }}>
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>ЧОМУ MED OK</div>
