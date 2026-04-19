@@ -50,6 +50,9 @@ export interface LeadPayload {
   doctor_name?: string;
   referrer_url?: string;
   city?: string;
+  // booking system
+  quiz_answers?: object;
+  is_existing_patient?: boolean;
 }
 
 export interface Cabinet {

@@ -1,0 +1,308 @@
+/* =====================================================
+   MEDOK Component Utility Classes
+   Source: medok-design-tokens.md
+   ===================================================== */
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+@media (min-width: 768px) { .container { padding: 0 32px; } }
+
+/* ── Typography ── */
+.h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--gray-900);
+}
+@media (min-width: 768px) { .h1 { font-size: 44px; } }
+
+.h1-accent { color: var(--teal-dark); }
+
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gray-900);
+}
+@media (min-width: 768px) { .h2 { font-size: 36px; } }
+
+.h3 {
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--black);
+}
+@media (min-width: 768px) { .h3 { font-size: 20px; } }
+
+.eyebrow {
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+}
+
+.body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--black);
+}
+@media (min-width: 768px) { .body { font-size: 16px; line-height: 1.7; } }
+
+.body-lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--gray-700);
+}
+
+.caption {
+  font-family: var(--font-text);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+/* ── Inputs ── */
+.input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-md);
+  font-family: var(--font-text);
+  font-size: 16px;
+  background: var(--white);
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input::placeholder { color: var(--gray-500); }
+.input:focus { border-color: var(--teal-dark); }
+.input:disabled { background: var(--gray-100); color: var(--gray-500); }
+
+.label {
+  display: block;
+  font-family: var(--font-text);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  margin-bottom: 6px;
+}
+
+/* ── Pill toggles (contact method) ── */
+.pill-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-pill);
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-700);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.pill-toggle.active {
+  border-color: var(--teal-dark);
+  background: var(--mint-tint);
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+
+/* ── Date pills ── */
+.date-pill {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--white);
+}
+.date-pill .day  { font-size: 11px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; }
+.date-pill .date { font-size: 15px; color: var(--black); font-weight: 600; margin-top: 2px; }
+.date-pill.active { border-color: var(--teal-dark); background: var(--mint-tint); }
+
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--teal);
+  color: var(--white);
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-primary:hover { background: var(--teal-dark); }
+.btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+.btn-primary-long {
+  background: var(--teal);
+  color: var(--white);
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-primary-long:hover { background: var(--teal-dark); }
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--teal-dark);
+  border: 1.5px solid var(--teal-dark);
+  padding: 14px 24px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-text);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-secondary:hover { background: var(--mint-tint); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--teal-dark);
+  border: none;
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+/* ── Sticky CTA mobile ── */
+.sticky-cta {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  padding: 12px 20px;
+  border-top: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-accent);
+  z-index: 50;
+}
+@media (min-width: 768px) { .sticky-cta { display: none; } }
+
+/* ── Cards ── */
+.card {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-lg);
+  padding: 18px;
+  transition: border-color 0.15s;
+}
+@media (min-width: 768px) { .card { padding: 24px; } }
+.card:hover { border-color: var(--teal-dark); }
+
+.card-accent {
+  background: var(--mint-tint);
+  border: none;
+  border-radius: var(--r-xl);
+  padding: 20px;
+}
+
+.card-fact {
+  background: var(--mint-light);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  text-align: center;
+}
+.card-fact .number {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.card-fact .label {
+  font-family: var(--font-text);
+  font-size: 11px;
+  color: var(--teal-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  position: relative;
+}
+
+/* Mobile: full bottom sheet */
+@media (max-width: 767px) {
+  .modal-overlay { align-items: flex-end; }
+  .modal-content {
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    max-height: 90vh;
+    padding: 24px 20px;
+  }
+}
+
+/* ── Drag handle ── */
+.drag-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--gray-300);
+  border-radius: var(--r-full);
+  margin: 0 auto 20px;
+}

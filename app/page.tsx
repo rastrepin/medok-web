@@ -31,14 +31,15 @@ const ADVANTAGES = [
 ];
 
 function fmt(n: number) { return n.toLocaleString('uk-UA'); }
+import { useBookingModal } from '@/components/booking/useBookingModal';
 import MedokTransfer from './components/MedokTransfer';
 import MedokFaq from './components/MedokFaq';
 import MedokGeoBlock from './components/MedokGeoBlock';
 import MedokEeat from './components/MedokEeat';
-import CallbackForm from './components/CallbackForm';
 import MedokQuiz from './components/MedokQuiz';
 
 export default function HomePage() {
+  const booking = useBookingModal();
   const [ctaText, setCtaText] = useState('Підібрати програму');
   const doctorsRef = useRef<HTMLElement>(null);
   const programsRef = useRef<HTMLElement>(null);
@@ -79,7 +80,7 @@ export default function HomePage() {
           Лікар завжди на зв'язку — ваші аналізи та УЗД під рукою між візитами
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 12 }}>
-          <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
+          <button onClick={() => booking.open('quiz', { source: 'hero' })} style={{ background: 'var(--c)', color: '#fff', border: 'none', padding: '15px 36px', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>
             Підібрати програму
           </button>
           <button onClick={() => document.getElementById('doctors')?.scrollIntoView({ behavior: 'smooth' })} style={{ background: 'transparent', border: 'none', padding: '4px 0', fontSize: 14, fontWeight: 600, color: 'var(--td)', cursor: 'pointer', fontFamily: 'inherit' }}>
@@ -105,7 +106,7 @@ export default function HomePage() {
                 <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--g900)', marginBottom: 3, lineHeight: 1.35 }}>{doc.name}</div>
                 <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '.5px' }}>{doc.role}</div>
                 <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, flex: 1 }}>{doc.bio}</p>
-                <a href={`/doctors/${doc.slug}#booking`} style={{ display: 'block', textAlign: 'center', padding: '10px 6px', background: '#005485', color: '#fff', borderRadius: 10, fontSize: 13, fontWeight: 700, textDecoration: 'none', width: '100%', minHeight: 44, lineHeight: '24px' }}>Записатись</a>
+                <button onClick={() => booking.open('booking', { prefilledDoctorSlug: doc.slug, source: 'doctor-card' })} style={{ display: 'block', textAlign: 'center', padding: '10px 6px', background: '#005485', color: '#fff', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', border: 'none', width: '100%', minHeight: 44 }}>Записатись</button>
                 <a href={`/doctors/${doc.slug}?case=pregnancy`} style={{ display: 'block', textAlign: 'center', fontSize: 12, fontWeight: 600, color: 'var(--td)', textDecoration: 'none', marginTop: 8, padding: '4px 0' }}>Профіль →</a>
               </div>
             ))}
@@ -149,7 +150,10 @@ export default function HomePage() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => { const m: Record<string, string> = { 'trimester-i': 'i', 'trimester-ii': 'ii', 'trimester-iii': 'iii', 'trimester-full': 'full' }; window.dispatchEvent(new CustomEvent('medok:prefill', { detail: { trimester: m[prog.id] } })); document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' }); }} style={{ background: '#005485', color: '#fff', border: 'none', padding: '11px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', width: '100%', minHeight: 44 }}>Обрати програму</button>
+                <button onClick={() => {
+                  const tMap: Record<string, 'first'|'second'|'third'|'full'> = { 'trimester-i': 'first', 'trimester-ii': 'second', 'trimester-iii': 'third', 'trimester-full': 'full' };
+                  booking.open('quiz', { prefilledTrimester: tMap[prog.id], prefilledPregnancyType: 'single', source: 'program-card' });
+                }} style={{ background: '#005485', color: '#fff', border: 'none', padding: '11px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit', width: '100%', minHeight: 44 }}>Обрати програму</button>
               </div>
             ))}
           </div>
@@ -207,11 +211,21 @@ export default function HomePage() {
       <div id="quiz"><MedokQuiz /></div>
       <MedokGeoBlock />
       <MedokEeat />
-      <CallbackForm />
+      {/* Callback CTA — replaces inline form */}
+      <section style={{ background: 'var(--mint-tint)', borderTop: '1px solid var(--gray-200)' }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px', textAlign: 'center' }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 12 }}>ЗВ'ЯЗОК</p>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: 'var(--gray-900)', marginBottom: 8, textTransform: 'uppercase' }}>Передзвонимо вам</h2>
+          <p style={{ fontSize: 15, color: 'var(--gray-700)', marginBottom: 24, lineHeight: 1.6 }}>Залишіть номер — адміністратор зателефонує протягом робочого дня</p>
+          <button onClick={() => booking.open('callback', { source: 'footer-cta' })} className="btn-primary" style={{ minWidth: 200 }}>
+            ПЕРЕДЗВОНИТИ
+          </button>
+        </div>
+      </section>
 
       {/* STICKY CTA — mobile only */}
       <div className="v2-sticky-cta" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 100, padding: '8px 16px', paddingBottom: 'max(8px, env(safe-area-inset-bottom))', background: '#fff', boxShadow: '0 -2px 8px rgba(0,0,0,0.08)' }}>
-        <button onClick={() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth' })} style={{ width: '100%', height: 52, background: '#d60242', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>{ctaText}</button>
+        <button onClick={() => booking.open('quiz', { source: 'sticky-mobile' })} style={{ width: '100%', height: 52, background: '#d60242', color: '#fff', border: 'none', borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit' }}>Підібрати програму</button>
       </div>
 
       <style>{`

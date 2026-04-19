@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useBookingModal } from '@/components/booking/useBookingModal';
 import { CLINIC } from '@/lib/data';
 
 const NAV_LINKS = [
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 export default function MedokNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const booking = useBookingModal();
   const isHome = pathname === '/';
 
   const handleLink = (id: string) => {
@@ -84,7 +86,7 @@ export default function MedokNav() {
             {CLINIC.phoneDisplay}
           </a>
           <button
-            onClick={handleQuiz}
+            onClick={() => { setOpen(false); booking.open('booking', { source: 'header' }); }}
             style={{
               background: 'var(--t)', color: '#fff', border: 'none',
               padding: '9px 24px', borderRadius: 9999, fontSize: 13,

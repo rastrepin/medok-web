@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServiceClient } from '@/lib/supabase';
 import { LeadPayload } from '@/lib/types';
 import { normalizePhone, isSpamPhone, isValidUkrainianPhone } from '@/lib/lead-utils';
-import { randomUUID } from 'crypto';
 
 // ── email helpers ─────────────────────────────────────────────────────────────
 
@@ -193,11 +192,10 @@ export async function POST(req: NextRequest) {
   const sanitizedBody: LeadPayload = { ...body, phone: normalizedPhone };
 
   // ── DB ────────────────────────────────────────────────────────────────────
-  const supabase    = createServiceClient();
-  const cabinetUuid = randomUUID();
-  const origin      = req.headers.get('origin') || 'https://medok.check-up.in.ua';
-  const cabinetUrl  = `${origin}/cabinet/${cabinetUuid}`;
+  const supabase = createServiceClient();
+  const origin   = req.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'https://medok.check-up.in.ua';
 
+  // INSERT lead — trigger auto_create_cabinet fires and creates cabinet row
   const { data: lead, error: leadError } = await supabase
     .from('medok_leads')
     .insert({
@@ -212,6 +210,9 @@ export async function POST(req: NextRequest) {
       preferred_dates:    sanitizedBody.preferred_dates    ?? null,
       transfer_week:      sanitizedBody.transfer_week      ?? null,
       has_medical_records: sanitizedBody.has_medical_records ?? null,
+      // new fields (booking system)
+      quiz_answers:       sanitizedBody.quiz_answers       ?? null,
+      is_existing_patient: sanitizedBody.is_existing_patient ?? null,
       // doctor_booking fields
       contact_method:     sanitizedBody.contact_method     ?? null,
       visit_purpose:      sanitizedBody.visit_purpose      ?? null,
@@ -230,21 +231,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'db error' }, { status: 500 });
   }
 
-  // Cabinet (secondary — don't fail on error)
-  const { error: cabError } = await supabase
+  // Fetch UUID created by trigger (auto_create_cabinet)
+  const { data: cabinet } = await supabase
     .from('medok_cabinets')
-    .insert({
-      uuid:                cabinetUuid,
-      lead_id:             lead.id,
-      patient_name:        sanitizedBody.name.trim(),
-      patient_phone:       normalizedPhone,
-      program_id:          sanitizedBody.program_id   ?? null,
-      doctor_id:           sanitizedBody.doctor_id    ?? null,
-      trimester:           sanitizedBody.trimester    ?? null,
-      appointment_status:  'pending',
-    });
+    .select('uuid')
+    .eq('lead_id', lead.id)
+    .single();
 
-  if (cabError) console.error('[CABINET ERROR]', cabError);
+  const cabinetUuid = cabinet?.uuid ?? '';
+  const cabinetUrl  = cabinetUuid ? `${origin}/o/${cabinetUuid}` : '';
 
   // ── Notifications (non-blocking) ─────────────────────────────────────────
   const tgText = buildTelegramText(sanitizedBody, cabinetUrl);
@@ -253,5 +248,5 @@ export async function POST(req: NextRequest) {
     sendEmailViaResend(sanitizedBody, cabinetUrl),
   ]);
 
-  return NextResponse.json({ cabinet_url: cabinetUrl });
+  return NextResponse.json({ cabinet_url: cabinetUrl, cabinet_uuid: cabinetUuid });
 }
