@@ -6,6 +6,7 @@ import MedokNav from "./components/MedokNav";
 import MedokFooter from "./components/MedokFooter";
 import { BookingModalProvider } from "@/components/booking/BookingModalProvider";
 import BookingSystem from "@/components/booking/BookingSystem";
+import PwaRegister from "@/components/PwaRegister";
 
 const comfortaa = Comfortaa({
   variable: "--font-display-loaded",
@@ -143,6 +144,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main style={{ flex: 1 }}>{children}</main>
           <MedokFooter />
           <BookingSystem />
+          <PwaRegister />
         </BookingModalProvider>
       </body>
     </html>
