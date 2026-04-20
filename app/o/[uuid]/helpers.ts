@@ -109,20 +109,46 @@ export function programPrice(cab: OnboardingCabinet): { value: number; label: st
   return { value: cab.program.price_single, label: 'одноплідна' };
 }
 
-/** Trimester label for display */
-export function trimesterLabel(trimester: string | null): string {
-  switch (trimester) {
+/** Normalize trimester values used across quiz ("first"/"second"/...)
+ * and DB ("i"/"ii"/...) to a common key. */
+export function normalizeTrimester(
+  t: string | null,
+): 'i' | 'ii' | 'iii' | 'full' | null {
+  switch (t) {
+    case 'i':
+    case 'first':
+      return 'i';
+    case 'ii':
+    case 'second':
+      return 'ii';
+    case 'iii':
+    case 'third':
+      return 'iii';
+    case 'full':
+    case 'all':
+      return 'full';
+    default:
+      return null;
+  }
+}
+
+/** Trimester label for display. Returns null when unknown
+ * so the caller can hide the row. */
+export function trimesterLabel(trimester: string | null): string | null {
+  switch (normalizeTrimester(trimester)) {
     case 'i':   return 'I триместр';
     case 'ii':  return 'II триместр';
     case 'iii': return 'III триместр';
     case 'full': return 'Вся вагітність';
-    default: return '—';
+    default: return null;
   }
 }
 
-/** Pregnancy type label */
-export function pregnancyTypeLabel(t: 'single' | 'twin' | null): string {
-  return t === 'twin' ? 'Двоплідна' : t === 'single' ? 'Одноплідна' : '—';
+/** Pregnancy type label. Returns null when unknown so the caller can hide the row. */
+export function pregnancyTypeLabel(t: 'single' | 'twin' | null): string | null {
+  if (t === 'twin') return 'Двоплідна';
+  if (t === 'single') return 'Одноплідна';
+  return null;
 }
 
 /** Format preferred_day (ISO date or "other") */

@@ -253,10 +253,9 @@ function RequestSummary({ cabinet, isConfirmed }: { cabinet: Cab; isConfirmed: b
 
   return (
     <section>
-      {/* одна конструкція — тільки eyebrow + H2 "Ваш запит" */}
+      {/* одна конструкція на секцію — тільки H2, без eyebrow */}
       <SectionHeader
-        eyebrow="ВАШ ЗАПИТ"
-        title={isConfirmed ? 'Деталі запису' : 'Що ви обрали'}
+        title={isConfirmed ? 'Деталі запису' : 'Ваш запит'}
       />
 
       <div style={cardDefault}>
@@ -442,22 +441,24 @@ function DoctorAvatar({ doctor, size }: {
 }
 
 function SectionHeader({ eyebrow, title, hint, isAlert }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   hint?: string;
   isAlert?: boolean;
 }) {
   return (
     <div style={{ margin: '0 0 12px' }}>
-      <div
-        className="eyebrow"
-        style={{
-          color: isAlert ? 'var(--crimson, #d60242)' : 'var(--teal-dark, #1a7c75)',
-          marginBottom: 4,
-        }}
-      >
-        {eyebrow}
-      </div>
+      {eyebrow && (
+        <div
+          className="eyebrow"
+          style={{
+            color: isAlert ? 'var(--crimson, #d60242)' : 'var(--teal-dark, #1a7c75)',
+            marginBottom: 4,
+          }}
+        >
+          {eyebrow}
+        </div>
+      )}
       <h2 className="h2" style={{ margin: 0, fontSize: 20, lineHeight: 1.3 }}>{title}</h2>
       {hint && (
         <div style={{ marginTop: 6, fontSize: 13, color: 'var(--gray-500, #6B7280)' }}>{hint}</div>

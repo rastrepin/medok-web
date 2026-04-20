@@ -114,11 +114,27 @@ export async function fetchEnrichedCabinet(
   }
 
   let resolvedProgram = programRow;
-  if (!resolvedProgram && lead?.program_id) {
+
+  // Derive a canonical programs.id from lead-level data when the trigger or
+  // form stored a non-canonical identifier (e.g. "ii-single" instead of
+  // "trimester-ii") or nothing at all.
+  const trimToProgramId: Record<string, string> = {
+    i: 'trimester-i', first: 'trimester-i',
+    ii: 'trimester-ii', second: 'trimester-ii',
+    iii: 'trimester-iii', third: 'trimester-iii',
+    full: 'trimester-full', all: 'trimester-full',
+  };
+  const derivedProgramId =
+    (lead?.program_id && trimToProgramId[lead.program_id]) ||
+    (lead?.trimester && trimToProgramId[lead.trimester]) ||
+    lead?.program_id ||
+    null;
+
+  if (!resolvedProgram && derivedProgramId) {
     const { data: p2 } = await supabase
       .from('medok_programs')
       .select('id, name, price_single, price_twin, includes, trimester')
-      .eq('id', lead.program_id)
+      .eq('id', derivedProgramId)
       .maybeSingle();
     if (p2) {
       resolvedProgram = p2 as typeof programRow;
