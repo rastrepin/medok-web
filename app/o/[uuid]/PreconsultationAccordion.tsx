@@ -70,9 +70,11 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
 
   // Save state
   const [savingKey, setSavingKey] = useState<string | null>(null);
+  const [savedKey, setSavedKey] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [serverCompletedAt, setServerCompletedAt] = useState<string | null>(initial?.completed_at ?? null);
   const abortRef = useRef<AbortController | null>(null);
+  const savedTimerRef = useRef<number | null>(null);
 
   const save = useCallback(async (patch: Partial<PreconsultationData>, key: string) => {
     if (abortRef.current) abortRef.current.abort();
@@ -90,6 +92,10 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
       if (!res.ok) throw new Error(`status ${res.status}`);
       const json = (await res.json()) as { preconsultation: PreconsultationData };
       if (json.preconsultation?.completed_at) setServerCompletedAt(json.preconsultation.completed_at);
+      // Flash "✓ Збережено" for 1.5s
+      if (savedTimerRef.current) window.clearTimeout(savedTimerRef.current);
+      setSavedKey(key);
+      savedTimerRef.current = window.setTimeout(() => setSavedKey(null), 1500);
     } catch (err) {
       if ((err as Error).name !== 'AbortError') setSaveError('Не вдалось зберегти. Перевірте з’єднання.');
     } finally {
@@ -143,7 +149,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           <div className="eyebrow" style={{ color: 'var(--teal-dark, #1a7c75)', marginBottom: 4 }}>АНКЕТА · 2 ХВ</div>
           <div className="h3" style={{ marginBottom: 4 }}>Розкажіть про вашу вагітність</div>
           <div className="caption" style={{ color: 'var(--gray-500, #6B7280)' }}>
-            Відповіді допоможуть лікарю краще підготуватись · {filled} з {REQUIRED_STEPS}
+            Відповіді допоможуть лікарю краще підготуватись · <strong style={{ color: 'var(--teal-dark, #1a7c75)' }}>{filled} з {REQUIRED_STEPS}</strong>
           </div>
         </div>
         <span style={{
@@ -168,7 +174,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
       {open && (
         <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 18 }}>
           {/* 1. Pregnancy week */}
-          <Field label="Тиждень вагітності" hint="1–41" saving={savingKey === 'pregnancy_week'}>
+          <Field label="Тиждень вагітності" hint="1–41" saving={savingKey === 'pregnancy_week'} saved={savedKey === 'pregnancy_week'}>
             <input
               type="number"
               min={1}
@@ -187,7 +193,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           </Field>
 
           {/* 2. First pregnancy? */}
-          <Field label="Перша вагітність?" saving={savingKey === 'is_first_pregnancy'}>
+          <Field label="Перша вагітність?" saving={savingKey === 'is_first_pregnancy'} saved={savedKey === 'is_first_pregnancy'}>
             <div style={pillsRow}>
               <Pill
                 active={data.is_first_pregnancy === true}
@@ -209,7 +215,11 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
 
           {/* 3. If not first — births count + method */}
           {data.is_first_pregnancy === false && (
-            <Field label="Скільки пологів + спосіб">
+            <Field
+              label="Скільки пологів + спосіб"
+              saving={savingKey === 'previous_births_count' || savingKey === 'previous_births_method'}
+              saved={savedKey === 'previous_births_count' || savedKey === 'previous_births_method'}
+            >
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <input
                   type="number"
@@ -243,7 +253,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           )}
 
           {/* 4. Chronic conditions */}
-          <Field label="Хронічні захворювання" hint="можна обрати декілька" saving={savingKey === 'chronic_conditions'}>
+          <Field label="Хронічні захворювання" hint="можна обрати декілька" saving={savingKey === 'chronic_conditions'} saved={savedKey === 'chronic_conditions'}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {CHRONIC_OPTIONS.map(opt => {
                 const arr = data.chronic_conditions ?? [];
@@ -274,7 +284,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           </Field>
 
           {/* 5. Medications */}
-          <Field label="Препарати зараз" hint="фолієва, вітаміни, інсулін тощо" saving={savingKey === 'current_medications'}>
+          <Field label="Препарати зараз" hint="фолієва, вітаміни, інсулін тощо" saving={savingKey === 'current_medications'} saved={savedKey === 'current_medications'}>
             <textarea
               className="input"
               rows={2}
@@ -287,7 +297,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           </Field>
 
           {/* 6. Allergies */}
-          <Field label="Алергії" saving={savingKey === 'allergies'}>
+          <Field label="Алергії" saving={savingKey === 'allergies'} saved={savedKey === 'allergies'}>
             <textarea
               className="input"
               rows={2}
@@ -300,7 +310,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           </Field>
 
           {/* 7. Main concern */}
-          <Field label="Що турбує найбільше?" hint="обов'язково — лікар підготується саме до цього" saving={savingKey === 'main_concern'}>
+          <Field label="Що турбує найбільше?" hint="обов'язково — лікар підготується саме до цього" saving={savingKey === 'main_concern'} saved={savedKey === 'main_concern'}>
             <textarea
               className="input"
               rows={3}
@@ -322,7 +332,7 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
           )}
 
           <div className="caption" style={{ color: 'var(--gray-500, #6B7280)', textAlign: 'center' }}>
-            Відповіді зберігаються автоматично. Можна закрити сторінку — прогрес не зникне.
+            Кожна відповідь зберігається одразу. Можна закрити сторінку — прогрес не зникне.
           </div>
         </div>
       )}
@@ -332,10 +342,11 @@ export default function PreconsultationAccordion({ uuid, initial }: Props) {
 
 /* ────────────────────────────── Small subcomponents ───────────────────────── */
 
-function Field({ label, hint, saving, children }: {
+function Field({ label, hint, saving, saved, children }: {
   label: string;
   hint?: string;
   saving?: boolean;
+  saved?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -344,6 +355,11 @@ function Field({ label, hint, saving, children }: {
         <label className="label" style={{ margin: 0 }}>{label}</label>
         {saving ? (
           <span style={{ fontSize: 11, color: 'var(--gray-500, #6B7280)' }}>зберігаю…</span>
+        ) : saved ? (
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--teal-dark, #1a7c75)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+            Збережено
+          </span>
         ) : hint ? (
           <span style={{ fontSize: 11, color: 'var(--gray-500, #6B7280)' }}>{hint}</span>
         ) : null}

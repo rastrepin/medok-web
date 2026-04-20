@@ -5,13 +5,12 @@ import { fetchEnrichedCabinet } from '@/lib/cabinet-query';
 import { CLINIC } from '@/lib/data';
 import PreconsultationAccordion from './PreconsultationAccordion';
 import AddToHomeScreenHint from './AddToHomeScreenHint';
+import ProgramIncludedAccordion from './ProgramIncludedAccordion';
 import {
   formatKyivAppointment,
   formatPreferredDay,
-  formatUAH,
   getCallbackEta,
   pregnancyTypeLabel,
-  programPrice,
   telHref,
   trimesterLabel,
 } from './helpers';
@@ -22,6 +21,8 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
+
+type Cab = NonNullable<Awaited<ReturnType<typeof fetchEnrichedCabinet>>>['cabinet'];
 
 interface Props {
   params: Promise<{ uuid: string }>;
@@ -43,40 +44,49 @@ export default async function OnboardingPage({ params }: Props) {
       {isConfirmed ? <HeroConfirmed cabinet={cabinet} /> : <HeroPending cabinet={cabinet} />}
 
       <div style={container}>
-        {/* PWA banner — hide after confirmation (spec 2.1 end) */}
+        {/* PWA banner — hide after confirmation */}
         {!isConfirmed && (
           <div style={{ margin: '0 0 24px' }}>
             <AddToHomeScreenHint />
           </div>
         )}
 
+        {/* 1. Ваш запит (об'єднує «Що обрано» + «Програма/Що входить» акордеон) */}
         <RequestSummary cabinet={cabinet} isConfirmed={isConfirmed} />
 
-        <SectionTitle eyebrow="ДОДАТКОВО · 2 ХВ" title="Анкета для лікаря">
-          <span style={{ color: 'var(--gray-500, #6B7280)', fontSize: 14 }}>Можна заповнити зараз або після дзвінка адміністратора</span>
-        </SectionTitle>
-        <PreconsultationAccordion uuid={cabinet.uuid} initial={cabinet.preconsultation} />
+        {/* 2. Анкета для лікаря */}
+        <section>
+          <SectionHeader
+            eyebrow="ДОДАТКОВО · 2 ХВ"
+            title="Анкета для лікаря"
+            hint="Можна заповнити зараз або після дзвінка адміністратора"
+          />
+          <PreconsultationAccordion uuid={cabinet.uuid} initial={cabinet.preconsultation} />
+        </section>
 
-        <SectionTitle eyebrow="НА ПРИЙОМ" title="Що взяти з собою" />
-        <WhatToBring />
+        {/* 3. Що взяти з собою — без eyebrow, компактний блок */}
+        <section>
+          <h2 className="h2" style={{ margin: '0 0 12px', fontSize: 20, lineHeight: 1.3 }}>
+            Що взяти з собою
+          </h2>
+          <WhatToBring />
+        </section>
 
-        <SectionTitle eyebrow="ДОКУМЕНТИ · СКОРО" title="Аналізи та УЗД">
-          <span style={{ color: 'var(--gray-500, #6B7280)', fontSize: 14 }}>Завантаження буде доступне після оформлення програми</span>
-        </SectionTitle>
-        <DocumentsStub />
+        {/* 4. Як дістатися */}
+        <section>
+          <SectionHeader eyebrow="АДРЕСА · ФІЛІЯ ПОДІЛЛЯ" title="Як дістатися" />
+          <DirectionsCard />
+        </section>
 
-        <SectionTitle eyebrow="АДРЕСА · ФІЛІЯ ПОДІЛЛЯ" title="Як дістатися" />
-        <DirectionsCard />
-
-        {cabinet.program && (
-          <>
-            <SectionTitle eyebrow="ВАША ПРОГРАМА" title={cabinet.program.name} />
-            <ProgramCard program={cabinet.program} pregnancyType={cabinet.pregnancy_type} />
-          </>
-        )}
-
-        <SectionTitle eyebrow="КОЛИ ДЗВОНИТИ ОДРАЗУ" title="Тривожні симптоми" isAlert />
-        <AlertBlock />
+        {/* 5. Тривожні симптоми — Crimson */}
+        <section>
+          <SectionHeader
+            eyebrow="КОЛИ ДЗВОНИТИ ОДРАЗУ"
+            title="Тривожні симптоми"
+            isAlert
+          />
+          <AlertBlock />
+        </section>
       </div>
 
       <div style={{ height: 40 }} />
@@ -86,7 +96,7 @@ export default async function OnboardingPage({ params }: Props) {
 
 /* ──────────────────────────────────  HERO  ──────────────────────────────── */
 
-function HeroPending({ cabinet }: { cabinet: NonNullable<Awaited<ReturnType<typeof fetchEnrichedCabinet>>>['cabinet'] }) {
+function HeroPending({ cabinet }: { cabinet: Cab }) {
   const name = cabinet.patient_name?.split(' ')[0] ?? 'Дорога пацієнтко';
   const eta = getCallbackEta(cabinet.created_at);
   return (
@@ -119,7 +129,7 @@ function HeroPending({ cabinet }: { cabinet: NonNullable<Awaited<ReturnType<type
   );
 }
 
-function HeroConfirmed({ cabinet }: { cabinet: NonNullable<Awaited<ReturnType<typeof fetchEnrichedCabinet>>>['cabinet'] }) {
+function HeroConfirmed({ cabinet }: { cabinet: Cab }) {
   const apt = cabinet.appointment_date ? formatKyivAppointment(cabinet.appointment_date) : null;
   const doctor = cabinet.doctor;
 
@@ -179,70 +189,96 @@ function HeroConfirmed({ cabinet }: { cabinet: NonNullable<Awaited<ReturnType<ty
 
 /* ──────────────────────────  REQUEST SUMMARY  ──────────────────────────── */
 
-function RequestSummary({ cabinet, isConfirmed }: {
-  cabinet: NonNullable<Awaited<ReturnType<typeof fetchEnrichedCabinet>>>['cabinet'];
-  isConfirmed: boolean;
-}) {
-  const price = programPrice(cabinet);
+function RequestSummary({ cabinet, isConfirmed }: { cabinet: Cab; isConfirmed: boolean }) {
+  // Збираємо DL-рядки. Показуємо рядок тільки якщо є значення.
+  const rows: { key: string; label: string; value: React.ReactNode }[] = [];
+
+  if (cabinet.program) {
+    rows.push({
+      key: 'program',
+      label: 'Програма',
+      value: cabinet.program.name,
+    });
+  }
+
+  if (cabinet.doctor) {
+    rows.push({
+      key: 'doctor',
+      label: 'Лікар',
+      value: cabinet.doctor.slug ? (
+        <Link
+          href={`/doctors/${cabinet.doctor.slug}`}
+          style={{ color: 'var(--teal-dark, #1a7c75)', textDecoration: 'none', fontWeight: 600 }}
+        >
+          {cabinet.doctor.name} ↗
+        </Link>
+      ) : (
+        cabinet.doctor.name
+      ),
+    });
+  } else if (!isConfirmed) {
+    rows.push({
+      key: 'doctor',
+      label: 'Лікар',
+      value: 'Адміністратор узгодить',
+    });
+  }
+
+  const trimester = trimesterLabel(cabinet.trimester);
+  if (trimester) rows.push({ key: 't', label: 'Триместр', value: trimester });
+
+  const preg = pregnancyTypeLabel(cabinet.pregnancy_type);
+  if (preg) rows.push({ key: 'pt', label: 'Тип вагітності', value: preg });
+
+  if (cabinet.is_existing_patient && cabinet.transfer_week != null) {
+    rows.push({
+      key: 'transfer',
+      label: 'Перехід з клініки',
+      value: `${cabinet.transfer_week} тиждень`,
+    });
+  }
+
+  if (!isConfirmed && cabinet.preferred_day) {
+    const formatted = formatPreferredDay(cabinet.preferred_day);
+    if (formatted) rows.push({ key: 'day', label: 'Побажаний день', value: formatted });
+  }
+
+  if (cabinet.contact_method) {
+    rows.push({
+      key: 'c',
+      label: 'Спосіб зв’язку',
+      value: contactMethodLabel(cabinet.contact_method),
+    });
+  }
 
   return (
-    <>
-      <SectionTitle eyebrow="ВАШ ЗАПИТ" title={isConfirmed ? 'Деталі запису' : 'Що ви обрали'} />
+    <section>
+      {/* одна конструкція — тільки eyebrow + H2 "Ваш запит" */}
+      <SectionHeader
+        eyebrow="ВАШ ЗАПИТ"
+        title={isConfirmed ? 'Деталі запису' : 'Що ви обрали'}
+      />
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 40 }}>
+      <div style={cardDefault}>
+        <dl style={dlList}>
+          {rows.map((r, i) => (
+            <DlRow
+              key={r.key}
+              label={r.label}
+              value={r.value}
+              isLast={i === rows.length - 1}
+            />
+          ))}
+        </dl>
+
         {cabinet.program && (
-          <div style={cardAccent}>
-            <div className="eyebrow" style={{ color: 'var(--teal-dark, #1a7c75)' }}>ПРОГРАМА</div>
-            <div className="h3" style={{ margin: '6px 0 6px' }}>{cabinet.program.name}</div>
-            {price && (
-              <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--teal-dark, #1a7c75)' }}>
-                {formatUAH(price.value)} · {price.label}
-              </div>
-            )}
-          </div>
+          <ProgramIncludedAccordion
+            program={cabinet.program}
+            pregnancyType={cabinet.pregnancy_type}
+          />
         )}
-
-        {cabinet.doctor && (
-          <div style={cardDefault}>
-            <div className="eyebrow" style={{ color: 'var(--gray-500, #6B7280)' }}>ЛІКАР</div>
-            <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginTop: 10 }}>
-              <DoctorAvatar doctor={cabinet.doctor} size={48} />
-              <div style={{ flex: 1 }}>
-                <div className="h3" style={{ margin: 0 }}>{cabinet.doctor.name}</div>
-                {cabinet.doctor.role && (
-                  <div style={{ fontSize: 13, color: 'var(--gray-500, #6B7280)' }}>{cabinet.doctor.role}</div>
-                )}
-              </div>
-              {cabinet.doctor.slug && (
-                <Link href={`/doctors/${cabinet.doctor.slug}`} style={{
-                  color: 'var(--teal-dark, #1a7c75)', fontSize: 14, fontWeight: 600,
-                  textDecoration: 'none', whiteSpace: 'nowrap',
-                }}>
-                  Профіль →
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
-
-        <div style={cardDefault}>
-          <div className="eyebrow" style={{ color: 'var(--gray-500, #6B7280)' }}>ДЕТАЛІ</div>
-          <dl style={dlList}>
-            <DlRow label="Триместр" value={trimesterLabel(cabinet.trimester)} />
-            <DlRow label="Тип вагітності" value={pregnancyTypeLabel(cabinet.pregnancy_type)} />
-            {cabinet.transfer_week != null && (
-              <DlRow label="Перехід з клініки" value={`${cabinet.transfer_week} тиждень`} />
-            )}
-            {!isConfirmed && cabinet.preferred_day && (
-              <DlRow label="Побажаний день" value={formatPreferredDay(cabinet.preferred_day)} />
-            )}
-            {cabinet.contact_method && (
-              <DlRow label="Спосіб зв’язку" value={contactMethodLabel(cabinet.contact_method)} />
-            )}
-          </dl>
-        </div>
       </div>
-    </>
+    </section>
   );
 }
 
@@ -251,7 +287,7 @@ function contactMethodLabel(m: string): string {
     case 'phone':    return 'Дзвінок';
     case 'telegram': return 'Telegram';
     case 'viber':    return 'Viber';
-    default: return '—';
+    default: return '';
   }
 }
 
@@ -278,30 +314,6 @@ function WhatToBring() {
           </li>
         ))}
       </ul>
-    </div>
-  );
-}
-
-function DocumentsStub() {
-  return (
-    <div style={{ ...cardDefault, opacity: 0.72, background: 'var(--gray-100, #F3F4F6)' }}>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-        <span style={{
-          width: 44, height: 44, borderRadius: 12,
-          background: 'var(--white, #FFFFFF)',
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-          color: 'var(--gray-500, #6B7280)',
-        }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-          </svg>
-        </span>
-        <div>
-          <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 2 }}>Завантаження УЗД та аналізів</div>
-          <div style={{ fontSize: 13, color: 'var(--gray-500, #6B7280)' }}>Доступно після оформлення програми</div>
-        </div>
-      </div>
     </div>
   );
 }
@@ -342,41 +354,6 @@ function DirectionsCard() {
       >
         Відкрити в Google Maps ↗
       </a>
-    </div>
-  );
-}
-
-function ProgramCard({ program, pregnancyType }: {
-  program: NonNullable<NonNullable<Awaited<ReturnType<typeof fetchEnrichedCabinet>>>['cabinet']['program']>;
-  pregnancyType: 'single' | 'twin' | null;
-}) {
-  return (
-    <div style={cardDefault}>
-      <div style={{ marginBottom: 12, color: 'var(--gray-500, #6B7280)', fontSize: 13 }}>
-        Що входить у програму · {trimesterLabel(program.trimester)}
-      </div>
-      <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {(program.includes ?? []).map((item, i) => (
-          <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-            <span style={{ color: 'var(--teal-dark, #1a7c75)', flexShrink: 0, marginTop: 6 }}>
-              <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="3" fill="currentColor" /></svg>
-            </span>
-            <span style={{ fontSize: 14, lineHeight: 1.55 }}>{item}</span>
-          </li>
-        ))}
-      </ul>
-      <div style={{
-        marginTop: 16, paddingTop: 14,
-        borderTop: '1px solid var(--gray-200, #E5E7EB)',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
-      }}>
-        <span style={{ fontSize: 13, color: 'var(--gray-500, #6B7280)' }}>
-          {pregnancyType === 'twin' ? 'Двоплідна вагітність' : 'Одноплідна вагітність'}
-        </span>
-        <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--teal-dark, #1a7c75)', fontFamily: 'var(--font-display-loaded)' }}>
-          {formatUAH(pregnancyType === 'twin' ? program.price_twin : program.price_single)}
-        </span>
-      </div>
     </div>
   );
 }
@@ -436,11 +413,10 @@ function AlertBlock() {
 /* ──────────────────────────  UTIL COMPONENTS  ─────────────────────────── */
 
 function DoctorAvatar({ doctor, size }: {
-  doctor: NonNullable<NonNullable<Awaited<ReturnType<typeof fetchEnrichedCabinet>>>['cabinet']['doctor']>;
+  doctor: NonNullable<Cab['doctor']>;
   size: number;
 }) {
   if (doctor.photo_url) {
-    // next/image not imported to keep this server component lean — img is fine
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
@@ -465,28 +441,44 @@ function DoctorAvatar({ doctor, size }: {
   );
 }
 
-function SectionTitle({ eyebrow, title, children, isAlert }: {
+function SectionHeader({ eyebrow, title, hint, isAlert }: {
   eyebrow: string;
   title: string;
-  children?: React.ReactNode;
+  hint?: string;
   isAlert?: boolean;
 }) {
   return (
-    <div style={{ margin: '0 0 16px' }}>
-      <div className="eyebrow" style={{ color: isAlert ? 'var(--crimson, #d60242)' : 'var(--teal-dark, #1a7c75)', marginBottom: 6 }}>
+    <div style={{ margin: '0 0 12px' }}>
+      <div
+        className="eyebrow"
+        style={{
+          color: isAlert ? 'var(--crimson, #d60242)' : 'var(--teal-dark, #1a7c75)',
+          marginBottom: 4,
+        }}
+      >
         {eyebrow}
       </div>
-      <h2 className="h2" style={{ margin: 0, fontSize: 22, lineHeight: 1.3 }}>{title}</h2>
-      {children && <div style={{ marginTop: 8, fontSize: 14 }}>{children}</div>}
+      <h2 className="h2" style={{ margin: 0, fontSize: 20, lineHeight: 1.3 }}>{title}</h2>
+      {hint && (
+        <div style={{ marginTop: 6, fontSize: 13, color: 'var(--gray-500, #6B7280)' }}>{hint}</div>
+      )}
     </div>
   );
 }
 
-function DlRow({ label, value }: { label: string; value: string }) {
+function DlRow({ label, value, isLast }: { label: string; value: React.ReactNode; isLast?: boolean }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, padding: '8px 0', borderBottom: '1px solid var(--gray-100, #F3F4F6)' }}>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      gap: 16,
+      padding: '10px 0',
+      borderBottom: isLast ? 'none' : '1px solid var(--gray-100, #F3F4F6)',
+    }}>
       <dt style={{ color: 'var(--gray-500, #6B7280)', fontSize: 13 }}>{label}</dt>
-      <dd style={{ margin: 0, fontSize: 14, fontWeight: 600, color: 'var(--black, #1A1A2E)', textAlign: 'right' }}>{value}</dd>
+      <dd style={{ margin: 0, fontSize: 14, fontWeight: 600, color: 'var(--black, #1A1A2E)', textAlign: 'right' }}>
+        {value}
+      </dd>
     </div>
   );
 }
@@ -507,7 +499,7 @@ const container: React.CSSProperties = {
   margin: '0 auto',
   padding: '40px 20px 0',
   display: 'grid',
-  gap: 40,
+  gap: 32,
 };
 
 const cardDefault: React.CSSProperties = {
@@ -517,15 +509,8 @@ const cardDefault: React.CSSProperties = {
   padding: 18,
 };
 
-const cardAccent: React.CSSProperties = {
-  background: 'var(--mint-tint, #E8F5F1)',
-  border: 'none',
-  borderRadius: 14,
-  padding: 20,
-};
-
 const dlList: React.CSSProperties = {
-  margin: '8px 0 0',
+  margin: 0,
   padding: 0,
 };
 

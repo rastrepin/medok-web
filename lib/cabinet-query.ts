@@ -44,7 +44,7 @@ export async function fetchEnrichedCabinet(
       ? supabase
           .from('medok_leads')
           .select(
-            'quiz_answers, is_existing_patient, transfer_week, contact_method, preferred_day, pregnancy_type',
+            'quiz_answers, is_existing_patient, transfer_week, contact_method, preferred_day, pregnancy_type, trimester, doctor_slug, doctor_name, program_id',
           )
           .eq('id', cab.lead_id)
           .maybeSingle()
@@ -72,6 +72,10 @@ export async function fetchEnrichedCabinet(
     contact_method: 'phone' | 'telegram' | 'viber' | null;
     preferred_day: string | null;
     pregnancy_type: 'single' | 'twin' | null;
+    trimester: string | null;
+    doctor_slug: string | null;
+    doctor_name: string | null;
+    program_id: string | null;
   } | null;
 
   const programRow = programRes.data as {
@@ -94,6 +98,47 @@ export async function fetchEnrichedCabinet(
 
   const preconsultationJson = (cab.preconsultation ?? null) as PreconsultationData | null;
 
+  // ── Fallback lookups: cabinet trigger sometimes leaves doctor_id/program_id
+  // as NULL when the form sent only doctor_slug (legacy slug without matching id).
+  // Resolve here so the UI always shows a doctor/program when the lead has one.
+  let resolvedDoctor = doctorRow;
+  if (!resolvedDoctor && lead?.doctor_slug) {
+    const { data: d2 } = await supabase
+      .from('medok_doctors')
+      .select('id, slug, name, photo_filename, tags, role')
+      .eq('slug', lead.doctor_slug)
+      .maybeSingle();
+    if (d2) {
+      resolvedDoctor = d2 as typeof doctorRow;
+    }
+  }
+
+  let resolvedProgram = programRow;
+  if (!resolvedProgram && lead?.program_id) {
+    const { data: p2 } = await supabase
+      .from('medok_programs')
+      .select('id, name, price_single, price_twin, includes, trimester')
+      .eq('id', lead.program_id)
+      .maybeSingle();
+    if (p2) {
+      resolvedProgram = p2 as typeof programRow;
+    }
+  }
+
+  // Final fallback — if we still have no doctor row but the lead recorded a
+  // doctor_name (e.g. slug that no longer exists in medok_doctors), surface a
+  // minimal doctor object so the UI can display the name.
+  const doctorFallback = !resolvedDoctor && lead?.doctor_name
+    ? {
+        id: lead.doctor_slug ?? 'unknown',
+        slug: lead.doctor_slug ?? undefined,
+        name: lead.doctor_name,
+        photo_filename: null as string | null,
+        tags: null as string[] | null,
+        role: null as string | null,
+      }
+    : null;
+
   const onboarding: OnboardingCabinet = {
     uuid: cab.uuid,
     status: (cab.appointment_status ?? 'pending') as CabinetStatus,
@@ -102,7 +147,7 @@ export async function fetchEnrichedCabinet(
     appointment_date: cab.appointment_date,
     confirmed_at:     cab.confirmed_at,
     created_at:       cab.created_at,
-    trimester:        cab.trimester ?? null,
+    trimester:        cab.trimester ?? lead?.trimester ?? null,
     pregnancy_type:       lead?.pregnancy_type ?? null,
     is_existing_patient:  lead?.is_existing_patient ?? null,
     transfer_week:        lead?.transfer_week ?? null,
@@ -112,26 +157,35 @@ export async function fetchEnrichedCabinet(
     preconsultation:      preconsultationJson && Object.keys(preconsultationJson).length > 0
       ? preconsultationJson
       : null,
-    program: programRow
+    program: resolvedProgram
       ? {
-          id:           programRow.id,
-          name:         programRow.name,
-          price_single: programRow.price_single,
-          price_twin:   programRow.price_twin,
-          includes:     Array.isArray(programRow.includes) ? programRow.includes : [],
-          trimester:    programRow.trimester,
+          id:           resolvedProgram.id,
+          name:         resolvedProgram.name,
+          price_single: resolvedProgram.price_single,
+          price_twin:   resolvedProgram.price_twin,
+          includes:     Array.isArray(resolvedProgram.includes) ? resolvedProgram.includes : [],
+          trimester:    resolvedProgram.trimester,
         }
       : null,
-    doctor: doctorRow
+    doctor: resolvedDoctor
       ? {
-          id:       doctorRow.id,
-          slug:     doctorRow.slug ?? undefined,
-          name:     doctorRow.name,
-          photo_url: doctorRow.photo_filename
-            ? `/doctors/${doctorRow.photo_filename}`
+          id:       resolvedDoctor.id,
+          slug:     resolvedDoctor.slug ?? undefined,
+          name:     resolvedDoctor.name,
+          photo_url: resolvedDoctor.photo_filename
+            ? `/doctors/${resolvedDoctor.photo_filename}`
             : undefined,
-          tags: doctorRow.tags ?? [],
-          role: doctorRow.role ?? undefined,
+          tags: resolvedDoctor.tags ?? [],
+          role: resolvedDoctor.role ?? undefined,
+        }
+      : doctorFallback
+      ? {
+          id:       doctorFallback.id,
+          slug:     doctorFallback.slug,
+          name:     doctorFallback.name,
+          photo_url: undefined,
+          tags:     [],
+          role:     undefined,
         }
       : null,
   };
