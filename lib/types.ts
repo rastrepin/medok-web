@@ -55,6 +55,13 @@ export interface LeadPayload {
   is_existing_patient?: boolean;
 }
 
+export type CabinetStatus =
+  | 'pending'
+  | 'confirmed'
+  | 'active'
+  | 'completed'
+  | 'cancelled';
+
 export interface Cabinet {
   uuid: string;
   lead_id: string;
@@ -63,10 +70,18 @@ export interface Cabinet {
   program_id?: string;
   doctor_id?: string;
   trimester?: Trimester;
-  appointment_status: 'pending' | 'confirmed' | 'active' | 'completed';
+  appointment_status: CabinetStatus;
   appointment_date?: string;
   case_steps?: CaseStep[];
   notes?: string;
+  // session 3 — admin confirmation flow
+  confirmation_token?: string;
+  token_expires_at?: string;
+  confirmed_at?: string;
+  confirmed_by?: string;
+  preconsultation?: PreconsultationData | null;
+  email_sent_at?: string;
+  branch?: string;
   created_at: string;
   updated_at?: string;
 }
@@ -75,4 +90,53 @@ export interface CaseStep {
   id: number;
   label: string;
   status: 'done' | 'active' | 'pending';
+}
+
+// ─── Preconsultation (onboarding quiz) ────────────────────────────────────
+export interface PreconsultationData {
+  pregnancy_week?: number | null;
+  is_first_pregnancy?: boolean | null;
+  previous_births_count?: number | null;
+  previous_births_method?: 'natural' | 'cesarean' | 'mixed' | null;
+  chronic_conditions?: string[] | null;
+  chronic_other?: string | null;
+  current_medications?: string | null;
+  allergies?: string | null;
+  main_concern?: string | null;
+  completed_at?: string | null;
+}
+
+// ─── Onboarding cabinet API shape (enriched with joined lead/doctor/program) ─
+export interface OnboardingCabinet {
+  uuid: string;
+  status: CabinetStatus;
+  patient_name: string;
+  patient_phone: string;
+  appointment_date: string | null;
+  confirmed_at: string | null;
+  created_at: string;
+  trimester: string | null;
+  pregnancy_type: 'single' | 'twin' | null;
+  is_existing_patient: boolean | null;
+  transfer_week: number | null;
+  contact_method: 'phone' | 'telegram' | 'viber' | null;
+  preferred_day: string | null;
+  quiz_answers: Record<string, unknown> | null;
+  preconsultation: PreconsultationData | null;
+  program: {
+    id: string;
+    name: string;
+    price_single: number;
+    price_twin: number;
+    includes: string[];
+    trimester: string;
+  } | null;
+  doctor: {
+    id: string;
+    slug?: string;
+    name: string;
+    photo_url?: string;
+    tags?: string[];
+    role?: string;
+  } | null;
 }
