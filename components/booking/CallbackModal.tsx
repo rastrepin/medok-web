@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import BottomSheet from './BottomSheet';
 import { IMaskInput } from 'react-imask';
 import { track } from '@/lib/track';
+import { saveCabinetUuid } from '@/lib/cabinet-storage';
 
 const PURPOSES = [
   { value: 'program',     label: 'Дізнатись про програму' },
@@ -57,6 +58,7 @@ export default function CallbackModal({ open, onClose, source }: Props) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Помилка');
+      saveCabinetUuid(data.cabinet_uuid);
       setStatus('success');
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Щось пішло не так. Спробуйте ще раз.');

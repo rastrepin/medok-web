@@ -5,6 +5,7 @@ import BottomSheet from './BottomSheet';
 import { IMaskInput } from 'react-imask';
 import { track } from '@/lib/track';
 import { getAvailableDays } from '@/lib/doctor-booking-utils';
+import { saveCabinetUuid } from '@/lib/cabinet-storage';
 
 type ContactMethod = 'phone' | 'telegram' | 'viber';
 
@@ -95,6 +96,7 @@ export default function BookingModal({ open, onClose, prefilledDoctorSlug, sourc
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Помилка');
       void track({ event_type: 'form_submitted', modal_type: 'booking', source_cta: source });
+      saveCabinetUuid(data.cabinet_uuid);
       setCabinetUuid(data.cabinet_uuid ?? null);
       setStatus('success');
       setTimeout(() => {

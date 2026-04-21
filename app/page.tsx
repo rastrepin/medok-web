@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 const DOCTORS = [
   { id: 'yanyuk', slug: 'yanyuk-olha', name: 'Янюк Ольга Олександрівна', role: 'Акушер-гінеколог · УЗД', photo: '/images/doctors/ginekolog-yanyuk-olga.jpg', bio: 'Веде вагітність і сама проводить УЗД — ваш лікар бачить повну картину без посередників. Автор медичних публікацій.', badge: null },
@@ -37,9 +38,11 @@ import MedokFaq from './components/MedokFaq';
 import MedokGeoBlock from './components/MedokGeoBlock';
 import MedokEeat from './components/MedokEeat';
 import MedokHero from './components/MedokHero';
+import { getActiveCabinetUuid } from '@/lib/cabinet-storage';
 
 export default function HomePage() {
   const booking = useBookingModal();
+  const router = useRouter();
   const [heroVisible, setHeroVisible] = useState(true);
   const doctorsRef = useRef<HTMLElement>(null);
   const programsRef = useRef<HTMLElement>(null);
@@ -55,6 +58,15 @@ export default function HomePage() {
     obs.observe(heroEl);
     return () => obs.disconnect();
   }, []);
+
+  // PWA deep-link: якщо пацієнтка вже подавала заявку (<30 днів) і не
+  // зайшла явно через ?home=1 — переадресуємо на її кабінет.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('home')) return;
+    const uuid = getActiveCabinetUuid();
+    if (uuid) router.replace(`/o/${uuid}`);
+  }, [router]);
 
   return (
     <>

@@ -102,6 +102,9 @@ function HeroPending({ cabinet }: { cabinet: Cab }) {
   return (
     <header style={{ ...hero, background: 'var(--mint-tint, #E8F5F1)' }}>
       <div style={{ ...heroInner }}>
+        <a href="/?home=1" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 13, color: 'var(--gray-500, #6b7280)', textDecoration: 'none', marginBottom: 12 }}>
+          ← На головний MED OK
+        </a>
         <div className="eyebrow" style={{ color: 'var(--teal-dark, #1a7c75)' }}>ВАША ЗАЯВКА · MED OK</div>
         <h1 className="h1" style={{ margin: '8px 0 0' }}>
           Дякуємо, {name}
@@ -136,6 +139,9 @@ function HeroConfirmed({ cabinet }: { cabinet: Cab }) {
   return (
     <header style={{ ...hero, background: 'var(--mint-tint, #E8F5F1)' }}>
       <div style={{ ...heroInner }}>
+        <a href="/?home=1" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 13, color: 'var(--gray-500, #6b7280)', textDecoration: 'none', marginBottom: 12 }}>
+          ← На головний MED OK
+        </a>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
           <div>
             <div className="eyebrow" style={{ color: 'var(--teal-dark, #1a7c75)' }}>ПЕРШИЙ ПРИЙОМ · ПІДТВЕРДЖЕНО</div>
