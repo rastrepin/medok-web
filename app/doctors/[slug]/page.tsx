@@ -154,10 +154,10 @@ export default async function DoctorPage({
   const geoEeat = getDoctorGeoEeat(slug);
   const faqItems = DOCTOR_FAQ[slug] ?? [];
 
-  // Name parts: "Кельман Вікторія Володимирівна" → surname="КЕЛЬМАН", firstName="ВІКТОРІЯ", patronymic="Володимирівна"
+  // Name parts: "Кельман Вікторія Володимирівна" → surname="Кельман", firstName="Вікторія", patronymic="Володимирівна"
   const nameParts = doctor.name.trim().split(/\s+/);
-  const surname    = (nameParts[0] ?? '').toUpperCase();
-  const firstName  = (nameParts[1] ?? '').toUpperCase();
+  const surname    = nameParts[0] ?? '';
+  const firstName  = nameParts[1] ?? '';
   const patronymic = nameParts.slice(2).join(' ');
 
   const isUzd       = doctor.doctor_type === 'ultrasound';
