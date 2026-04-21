@@ -78,7 +78,7 @@ export default function HomePage() {
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>КОМАНДА</div>
-            <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Лікарі, які ведуть вагітність</h2>
+            <h2 className="h2">Лікарі, які ведуть вагітність</h2>
           </div>
           <div className="doctors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 20 }}>
             {DOCTORS.map((doc) => (
@@ -115,7 +115,7 @@ export default function HomePage() {
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>ПРОГРАМИ</div>
-            <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Програми ведення вагітності</h2>
+            <h2 className="h2">Програми ведення вагітності</h2>
           </div>
           <div className="programs-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
             {PROGRAMS.map((prog) => (
@@ -151,7 +151,7 @@ export default function HomePage() {
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>МАРШРУТ</div>
-            <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Як це працює</h2>
+            <h2 className="h2">Як це працює</h2>
           </div>
           <div className="v2-steps-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             {STEPS.map((step) => (
@@ -172,7 +172,7 @@ export default function HomePage() {
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '96px 48px' }}>
           <div style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 10 }}>ЧОМУ MED OK</div>
-            <h2 style={{ fontFamily: 'var(--font)', fontSize: 32, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>Переваги</h2>
+            <h2 className="h2">Переваги</h2>
           </div>
           <div className="advantages-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {ADVANTAGES.map((adv, i) => (
@@ -197,7 +197,7 @@ export default function HomePage() {
       <section style={{ background: 'var(--mint-tint)', borderTop: '1px solid var(--gray-200)' }}>
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px', textAlign: 'center' }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 12 }}>ЗВ'ЯЗОК</p>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: 'var(--gray-900)', marginBottom: 8, letterSpacing: '0.01em' }}>Передзвонимо вам</h2>
+          <h2 className="h2" style={{ marginBottom: 8 }}>Передзвонимо вам</h2>
           <p style={{ fontSize: 15, color: 'var(--gray-700)', marginBottom: 24, lineHeight: 1.6 }}>Залишіть номер — адміністратор зателефонує протягом робочого дня</p>
           <button onClick={() => booking.open('callback', { source: 'footer-cta' })} className="btn-primary" style={{ minWidth: 200 }}>
             ПЕРЕДЗВОНИТИ

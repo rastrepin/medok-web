@@ -28,7 +28,7 @@ export default function MedokWhy() {
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 12 }}>
           ПЕРЕВАГИ
         </div>
-        <h2 style={{ fontFamily: 'var(--font)', fontSize: 36, fontWeight: 600, color: 'var(--g900)', lineHeight: 1.2 }}>
+        <h2 className="h2">
           Чому MED OK
         </h2>
         <p style={{ fontSize: 15, color: 'var(--g500)', marginTop: 10, maxWidth: 620, lineHeight: 1.75 }}>

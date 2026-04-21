@@ -273,12 +273,7 @@ export default async function DoctorPage({
 
             {/* Name */}
             <div>
-              <h1 style={{
-                fontFamily: 'var(--font-display)', fontWeight: 400,
-                fontSize: 28, lineHeight: 1.1, letterSpacing: '0.01em',
-                color: 'var(--gray-900)',
-                margin: 0,
-              }}>
+              <h1 className="h1" style={{ margin: 0 }}>
                 {surname} {firstName}
               </h1>
               {patronymic && (

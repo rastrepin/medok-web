@@ -31,12 +31,7 @@ export default function DoctorSchedule({ days, doctorFirstName, geoText }: Docto
             }}>
               Графік прийому
             </div>
-            <h2 style={{
-              fontFamily: 'var(--font)',
-              fontSize: 20, fontWeight: 700,
-              color: 'var(--g900)', marginBottom: 6,
-              lineHeight: 1.2,
-            }}>
+            <h2 className="h2" style={{ marginBottom: 6 }}>
               Коли приймає {doctorFirstName}
             </h2>
             <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.5 }}>

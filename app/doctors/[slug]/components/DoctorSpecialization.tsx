@@ -32,11 +32,7 @@ export default function DoctorSpecialization({
         </div>
 
         {/* Headline */}
-        <h2 style={{
-          fontFamily: 'var(--font)',
-          fontSize: 32, fontWeight: 600, color: 'var(--g900)',
-          lineHeight: 1.25, marginBottom: 16, maxWidth: 680,
-        }}>
+        <h2 className="h2" style={{ marginBottom: 16, maxWidth: 680 }}>
           {headline}
         </h2>
 

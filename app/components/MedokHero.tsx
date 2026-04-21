@@ -19,17 +19,8 @@ export default function MedokHero() {
               ВЕДЕННЯ ВАГІТНОСТІ · ВІННИЦЯ
             </div>
 
-            {/* H1 — Comfortaa, sentence case */}
-            <h1 style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 44, fontWeight: 400,
-              textTransform: 'none',
-              letterSpacing: '0.01em',
-              color: '#202640',
-              lineHeight: 1.15,
-              marginBottom: 20,
-              maxWidth: 560,
-            }}>
+            {/* H1 — token .h1 (Comfortaa 400, 32→44px, sentence case) */}
+            <h1 className="h1" style={{ marginBottom: 20, maxWidth: 560 }}>
               Ведення вагітності у Вінниці · <span className="nowrap">MED OK</span>
             </h1>
 

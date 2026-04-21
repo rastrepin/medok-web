@@ -15,16 +15,7 @@ export default function MedokGeoBlock() {
       }}
     >
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
-        <h2
-          style={{
-            fontFamily: 'var(--font)',
-            fontSize: 22,
-            fontWeight: 700,
-            color: 'var(--g900)',
-            marginBottom: 16,
-            lineHeight: 1.25,
-          }}
-        >
+        <h2 className="h2" style={{ marginBottom: 16 }}>
           Ведення вагітності у Вінниці — МЦ MED OK, від 9&nbsp;970&nbsp;₴
         </h2>
         <p

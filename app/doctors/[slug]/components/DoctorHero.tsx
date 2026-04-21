@@ -102,12 +102,8 @@ export default function DoctorHero({
               {role}
             </div>
 
-            {/* Name */}
-            <h1 style={{
-              fontFamily: 'var(--font)',
-              fontSize: 36, fontWeight: 600, lineHeight: 1.15,
-              color: 'var(--g900)', marginBottom: 14, letterSpacing: '-.3px',
-            }}>
+            {/* Name — token .h1 (Comfortaa 400, 32→44px, sentence case) */}
+            <h1 className="h1" style={{ marginBottom: 14 }}>
               {name}
             </h1>
 

@@ -11,11 +11,7 @@ export default function MedokGeoSummary() {
       }}
     >
       <div style={{ maxWidth: 1140, margin: '0 auto' }}>
-        <h2 style={{
-          fontFamily: 'var(--font)',
-          fontSize: 22, fontWeight: 600, color: '#fff',
-          marginBottom: 8, lineHeight: 1.3,
-        }}>
+        <h2 className="h2" style={{ color: '#fff', marginBottom: 8 }}>
           Ведення вагітності у МЦ MED OK, Вінниця
         </h2>
         <p style={{ fontSize: 14, color: 'rgba(255,255,255,.65)', lineHeight: 1.7, marginBottom: 28, maxWidth: 780 }}>

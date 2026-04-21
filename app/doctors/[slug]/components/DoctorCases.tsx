@@ -32,11 +32,7 @@ export default function DoctorCases({ caseTypes }: DoctorCasesProps) {
         }}>
           НАПРЯМИ РОБОТИ
         </div>
-        <h2 style={{
-          fontFamily: 'var(--font)',
-          fontSize: 28, fontWeight: 600, color: 'var(--g900)',
-          lineHeight: 1.3, marginBottom: 28,
-        }}>
+        <h2 className="h2" style={{ marginBottom: 28 }}>
           Як цей лікар може допомогти
         </h2>
 
