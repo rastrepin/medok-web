@@ -53,8 +53,8 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'Членство', body: 'Член FMF (Fetal Medicine Foundation) та Асоціації акушер-гінекологів України.', tag: 'FMF · ААГУ' },
       { eyebrow: 'Наукова діяльність', body: 'Аспірантка кафедри акушерства та гінекології №2 ВНМУ ім. М.І. Пирогова.', tag: 'ВНМУ ім. Пирогова' },
     ],
-    ctaLabel: 'ЗАПИСАТИСЬ ДО ВІКТОРІЇ',
-    stickyCtaLabel: 'ЗАПИСАТИСЬ ДО КЕЛЬМАН ВІКТОРІЇ',
+    ctaLabel: 'Записатись до Вікторії',
+    stickyCtaLabel: 'Записатись до Кельман Вікторії',
   },
 
   'yanyuk-olha': {
@@ -75,8 +75,8 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'УЗД-діагностика', body: 'Спеціалізація з ультразвукової діагностики, апарат Voluson.', tag: 'УЗД 2019' },
       { eyebrow: 'Кольпоскопія', body: 'Кваліфікаційний курс кольпоскопії та лікування патологій шийки матки.', tag: 'Кольпоскопія' },
     ],
-    ctaLabel: 'ЗАПИСАТИСЬ ДО ОЛЬГИ',
-    stickyCtaLabel: 'ЗАПИСАТИСЬ ДО ЯНЮК ОЛЬГИ',
+    ctaLabel: 'Записатись до Ольги',
+    stickyCtaLabel: 'Записатись до Янюк Ольги',
   },
 
   'trofimchuk-tetiana': {
@@ -97,8 +97,8 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'Безперервна освіта', body: 'Активний учасник платформи Progress для лікарів — постійне оновлення знань.', tag: 'Progress' },
       { eyebrow: 'Академічна база', body: 'Диплом ВНМУ ім. М.І. Пирогова з відзнакою — міцна теоретична підготовка.', tag: 'ВНМУ з відзнакою' },
     ],
-    ctaLabel: 'ЗАПИСАТИСЬ ДО ТЕТЯНИ',
-    stickyCtaLabel: 'ЗАПИСАТИСЬ ДО ТРОФІМЧУК ТЕТЯНИ',
+    ctaLabel: 'Записатись до Тетяни',
+    stickyCtaLabel: 'Записатись до Трофімчук Тетяни',
   },
 
   'bondarchuk-zhanna': {
@@ -119,8 +119,8 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
       { eyebrow: 'ISUOG', body: 'Член International Society of Ultrasound in Obstetrics and Gynecology.', tag: 'ISUOG' },
       { eyebrow: 'Обладнання', body: 'Дослідження на апараті GE Voluson E8 — 3D/4D зображення найвищої якості.', tag: 'Voluson E8' },
     ],
-    ctaLabel: 'ЗАПИСАТИСЬ НА УЗД',
-    stickyCtaLabel: 'ЗАПИСАТИСЬ НА УЗД',
+    ctaLabel: 'Записатись на УЗД',
+    stickyCtaLabel: 'Записатись на УЗД',
   },
 };
 

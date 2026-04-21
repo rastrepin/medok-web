@@ -77,7 +77,7 @@ export default function DoctorSpecialization({
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'var(--td)', color: '#fff',
             padding: '13px 28px', borderRadius: 9999,
-            fontSize: 14, fontWeight: 700, textDecoration: 'none',
+            fontSize: 16, fontWeight: 600, textDecoration: 'none',
           }}
         >
           {ctaLabel}

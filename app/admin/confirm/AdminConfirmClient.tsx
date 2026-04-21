@@ -240,7 +240,7 @@ export default function AdminConfirmClient({ token }: { token: string }) {
             )}
 
             <button
-              type="submit" className="btn-primary"
+              type="submit" className="btn-primary-long"
               disabled={submit.kind === 'submitting'}
               style={{ width: '100%' }}
             >

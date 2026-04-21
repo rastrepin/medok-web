@@ -57,10 +57,9 @@ export default function DoctorStickyCta({ slug, ctaLabel: _ctaLabel, stickyCtaLa
           border-radius: 9999px;
           padding: 16px 24px;
           font-family: inherit;
-          font-size: 14px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
+          font-size: 15px;
+          font-weight: 600;
+          letter-spacing: normal;
           cursor: pointer;
           min-height: 48px;
           white-space: nowrap;
@@ -68,7 +67,7 @@ export default function DoctorStickyCta({ slug, ctaLabel: _ctaLabel, stickyCtaLa
           text-overflow: ellipsis;
         }
         @media (max-width: 375px) {
-          .sticky-cta-btn { font-size: 13px; letter-spacing: 0.05em; }
+          .sticky-cta-btn { font-size: 14px; }
         }
         @media (max-width: 768px) {
           .doctor-sticky-cta { display: block; }

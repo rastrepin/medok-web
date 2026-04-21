@@ -422,10 +422,10 @@ export default function QuizModal({ open, onClose, prefilledTrimester, prefilled
           </div>
 
           {/* CTA primary */}
-          <button type="button" className="btn-primary"
-            style={{ width: '100%', marginBottom: 12, fontSize: 15 }}
+          <button type="button" className="btn-primary-long"
+            style={{ width: '100%', marginBottom: 12 }}
             onClick={() => handleBookCta()}>
-            ЗАПИСАТИСЬ НА ПРОГРАМУ
+            Записатись на програму
           </button>
 
           {/* Ghost row */}
