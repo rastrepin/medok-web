@@ -66,7 +66,7 @@ export default async function OnboardingPage({ params }: Props) {
 
         {/* 3. Що взяти з собою — без eyebrow, компактний блок */}
         <section>
-          <h2 className="h2" style={{ margin: '0 0 12px', fontSize: 20, lineHeight: 1.3 }}>
+          <h2 className="h2" style={{ margin: '0 0 12px' }}>
             Що взяти з собою
           </h2>
           <WhatToBring />
@@ -465,7 +465,7 @@ function SectionHeader({ eyebrow, title, hint, isAlert }: {
           {eyebrow}
         </div>
       )}
-      <h2 className="h2" style={{ margin: 0, fontSize: 20, lineHeight: 1.3 }}>{title}</h2>
+      <h2 className="h2" style={{ margin: 0 }}>{title}</h2>
       {hint && (
         <div style={{ marginTop: 6, fontSize: 13, color: 'var(--gray-500, #6B7280)' }}>{hint}</div>
       )}
