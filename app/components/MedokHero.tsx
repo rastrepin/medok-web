@@ -19,18 +19,18 @@ export default function MedokHero() {
               ВЕДЕННЯ ВАГІТНОСТІ · ВІННИЦЯ
             </div>
 
-            {/* H1 — Comfortaa, UPPERCASE */}
+            {/* H1 — Comfortaa, sentence case */}
             <h1 style={{
               fontFamily: 'var(--font-display)',
               fontSize: 44, fontWeight: 400,
-              textTransform: 'uppercase',
-              letterSpacing: '0.02em',
+              textTransform: 'none',
+              letterSpacing: '0.01em',
               color: '#202640',
               lineHeight: 1.15,
               marginBottom: 20,
               maxWidth: 560,
             }}>
-              Ведення вагітності у Вінниці — МЦ MED OK
+              Ведення вагітності у Вінниці · <span className="nowrap">MED OK</span>
             </h1>
 
             {/* Subtitle — Fixel, regular, not italic */}

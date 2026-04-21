@@ -122,8 +122,8 @@ export default function BookingModal({ open, onClose, prefilledDoctorSlug, sourc
             </svg>
           </div>
           <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
-            color: 'var(--gray-900)', marginBottom: 12, textTransform: 'uppercase' }}>
-            ЗАЯВКУ НАДІСЛАНО
+            color: 'var(--gray-900)', marginBottom: 12, letterSpacing: '0.01em' }}>
+            Заявку надіслано
           </p>
           <p style={{ fontSize: 15, color: 'var(--gray-700)', lineHeight: 1.6, marginBottom: 24 }}>
             Адміністратор зателефонує протягом дня для підтвердження запису.

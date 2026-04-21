@@ -185,7 +185,7 @@ export default function HomePage() {
       <section style={{ background: 'var(--mint-tint)', borderTop: '1px solid var(--gray-200)' }}>
         <div style={{ maxWidth: 1140, margin: '0 auto', padding: '64px 48px', textAlign: 'center' }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '2.2px', textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 12 }}>ЗВ'ЯЗОК</p>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: 'var(--gray-900)', marginBottom: 8, textTransform: 'uppercase' }}>Передзвонимо вам</h2>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 400, color: 'var(--gray-900)', marginBottom: 8, letterSpacing: '0.01em' }}>Передзвонимо вам</h2>
           <p style={{ fontSize: 15, color: 'var(--gray-700)', marginBottom: 24, lineHeight: 1.6 }}>Залишіть номер — адміністратор зателефонує протягом робочого дня</p>
           <button onClick={() => booking.open('callback', { source: 'footer-cta' })} className="btn-primary" style={{ minWidth: 200 }}>
             ПЕРЕДЗВОНИТИ

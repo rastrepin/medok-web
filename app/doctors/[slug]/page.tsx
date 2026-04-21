@@ -275,14 +275,14 @@ export default async function DoctorPage({
             <div>
               <h1 style={{
                 fontFamily: 'var(--font-display)', fontWeight: 400,
-                fontSize: 28, lineHeight: 1.1, letterSpacing: '0.02em',
-                textTransform: 'uppercase', color: 'var(--gray-900)',
+                fontSize: 28, lineHeight: 1.1, letterSpacing: '0.01em',
+                color: 'var(--gray-900)',
                 margin: 0,
               }}>
-                {surname}<br />{firstName}
+                {surname} {firstName}
               </h1>
               {patronymic && (
-                <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--gray-700)', margin: '6px 0 0' }}>
+                <p className="h3" style={{ color: 'var(--gray-700)', margin: '6px 0 0' }}>
                   {patronymic}
                 </p>
               )}
@@ -378,12 +378,9 @@ export default async function DoctorPage({
       {/* ── 3. ПРО ЛІКАРЯ ───────────────────────────────────── */}
       <section style={{ background: '#fff', padding: '64px 0' }}>
         <div className="container" style={{ maxWidth: 760 }}>
-          <p style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-            textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 20,
-          }}>
-            ПРО ЛІКАРЯ
-          </p>
+          <h2 className="h2" style={{ fontSize: 24, marginTop: 0, marginBottom: 20 }}>
+            Про лікаря
+          </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {bio.split('\n\n').map((para, i) => (
               <p key={i} style={{ fontSize: 15, color: 'var(--black)', lineHeight: 1.65, margin: 0 }}>
@@ -398,12 +395,9 @@ export default async function DoctorPage({
       {education.length > 0 && (
         <section style={{ background: 'var(--gray-50)', padding: '64px 0' }}>
           <div className="container" style={{ maxWidth: 760 }}>
-            <p style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 20,
-            }}>
-              ОСВІТА
-            </p>
+            <h2 className="h2" style={{ fontSize: 24, marginTop: 0, marginBottom: 20 }}>
+              Освіта
+            </h2>
             <div style={{
               background: '#fff', borderRadius: 'var(--r-lg)',
               border: '1.5px solid var(--gray-200)', padding: '4px 0',
@@ -429,12 +423,9 @@ export default async function DoctorPage({
       {cpd.length > 0 && (
         <section style={{ background: '#fff', padding: '64px 0' }}>
           <div className="container">
-            <p style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 20,
-            }}>
-              ПІДВИЩЕННЯ КВАЛІФІКАЦІЇ
-            </p>
+            <h2 className="h2" style={{ fontSize: 24, marginTop: 0, marginBottom: 20 }}>
+              Підвищення кваліфікації
+            </h2>
             <div className="cpd-grid">
               {cpd.map((card) => (
                 <div key={card.eyebrow} className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -483,12 +474,9 @@ export default async function DoctorPage({
       {schedule && (
         <section style={{ background: 'var(--gray-50)', padding: '64px 0' }}>
           <div className="container" style={{ maxWidth: 560 }}>
-            <p style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 20,
-            }}>
-              {`КОЛИ ПРИЙМАЄ ${firstName}`}
-            </p>
+            <h2 className="h2" style={{ fontSize: 24, marginTop: 0, marginBottom: 20 }}>
+              {`Графік прийому · ${firstName}`}
+            </h2>
             <div className="card" style={{ marginBottom: 24 }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {schedule.days.map((d) => (
@@ -514,12 +502,9 @@ export default async function DoctorPage({
       {faqItems.length > 0 && (
         <section style={{ background: '#fff', padding: '64px 0' }}>
           <div className="container" style={{ maxWidth: 760 }}>
-            <p style={{
-              fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: 'var(--teal-dark)', marginBottom: 20,
-            }}>
-              ЧАСТІ ЗАПИТАННЯ
-            </p>
+            <h2 className="h2" style={{ fontSize: 24, marginTop: 0, marginBottom: 20 }}>
+              Часті запитання
+            </h2>
             <DoctorFaqAccordion items={faqItems} />
           </div>
         </section>
