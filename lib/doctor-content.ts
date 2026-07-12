@@ -122,6 +122,23 @@ export const DOCTOR_CONTENT: Record<string, DoctorContent> = {
     ctaLabel: 'Записатись на УЗД',
     stickyCtaLabel: 'Записатись на УЗД',
   },
+  'barvinchenko-nataliya': {
+    tags: ['Акушер-гінеколог', 'УЗД-діагностика', 'Планування вагітності'],
+    facts: [
+      { value: '6+', label: 'Років в практиці' },
+      { value: '2',  label: 'Спеціалізації' },
+      { value: '2',  label: 'Філії прийому' },
+    ],
+    education: [
+      { icon: 'degree',   text: 'ВНМУ ім. М.І. Пирогова, 2013–2019, спеціальність «Лікувальна справа»' },
+      { icon: 'hospital', text: 'Інтернатура 2019–2022, КНП «ВМКПБ №2», Акушерство та гінекологія' },
+      { icon: 'lab',      text: 'Спеціалізація «Ультразвукова діагностика», січень–березень 2023' },
+    ],
+    cpd: [],
+    ctaLabel: 'Записатись до Наталії',
+    stickyCtaLabel: 'Записатись до Барвінченко Наталії',
+  },
+
 };
 
 export function getDoctorContent(slug: string): DoctorContent | undefined {

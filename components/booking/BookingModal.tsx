@@ -15,6 +15,7 @@ const DOCTOR_NAMES: Record<string, { name: string; nameGenitive: string; role: s
   'yanyuk-olha':        { name: 'Янюк Ольга Олександрівна',         nameGenitive: 'до Янюк Ольги',     role: 'Акушер-гінеколог, УЗД' },
   'trofimchuk-tetiana': { name: 'Трофімчук Тетяна Ігорівна',   nameGenitive: 'до Трофімчук Тетяни',    role: 'Акушер-гінеколог' },
   'bondarchuk-zhanna':  { name: 'Бондарчук Жанна Геннадіївна',    nameGenitive: 'до Бондарчук Жанни',     role: 'УЗД-спеціаліст, член FMF (Fetal Medicine Foundation)' },
+  'barvinchenko-nataliya': { name: 'Барвінченко Наталія', nameGenitive: 'до Барвінченко Наталії', role: 'Акушер-гінеколог · УЗД-діагностика' },
 };
 
 type Props = {
