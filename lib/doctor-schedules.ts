@@ -40,6 +40,13 @@ export const DOCTOR_SCHEDULES: DoctorSchedule[] = [
       { day: 'пт', hours: '9:00–17:00' },
     ],
   },
+  {
+    slug: 'barvinchenko-nataliya',
+    days: [
+      { day: 'ср', hours: '13:00–17:00' },
+      { day: 'сб', hours: '9:00–17:00' },
+    ],
+  },
 ];
 
 export function getScheduleBySlug(slug: string): DoctorSchedule | undefined {

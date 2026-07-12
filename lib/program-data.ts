@@ -126,7 +126,7 @@ export const QUIZ_DOCTORS = [
     name: 'Барвінченко Наталія',
     role: 'Акушер-гінеколог · УЗД-діагностика',
     tags: ['УЗД', 'Планування вагітності'],
-    schedule: 'Графік уточнюється у адміністратора',
+    schedule: 'ср 13–17 · сб 9–17',
     photo: '/images/doctors/ginekolog-barvinchenko-nataliya-200w.webp',
     initials: 'БН',
     color: '#97d5c9',
