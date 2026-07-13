@@ -4,12 +4,14 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
-const DOCTORS = [
-  { id: 'yanyuk', slug: 'yanyuk-olha', name: 'Янюк Ольга Олександрівна', role: 'Акушер-гінеколог · УЗД', photo: '/images/doctors/ginekolog-yanyuk-olga.jpg', bio: 'Веде вагітність і сама проводить УЗД — ваш лікар бачить повну картину без посередників. Автор медичних публікацій.', badge: null },
-  { id: 'kelman', slug: 'kelman-viktoriia', name: 'Кельман Вікторія Володимирівна', role: 'Акушер-гінеколог · Пренатальна діагностика', photo: '/images/doctors/ginekolog-kelman-viktoriya.jpg', bio: 'Фокус на пренатальній діагностиці. Навчання за програмою FMF — міжнародний стандарт скринінгу. Детально пояснює кожен результат.', badge: null },
-  { id: 'trofimchuk', slug: 'trofimchuk-tetiana', name: 'Трофімчук Тетяна Ігорівна', role: 'Акушер-гінеколог · УЗД', photo: '/images/doctors/ginekolog-trofimchuk-tetyana.jpg', bio: 'Досвід у перинатальному центрі та пологовому будинку Інномед. Веде вагітність від постановки на облік до пологів.', badge: null },
-  { id: 'bondarchuk', slug: 'bondarchuk-zhanna', name: 'Бондарчук Жанна Геннадіївна', role: 'УЗД · Пренатальна діагностика', photo: '/images/doctors/ginekolog-UZD-bondarchuk-zhanna.jpg', bio: 'Сертифікація FMF London, член ISUOG. Скринінги I–III триместру на Voluson E8 з 3D/4D.', badge: 'ДІАГНОСТИКА' },
-];
+type DoctorCard = {
+  id: string;
+  slug: string;
+  name: string;
+  role: string;
+  photo: string;
+  bio: string;
+};
 
 const PROGRAMS = [
   { id: 'trimester-i', name: 'I триместр', price: 14540, priceTwin: 16790, weeks: '11–16 тиж', highlights: ['УЗД з 3D + генетичний скринінг Astraia', 'Аналізи: ЗАК, феритин, ТТГ, вітамін D', 'УЗД щитоподібної та молочних залоз', 'Огляд терапевта + ЕКГ', 'Консультації гінеколога: очна + онлайн'] },
@@ -39,10 +41,42 @@ import MedokGeoBlock from './components/MedokGeoBlock';
 import MedokEeat from './components/MedokEeat';
 import MedokHero from './components/MedokHero';
 import { getActiveCabinetUuid } from '@/lib/cabinet-storage';
+import { supabase } from '@/lib/supabase';
 
 export default function HomePage() {
   const booking = useBookingModal();
   const router = useRouter();
+  const [doctors, setDoctors] = useState<DoctorCard[]>([]);
+
+  useEffect(() => {
+    async function fetchDoctors() {
+      const { data: specs } = await supabase
+        .from('medok_doctor_specializations')
+        .select('doctor_id, focus_text')
+        .eq('case_type', 'pregnancy');
+      if (!specs?.length) return;
+      const ids = specs.map((s: { doctor_id: string; focus_text: string }) => s.doctor_id);
+      const { data: rows } = await supabase
+        .from('medok_doctors')
+        .select('id, slug, name, role, photo_filename')
+        .eq('is_active', true)
+        .in('id', ids)
+        .order('name');
+      if (!rows) return;
+      const specMap = Object.fromEntries(
+        specs.map((s: { doctor_id: string; focus_text: string }) => [s.doctor_id, s.focus_text])
+      );
+      setDoctors(rows.map((d: { id: string; slug: string; name: string; role: string; photo_filename: string }) => ({
+        id: d.id,
+        slug: d.slug,
+        name: d.name,
+        role: d.role,
+        photo: `/images/doctors/${d.photo_filename}`,
+        bio: specMap[d.id] ?? '',
+      })));
+    }
+    fetchDoctors();
+  }, []);
   const [heroVisible, setHeroVisible] = useState(true);
   const doctorsRef = useRef<HTMLElement>(null);
   const programsRef = useRef<HTMLElement>(null);
@@ -81,12 +115,11 @@ export default function HomePage() {
             <h2 className="h2">Лікарі, які ведуть вагітність</h2>
           </div>
           <div className="doctors-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16, marginBottom: 20 }}>
-            {DOCTORS.map((doc) => (
+            {doctors.map((doc) => (
               <div key={doc.id} style={{ background: '#fff', border: '1.5px solid var(--g200)', borderRadius: 16, padding: '24px 16px', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', marginBottom: 12, flexShrink: 0, border: '2px solid var(--g100)' }}>
                   <Image src={doc.photo} alt={doc.name} width={80} height={80} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
                 </div>
-                {doc.badge && <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--td)', marginBottom: 4 }}>{doc.badge}</div>}
                 <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--g900)', marginBottom: 3, lineHeight: 1.35 }}>{doc.name}</div>
                 <div style={{ fontSize: 10, color: 'var(--t)', fontWeight: 700, marginBottom: 12, textTransform: 'uppercase', letterSpacing: '.5px' }}>{doc.role}</div>
                 <p style={{ fontSize: 13, color: 'var(--g500)', lineHeight: 1.65, marginBottom: 16, flex: 1 }}>{doc.bio}</p>
